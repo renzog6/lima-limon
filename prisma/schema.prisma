@@ -1,0 +1,39 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Cliente {
+  id     Int      @id @default(autoincrement())
+  nombre String?  @db.VarChar(20)
+  info   String?  @db.VarChar(255)
+  estado Boolean? @default(true)
+}
+
+model Producto {
+  id            Int           @id @default(autoincrement())
+  nombre        String?       @db.VarChar(20)
+  info          String?       @db.VarChar(255)
+  estado        Boolean?      @default(true)
+  tipoId        Int
+  Producto_Tipo Producto_Tipo @relation(fields: [tipoId], references: [id])
+}
+
+model Producto_Tipo {
+  id       Int        @id @default(autoincrement())
+  nombre   String?    @db.VarChar(20)
+  info     String?    @db.VarChar(255)
+  estado   Boolean?   @default(true)
+  Producto Producto[]
+}
+
+model Proveedor {
+  id     Int      @id @default(autoincrement())
+  nombre String?  @db.VarChar(20)
+  info   String?  @db.VarChar(255)
+  estado Boolean? @default(true)
+}
