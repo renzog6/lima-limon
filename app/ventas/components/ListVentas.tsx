@@ -1,30 +1,28 @@
-//import getClientes from "@/app/actions/getClientes";
 import { BsSearch } from "react-icons/bs";
-import DeleteCliente from "./DeleteCliente";
+import DeleteVenta from "./DeleteVenta";
 import Link from "next/link";
+import { FiEdit } from "react-icons/fi";
 
-const ListClientes = async () => {
+const ListVentas = async () => {
   // Fetch data from external API
-  const res = await fetch(`http://localhost:3000/api/clientes`, {
+  const res = await fetch(`http://localhost:3000/api/ventas`, {
     cache: "no-store",
   });
-  const clientes = await res.json();
 
-  if (clientes.length === 0) {
-    return <></>;
-  }
+  const ventas = await res.json();
+
   return (
     <>
       <div className="flex flex-col overflow-x-auto mt-8">
         <div className="inline-flex border rounded w-full h-8 bg-transparent justify-around">
           <div className="flex w-full h-full justify-center align-middle text-center bg-green-400">
             <p className="flex-1 inline-block align-middle text-center text-xl ">
-              Clientes
+              Ventas
             </p>
           </div>
 
           <div className="flex w-full h-full justify-center align-middle text-center text-lg bg-green-200">
-            <Link className="inline-block align-middle" href="/clientes/new">
+            <Link className="inline-block align-middle" href="/ventas/new">
               Nuevo
             </Link>
           </div>
@@ -44,14 +42,14 @@ const ListClientes = async () => {
         </div>
 
         <div className="inline-block min-w-full overflow-hidden align-middle border-b border-gray-200 shadow sm:rounded-lg">
-          <table className="min-w-full ">
+          <table className="min-w-full">
             <thead>
               <tr>
                 <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                  Nombre
+                  Fecha
                 </th>
                 <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
-                  Info
+                  Cliente
                 </th>
                 <th className="px-6 py-3 text-xs font-medium leading-4 tracking-wider text-left text-gray-500 uppercase border-b border-gray-200 bg-gray-50">
                   Status
@@ -67,47 +65,32 @@ const ListClientes = async () => {
 
             <tbody className="bg-white">
               <tr></tr>
-              {clientes.map((cliente: any) => (
-                <tr key={cliente.id}>
+              {ventas.map((venta: any) => (
+                <tr key={venta.id}>
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                     <div className="flex items-center">
-                      <div className="ml-4">
-                        <div className="text-sm font-medium leading-5 text-gray-900">
-                          {cliente.nombre}
-                        </div>
+                      <div className="text-sm font-medium leading-5 text-gray-900">
+                        {venta.fecha.substr(0, 10)}
                       </div>
                     </div>
                   </td>
 
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                     <div className="text-sm leading-5 text-gray-500">
-                      {cliente.info}
+                      {venta.cliente.nombre}
                     </div>
                   </td>
 
                   <td className="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                     <span className="inline-flex px-2 text-xs font-semibold leading-5 text-green-800 bg-green-100 rounded-full">
-                      {cliente.id}
+                      {venta.id}
                     </span>
                   </td>
                   <td className="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="w-6 h-6 text-blue-400"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
-                      />
-                    </svg>
+                    <FiEdit color="blue" size={20} />
                   </td>
                   <td className="px-6 py-4 text-sm leading-5 text-gray-500 whitespace-no-wrap border-b border-gray-200">
-                    <DeleteCliente id={cliente.id} />
+                    <DeleteVenta id={venta.id} />
                   </td>
                 </tr>
               ))}
@@ -119,4 +102,4 @@ const ListClientes = async () => {
   );
 };
 
-export default ListClientes;
+export default ListVentas;

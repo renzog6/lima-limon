@@ -1,12 +1,9 @@
 import Link from "next/link";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { SlHome } from "react-icons/sl";
-import { BsInfoSquare, BsEnvelopeAt } from "react-icons/bs";
+import { MdSell } from "react-icons/md";
 import { FaTshirt, FaRedhat, FaProductHunt } from "react-icons/fa";
-
-import logo from "@/images/logo.png";
 
 export default function Sidebar({ show, setter }) {
   const router = useRouter();
@@ -52,18 +49,6 @@ export default function Sidebar({ show, setter }) {
   return (
     <>
       <div className={`${className}${appendClass}`}>
-        <div className="p-2 flex">
-          <Link href="/">
-            {/*eslint-disable-next-line*/}
-            <Image
-              className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70]"
-              src={logo.src}
-              alt="Company Logo"
-              width={300}
-              height={300}
-            />
-          </Link>
-        </div>
         <div className="flex flex-col">
           <MenuItem name="Home" route="/" icon={<SlHome />} />
           <MenuItem name="Clientes" route="clientes" icon={<FaTshirt />} />
@@ -77,7 +62,7 @@ export default function Sidebar({ show, setter }) {
             route="/productos"
             icon={<FaProductHunt />}
           />
-          <MenuItem name="Contact" route="/contact" icon={<BsEnvelopeAt />} />
+          <MenuItem name="Ventas" route="/ventas" icon={<MdSell />} />
         </div>
       </div>
       {show ? <ModalOverlay /> : <></>}

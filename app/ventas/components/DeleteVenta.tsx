@@ -2,18 +2,19 @@
 import { useRouter } from "next/navigation";
 import { RiDeleteBin5Line } from "react-icons/ri";
 
-const DeleteCliente = ({ id }) => {
+const DeleteVenta = ({ id }) => {
   const router = useRouter();
 
   const deleteItem = async () => {
     try {
       // Simple DELETE request with fetch
-      const res = await fetch(`http://localhost:3000/api/clientes/${id}`, {
+      const res = await fetch(`http://localhost:3000/api/ventas/${id}`, {
         method: "DELETE",
       });
 
       if (res.status === 200) {
         alert("Item eliminado con exito!!!");
+        //router.push("/clientes");
         router.refresh();
       } else {
         alert("Sorry, something went wrong.");
@@ -34,4 +35,4 @@ const DeleteCliente = ({ id }) => {
   );
 };
 
-export default DeleteCliente;
+export default DeleteVenta;

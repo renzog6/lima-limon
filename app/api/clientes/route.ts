@@ -10,7 +10,6 @@ export async function GET(request: Request) {
         nombre: "asc",
       },
     });
-
     const safeclientes = clientes.map((cliente) => ({
       ...cliente,
       //createdAt: cliente.createdAt.toISOString(),

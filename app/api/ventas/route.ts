@@ -2,21 +2,31 @@ import { NextResponse } from "next/server";
 
 import prisma from "@/lib/prismadb";
 
+/* Code Status
+200 OK
+202 Accepted
+204 No Content
+400 Bad Request
+404 Not Found
+*/
+
 export async function GET(request: Request) {
   try {
-    const proveedores = await prisma.proveedor.findMany({
+    const ventas = await prisma.venta.findMany({
       where: { estado: true },
       orderBy: {
-        nombre: "asc",
+        fecha: "asc",
+      },
+      include: {
+        cliente: true,
       },
     });
 
-    const safeclientes = proveedores.map((cliente) => ({
-      ...cliente,
-      //createdAt: cliente.createdAt.toISOString(),
+    const safe = ventas.map((venta) => ({
+      ...venta,
     }));
 
-    return NextResponse.json(proveedores);
+    return NextResponse.json(ventas);
   } catch (error: any) {
     console.log(error);
     throw new Error(error);
@@ -24,6 +34,12 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
+  /*  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return NextResponse.error();
+  }
+*/
   const body = await request.json();
   const { nombre, info } = body;
 
@@ -33,7 +49,7 @@ export async function POST(request: Request) {
     }
   });
 
-  const listing = await prisma.proveedor.create({
+  const listing = await prisma.cliente.create({
     data: {
       nombre,
       info,

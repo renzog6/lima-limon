@@ -12,23 +12,34 @@ model Cliente {
   nombre String?  @db.VarChar(20)
   info   String?  @db.VarChar(255)
   estado Boolean? @default(true)
+  ventas Venta[]
 }
 
 model Producto {
-  id            Int           @id @default(autoincrement())
-  nombre        String?       @db.VarChar(20)
-  info          String?       @db.VarChar(255)
-  estado        Boolean?      @default(true)
-  tipoId        Int
-  Producto_Tipo Producto_Tipo @relation(fields: [tipoId], references: [id])
+  id          Int       @id @default(autoincrement())
+  nombre      String?   @db.VarChar(20)
+  info        String?   @db.VarChar(255)
+  estado      Boolean?  @default(true)
+  categoriaId Int
+  categoria   Categoria @relation(fields: [categoriaId], references: [id])
+  marcaId     Int
+  marca       Marca     @relation(fields: [marcaId], references: [id])
 }
 
-model Producto_Tipo {
-  id       Int        @id @default(autoincrement())
-  nombre   String?    @db.VarChar(20)
-  info     String?    @db.VarChar(255)
-  estado   Boolean?   @default(true)
-  Producto Producto[]
+model Categoria {
+  id        Int        @id @default(autoincrement())
+  nombre    String?    @db.VarChar(20)
+  info      String?    @db.VarChar(255)
+  estado    Boolean?   @default(true)
+  productos Producto[]
+}
+
+model Marca {
+  id        Int        @id @default(autoincrement())
+  nombre    String?    @db.VarChar(20)
+  info      String?    @db.VarChar(255)
+  estado    Boolean?   @default(true)
+  productos Producto[]
 }
 
 model Proveedor {
@@ -36,4 +47,13 @@ model Proveedor {
   nombre String?  @db.VarChar(20)
   info   String?  @db.VarChar(255)
   estado Boolean? @default(true)
+}
+
+model Venta {
+  id        Int       @id @default(autoincrement())
+  fecha     DateTime? @default(now())
+  info      String?   @db.VarChar(255)
+  estado    Boolean?  @default(true)
+  clienteId Int
+  cliente   Cliente   @relation(fields: [clienteId], references: [id])
 }

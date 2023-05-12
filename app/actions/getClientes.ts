@@ -1,35 +1,16 @@
-import prisma from "@/lib/prismadb";
-
-export interface IclientesParams {
-  nombre?: string;
-  info?: string;
-  estado?: boolean;
-}
-
 export default async function getclientes() {
   try {
-    // const { nombre, info, estado, } = params;
-
-    let query: any = {};
-    /*
-    if (userId) {
-      query.userId = userId;
-    }
-*/
-
-    const clientes = await prisma.cliente.findMany({
-      where: { estado: true },
-      orderBy: {
-        nombre: "desc",
-      },
+    const res = await fetch(`http://localhost:3000/api/clientes`, {
+      cache: "no-store",
     });
+    const clientes = await res.json();
 
-    const safeclientes = clientes.map((cliente) => ({
-      ...cliente,
-      //createdAt: cliente.createdAt.toISOString(),
+    const formatted = clientes.map((item) => ({
+      value: item.id,
+      label: item.nombre,
     }));
 
-    return safeclientes;
+    return formatted;
   } catch (error: any) {
     console.log(error);
     throw new Error(error);

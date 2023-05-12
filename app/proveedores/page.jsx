@@ -1,9 +1,11 @@
-import ListProveedores from "./components/ListProveedores";
+import ListProveedores from "./components/List";
 
-export default function Proveedores() {
+const pageProveedores = () => {
   return (
     <>
       <ListProveedores />
     </>
   );
-}
+};
+
+export default pageProveedores;
