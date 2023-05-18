@@ -1,3 +1,24 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.btn {
+  @apply rounded-sm;
+}
+/*
+tr {
+  @apply bg-white;
+  @apply border-b;
+  @apply dark:bg-gray-900;
+  @apply dark:border-gray-700;
+}
+
+th {
+  @apply px-6;
+  @apply py-4;
+  @apply font-medium;
+  @apply text-red-900;
+  @apply whitespace-nowrap;
+  @apply dark:text-white;
+}
+*/

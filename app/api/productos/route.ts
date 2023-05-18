@@ -17,7 +17,6 @@ export async function GET(request: Request) {
     const safeclientes = productos.map((producto) => ({
       ...producto,
     }));
-    console.log(safeclientes);
     return NextResponse.json(productos);
   } catch (error: any) {
     console.log(error);

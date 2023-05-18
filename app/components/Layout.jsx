@@ -10,15 +10,12 @@ export default function Layout({ children }) {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
-    <div className="w-full top-[117px] lg:top-[344px]">
+    <div className="w-full">
       <Navbar />
       <div className="flex">
         <MenuBarMobile setter={setShowSidebar} />
         <Sidebar show={showSidebar} setter={setShowSidebar} />
-
-        <div className="flex flex-col flex-grow overflow-x-auto min-h-screen py-10 md:py-0">
-          {children}
-        </div>
+        <div className="container min-h-screen">{children}</div>
       </div>
     </div>
   );

@@ -6,7 +6,7 @@ import logo from "@/images/logo.png";
 
 const Navbar = () => {
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar h-[60px] bg-white dark:bg-black">
       <div className="flex-none">
         <button title="menu" className="btn btn-square btn-ghost">
           <FiMenu />

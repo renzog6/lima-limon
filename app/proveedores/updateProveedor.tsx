@@ -1,0 +1,99 @@
+"use client";
+
+import { SyntheticEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { FiEdit } from "react-icons/fi";
+
+import { Proveedor } from "@prisma/client";
+import { updateProveedor } from "@/app/actions/actionsProveedores";
+
+export default function UpdateProveedor(proveedor: Proveedor) {
+  const [nombre, setNombre] = useState(proveedor.nombre || "");
+  const [info, setInfo] = useState(proveedor.info || "");
+  const [modal, setModal] = useState(false);
+  const [isMutating, setIsMutating] = useState(false);
+
+  const router = useRouter();
+
+  async function handleUpdate(e: SyntheticEvent) {
+    e.preventDefault();
+
+    setIsMutating(true);
+
+    const updated = { ...proveedor, nombre: nombre, info: info };
+
+    updateProveedor(updated); // Llama a la función de actualización del estado
+    setIsMutating(false);
+
+    router.refresh();
+    setModal(false);
+  }
+
+  function handleChange() {
+    setModal(!modal);
+  }
+
+  return (
+    <div>
+      <button
+        title="edit"
+        className="mr-2 text-blue-500 hover:text-blue-700"
+        onClick={handleChange}
+      >
+        <FiEdit color="blue" />
+      </button>
+
+      <input
+        id="modal-update"
+        aria-label="modal-update"
+        type="checkbox"
+        checked={modal}
+        onChange={handleChange}
+        className="modal-toggle"
+      />
+
+      <div className="modal">
+        <div className="modal-box">
+          <h3 className="font-bold text-lg">Edit {proveedor.nombre}</h3>
+          <form onSubmit={handleUpdate}>
+            <div className="form-control">
+              <label className="label font-bold">Nombre</label>
+              <input
+                id="nombre"
+                type="text"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                className="input w-full input-bordered"
+                placeholder="Proveedor Name"
+              />
+            </div>
+            <div className="form-control">
+              <label className="label font-bold">Info</label>
+              <input
+                type="text"
+                value={info}
+                onChange={(e) => setInfo(e.target.value)}
+                className="input w-full input-bordered"
+                placeholder="Info"
+              />
+            </div>
+            <div className="modal-action">
+              <button type="button" className="btn" onClick={handleChange}>
+                Carrar
+              </button>
+              {!isMutating ? (
+                <button type="submit" className="btn btn-primary">
+                  Guardar
+                </button>
+              ) : (
+                <button type="button" className="btn loading">
+                  Guardando...
+                </button>
+              )}
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}

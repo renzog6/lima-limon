@@ -3,20 +3,20 @@ import prisma from "@/lib/prismadb";
 
 export async function POST(
   request: Request,
-  { params }: { params: { clienteId: number } }
+  { params }: { params: { proveedorId: number } }
 ) {
-  var clienteId = Number(params.clienteId);
+  var proveedorId = Number(params.proveedorId);
 
-  if (!clienteId || typeof clienteId !== "number") {
+  if (!proveedorId || typeof proveedorId !== "number") {
     throw new Error("Invalid ID");
   }
 
   const body = await request.json();
   const { nombre, info } = body;
 
-  const res = await prisma.cliente.update({
+  const res = await prisma.proveedor.update({
     where: {
-      id: clienteId,
+      id: proveedorId,
     },
     data: {
       nombre,
@@ -30,17 +30,17 @@ export async function POST(
 //Cambio de estado
 export async function DELETE(
   request: Request,
-  { params }: { params: { clienteId: number } }
+  { params }: { params: { proveedorId: number } }
 ) {
-  var clienteId = Number(params.clienteId);
+  var proveedorId = Number(params.proveedorId);
 
-  if (!clienteId || typeof clienteId !== "number") {
+  if (!proveedorId || typeof proveedorId !== "number") {
     throw new Error("Invalid ID");
   }
 
-  const res = await prisma.cliente.update({
+  const res = await prisma.proveedor.update({
     where: {
-      id: clienteId,
+      id: proveedorId,
     },
     data: {
       estado: false,
@@ -53,17 +53,17 @@ export async function DELETE(
 /* Borrado definitivo
 export async function DELETE(
   request: Request,
-  { params }: { params: { clienteId: number } }
+  { params }: { params: { proveedorId: number } }
 ) {
-  var clienteId = Number(params.clienteId);
+  var proveedorId = Number(params.proveedorId);
 
-  if (!clienteId || typeof clienteId !== "number") {
+  if (!proveedorId || typeof proveedorId !== "number") {
     throw new Error("Invalid ID");
   }
 
-  const res = await prisma.cliente.deleteMany({
+  const res = await prisma.proveedor.deleteMany({
     where: {
-      id: clienteId,
+      id: proveedorId,
     },
   });
 

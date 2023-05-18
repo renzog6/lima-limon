@@ -63,7 +63,7 @@ const ListProductos = async () => {
               </tr>
             </thead>
 
-            <tbody className="bg-white">
+            <tbody>
               <tr></tr>
               {productos.map((item: any) => (
                 <tr key={item.id}>

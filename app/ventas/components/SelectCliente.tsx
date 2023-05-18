@@ -27,7 +27,6 @@ const SelectCliente = () => {
   const x = getClientes;
 
   const handle = ({ e }) => {
-    console.log("XXXXXXXX : " + e.target.value);
     setValue(e.target.value);
   };
 
