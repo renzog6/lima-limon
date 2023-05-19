@@ -14,10 +14,11 @@ export async function GET(request: Request) {
       },
     });
 
-    const safeclientes = productos.map((producto) => ({
+    const safe = productos.map((producto) => ({
       ...producto,
+      categoria: producto.categoria.nombre,
     }));
-    return NextResponse.json(productos);
+    return NextResponse.json(safe);
   } catch (error: any) {
     console.log(error);
     throw new Error(error);
@@ -25,27 +26,40 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  /*  const currentUser = await getCurrentUser();
-
-  if (!currentUser) {
-    return NextResponse.error();
-  }
-*/
   const body = await request.json();
-  const { nombre, info } = body;
+  const { nombre, info, precio, stock, categoriaId, marcaId, proveedorId } =
+    body;
 
-  Object.keys(body).forEach((value: any) => {
-    if (!body[value]) {
-      NextResponse.error();
-    }
+  // Verificar si el nombre del producto está repetido
+  const existingProducto = await prisma.producto.findFirst({
+    where: { nombre: nombre },
   });
 
-  const listing = await prisma.cliente.create({
+  if (existingProducto) {
+    return NextResponse.json(
+      { error: "El nombre del producto ya está en uso" },
+      { status: 400 }
+    );
+  }
+
+  const res = await prisma.producto.create({
     data: {
       nombre,
       info,
+      precio: Number(precio),
+      stock: Number(stock),
+      categoria: {
+        connect: { id: Number(categoriaId) }, // Conecta con la categoría existente usando el ID
+      },
+      marca: {
+        connect: { id: Number(marcaId) }, // Conecta con la marca existente usando el ID
+      },
+      proveedor: {
+        connect: { id: Number(proveedorId) }, // Conecta con la marca existente usando el ID
+      },
     },
   });
 
-  return NextResponse.json(listing);
+  console.log("routes ::: " + JSON.stringify(res));
+  return NextResponse.json(res);
 }

@@ -11,32 +11,30 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 26/04/2023 10:18:29
+ Date: 19/05/2023 09:06:10
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- ----------------------------
--- Table structure for _prisma_migrations
+-- Table structure for categoria
 -- ----------------------------
-DROP TABLE IF EXISTS `_prisma_migrations`;
-CREATE TABLE `_prisma_migrations`  (
-  `id` varchar(36) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `checksum` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `finished_at` datetime(3) NULL DEFAULT NULL,
-  `migration_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
-  `logs` text CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL,
-  `rolled_back_at` datetime(3) NULL DEFAULT NULL,
-  `started_at` datetime(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `applied_steps_count` int(10) UNSIGNED NOT NULL DEFAULT 0,
+DROP TABLE IF EXISTS `categoria`;
+CREATE TABLE `categoria`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `estado` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
--- Records of _prisma_migrations
+-- Records of categoria
 -- ----------------------------
-INSERT INTO `_prisma_migrations` VALUES ('f7c3359f-3d76-4c50-bacb-eabd6e148949', 'f033b2da196662d653cfd424a28c3965cf6c86307253d838da1be382db4dc19b', '2023-04-11 21:07:44.144', '20230411210744_0_init', NULL, NULL, '2023-04-11 21:07:44.065', 1);
+INSERT INTO `categoria` VALUES (1, 'Difusor', 'Test', 1);
+INSERT INTO `categoria` VALUES (5, 'Vela', 'xz', 1);
+INSERT INTO `categoria` VALUES (6, 'ASSS', 'KL', 1);
 
 -- ----------------------------
 -- Table structure for cliente
@@ -48,19 +46,44 @@ CREATE TABLE `cliente`  (
   `info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `estado` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of cliente
 -- ----------------------------
-INSERT INTO `cliente` VALUES (1, 'YO', 'Para Mi!!!', 1);
-INSERT INTO `cliente` VALUES (3, 'Juan', 'KL', 1);
-INSERT INTO `cliente` VALUES (4, 'Renzo', 'XS', 1);
-INSERT INTO `cliente` VALUES (8, 'Pedro', 'Deere', 1);
-INSERT INTO `cliente` VALUES (9, 'Lalo', 'Lamda', 1);
-INSERT INTO `cliente` VALUES (11, 'Luis X', 'PLX', 1);
-INSERT INTO `cliente` VALUES (15, 'Renzo G', 'XXX', 1);
-INSERT INTO `cliente` VALUES (16, 'AD RT', 'LK', 1);
+INSERT INTO `cliente` VALUES (3, 'Renzo', 'Deere', 1);
+INSERT INTO `cliente` VALUES (4, 'Larisa', 'sa', 1);
+INSERT INTO `cliente` VALUES (5, 'Rosa V', 'XXX', 1);
+INSERT INTO `cliente` VALUES (6, 'Luis S', 'S', 0);
+INSERT INTO `cliente` VALUES (9, 'XXX', 'XXX', 1);
+INSERT INTO `cliente` VALUES (10, 'DDD', 'DDD', 1);
+INSERT INTO `cliente` VALUES (11, 'FFF', 'FFF', 1);
+INSERT INTO `cliente` VALUES (12, 'AAA', 'AAA', 1);
+INSERT INTO `cliente` VALUES (13, 'CCC', 'CCC', 1);
+INSERT INTO `cliente` VALUES (14, 'EEE', 'EEE', 0);
+INSERT INTO `cliente` VALUES (15, 'BBB', 'BBB', 1);
+INSERT INTO `cliente` VALUES (16, 'MMM', 'X', 1);
+INSERT INTO `cliente` VALUES (17, 'YYY', 'Y', 1);
+INSERT INTO `cliente` VALUES (18, 'AABB', 'AB', 1);
+
+-- ----------------------------
+-- Table structure for marca
+-- ----------------------------
+DROP TABLE IF EXISTS `marca`;
+CREATE TABLE `marca`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nombre` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `estado` tinyint(1) NULL DEFAULT 1,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of marca
+-- ----------------------------
+INSERT INTO `marca` VALUES (1, 'Marca', '1', 1);
+INSERT INTO `marca` VALUES (4, 'DEswq', 'Test', 1);
+INSERT INTO `marca` VALUES (5, 'MMMS', 'Sas', 1);
 
 -- ----------------------------
 -- Table structure for producto
@@ -71,33 +94,31 @@ CREATE TABLE `producto`  (
   `nombre` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `estado` tinyint(1) NULL DEFAULT 1,
-  `tipoId` int(11) NOT NULL,
+  `categoriaId` int(11) NOT NULL,
+  `marcaId` int(11) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE,
-  INDEX `Producto_tipoId_fkey`(`tipoId`) USING BTREE,
-  CONSTRAINT `Producto_tipoId_fkey` FOREIGN KEY (`tipoId`) REFERENCES `producto_tipo` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+  INDEX `Producto_marcaId_fkey`(`marcaId`) USING BTREE,
+  INDEX `Producto_categoriaId_fkey`(`categoriaId`) USING BTREE,
+  CONSTRAINT `Producto_categoriaId_fkey` FOREIGN KEY (`categoriaId`) REFERENCES `categoria` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE,
+  CONSTRAINT `Producto_marcaId_fkey` FOREIGN KEY (`marcaId`) REFERENCES `marca` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of producto
 -- ----------------------------
-INSERT INTO `producto` VALUES (1, 'Difusor de Mar', NULL, 1, 1);
-
--- ----------------------------
--- Table structure for producto_tipo
--- ----------------------------
-DROP TABLE IF EXISTS `producto_tipo`;
-CREATE TABLE `producto_tipo`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nombre` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
-  `estado` tinyint(1) NULL DEFAULT 1,
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
-
--- ----------------------------
--- Records of producto_tipo
--- ----------------------------
-INSERT INTO `producto_tipo` VALUES (1, 'Difusor', 'X', 1);
+INSERT INTO `producto` VALUES (1, 'Producto 1', 'DS', 1, 1, 1);
+INSERT INTO `producto` VALUES (7, 'Luis S', 'XXX', 1, 1, 1);
+INSERT INTO `producto` VALUES (8, 'Renzo', 'XXX', 1, 1, 1);
+INSERT INTO `producto` VALUES (9, 'Renzo s', 'XXX', 1, 1, 4);
+INSERT INTO `producto` VALUES (10, 'Luis Sx', 'XS', 1, 6, 1);
+INSERT INTO `producto` VALUES (11, 'Luis St', 'XS', 1, 1, 4);
+INSERT INTO `producto` VALUES (12, 'Luis Sooo', '', 1, 6, 4);
+INSERT INTO `producto` VALUES (13, 'Luis Sqqq', '', 1, 1, 4);
+INSERT INTO `producto` VALUES (14, 'Renzo Gssss', '', 1, 6, 5);
+INSERT INTO `producto` VALUES (15, 'RenzoSSSSSSSS', '', 1, 6, 5);
+INSERT INTO `producto` VALUES (16, 'Luis Shhhhhhhh', '', 1, 5, 4);
+INSERT INTO `producto` VALUES (17, 'Luis Sjjjjjjj', '', 1, 6, 1);
+INSERT INTO `producto` VALUES (18, 'AAAA', 'd', 1, 6, 4);
 
 -- ----------------------------
 -- Table structure for proveedor
@@ -109,12 +130,26 @@ CREATE TABLE `proveedor`  (
   `info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `estado` tinyint(1) NULL DEFAULT 1,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of proveedor
 -- ----------------------------
-INSERT INTO `proveedor` VALUES (1, 'Juan VENDEDOR', 'Salta', 1);
-INSERT INTO `proveedor` VALUES (2, 'Pedro Vendedor', 'Cordoba', 1);
+INSERT INTO `proveedor` VALUES (1, 'Al Prove', 'Por', 1);
+
+-- ----------------------------
+-- Table structure for venta
+-- ----------------------------
+DROP TABLE IF EXISTS `venta`;
+CREATE TABLE `venta`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `fecha` datetime(3) NULL DEFAULT CURRENT_TIMESTAMP,
+  `info` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `estado` tinyint(1) NULL DEFAULT 1,
+  `clienteId` int(11) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  INDEX `Venta_clienteId_fkey`(`clienteId`) USING BTREE,
+  CONSTRAINT `Venta_clienteId_fkey` FOREIGN KEY (`clienteId`) REFERENCES `cliente` (`id`) ON DELETE RESTRICT ON UPDATE CASCADE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = Compact;
 
 SET FOREIGN_KEY_CHECKS = 1;

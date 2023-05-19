@@ -29,7 +29,7 @@ export default function AddProveedor() {
     setNombre("");
     setInfo("");
 
-    router.refresh;
+    router.refresh();
     setModal(false);
   }
 

@@ -1,35 +1,30 @@
-//@/app/productos/categorias/addCategoria.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { FiEdit } from "react-icons/fi";
 
-import { Categoria } from "@prisma/client";
-import { addCategoria } from "@/app/actions/actionsCategorias";
+import { Producto } from "@prisma/client";
+import { updateProducto } from "@/app/actions/actionsProductos";
 
-export default function AddCategoria() {
-  const [nombre, setNombre] = useState("");
-  const [info, setInfo] = useState("");
+export default function UpdateProducto(producto: Producto) {
+  const [nombre, setNombre] = useState(producto.nombre || "");
+  const [info, setInfo] = useState(producto.info || "");
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
   const router = useRouter();
 
-  async function handleSubmit(e: SyntheticEvent) {
+  async function handleUpdate(e: SyntheticEvent) {
     e.preventDefault();
 
     setIsMutating(true);
-    const categoria = {
-      nombre: nombre,
-      info: info,
-    };
-    //categoria.nombre = nombre;
-    //categoria.info = info;
-    addCategoria(categoria);
+
+    const updated = { ...producto, nombre: nombre, info: info };
+
+    updateProducto(updated); // Llama a la función de actualización del estado
     setIsMutating(false);
 
-    setNombre("");
-    setInfo("");
     router.refresh();
     setModal(false);
   }
@@ -40,13 +35,17 @@ export default function AddCategoria() {
 
   return (
     <div>
-      <button className="btn  btn-sm btn-secondary" onClick={handleChange}>
-        Agregar
+      <button
+        title="edit"
+        className="mr-2 text-blue-500 hover:text-blue-700"
+        onClick={handleChange}
+      >
+        <FiEdit color="blue" />
       </button>
 
       <input
-        id="modal"
-        aria-label="modal"
+        id="modal-update"
+        aria-label="modal-update"
         type="checkbox"
         checked={modal}
         onChange={handleChange}
@@ -55,16 +54,17 @@ export default function AddCategoria() {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Agregar Categoria</h3>
-          <form onSubmit={handleSubmit}>
+          <h3 className="font-bold text-lg">Edit {producto.nombre}</h3>
+          <form onSubmit={handleUpdate}>
             <div className="form-control">
               <label className="label font-bold">Nombre</label>
               <input
+                id="nombre"
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
                 className="input w-full input-bordered"
-                placeholder="Categoria Name"
+                placeholder="Producto Name"
               />
             </div>
             <div className="form-control">
@@ -79,7 +79,7 @@ export default function AddCategoria() {
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Cerrar
+                Carrar
               </button>
               {!isMutating ? (
                 <button type="submit" className="btn btn-primary">

@@ -1,12 +1,11 @@
-import Link from "next/link";
-import { ReactNode } from "react";
+export const metadata = {
+  title: "Ventas",
+};
 
 const LayoutVentas = ({ children }) => {
   return (
-    <div>
-      <main>
-        <div className="sm:px-6 lg:px-8 overflow-x-auto">{children}</div>
-      </main>
+    <div className="min-h-full max-w-full">
+      <div>{children}</div>
     </div>
   );
 };

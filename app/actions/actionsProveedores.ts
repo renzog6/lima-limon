@@ -1,49 +1,47 @@
 import { Proveedor } from "@prisma/client";
 
-//const URL = "http://localhost:3000/api"
+const apiUrl = `${process.env.apiUrl}/proveedores`;
 
 export async function getProveedores() {
   try {
-    const res = await fetch("http://localhost:3000/api/proveedores", {
+    const res = await fetch(apiUrl, {
+      mode: "no-cors",
       cache: "no-store",
     });
-    return res.json();
+    return await res.json();
   } catch (error) {
     return [];
   }
 }
 
 export async function addProveedor(proveedor) {
-  const res = await fetch("http://localhost:3000/api/proveedores", {
+  const res = await fetch(apiUrl, {
     method: "POST",
+    mode: "no-cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      nombre: proveedor.nombre,
-      info: proveedor.info,
-    }),
+    body: JSON.stringify(proveedor),
   });
+  return res;
 }
 
 export async function updateProveedor(proveedor: Proveedor) {
-  const res = await fetch(
-    `http://localhost:3000/api/proveedores/${proveedor.id}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nombre: proveedor.nombre,
-        info: proveedor.info,
-      }),
-    }
-  );
+  const res = await fetch(`${apiUrl}/${proveedor.id}`, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(proveedor),
+  });
+  return res;
 }
 
 export async function deleteProveedor(proveedorId: number) {
-  await fetch(`http://localhost:3000/api/proveedores/${proveedorId}`, {
+  const res = await fetch(`${apiUrl}/${proveedorId}`, {
     method: "DELETE",
+    mode: "no-cors",
   });
+  return res;
 }

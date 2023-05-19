@@ -1,9 +1,13 @@
+//@app/actions/actionsCategorias.ts
 import { Categoria } from "@prisma/client";
+
+const apiUrl = `${process.env.apiUrl}/productos/categorias`;
 
 export async function getCategorias() {
   try {
-    const res = await fetch("http://localhost:3000/api/productos/categorias", {
+    const res = await fetch(apiUrl, {
       cache: "no-store",
+      mode: "no-cors",
     });
     return res.json();
   } catch (error) {
@@ -12,36 +16,33 @@ export async function getCategorias() {
 }
 
 export async function addCategoria(categoria) {
-  const res = await fetch("http://localhost:3000/api/productos/categorias", {
+  const res = await fetch(apiUrl, {
     method: "POST",
+    mode: "no-cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      nombre: categoria.nombre,
-      info: categoria.info,
-    }),
+    body: JSON.stringify(categoria),
   });
+  return res;
 }
 
 export async function updateCategotria(categoria: Categoria) {
-  const res = await fetch(
-    `http://localhost:3000/api/productos/categorias/${categoria.id}`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        nombre: categoria.nombre,
-        info: categoria.info,
-      }),
-    }
-  );
+  const res = await fetch(`${apiUrl}/${categoria.id}`, {
+    method: "POST",
+    mode: "no-cors",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(categoria),
+  });
+  return res;
 }
 
 export async function deleteCategotria(categoriaId: number) {
-  await fetch(`http://localhost:3000/api/productos/categorias/${categoriaId}`, {
+  const res = await fetch(`${apiUrl}/${categoriaId}`, {
+    mode: "no-cors",
     method: "DELETE",
   });
+  return res;
 }

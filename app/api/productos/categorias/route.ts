@@ -41,12 +41,12 @@ export async function POST(request: Request) {
     }
   });
 
-  const listing = await prisma.categoria.create({
+  const res = await prisma.categoria.create({
     data: {
       nombre,
       info,
     },
   });
 
-  return NextResponse.json(listing);
+  return NextResponse.json(res);
 }

@@ -7,23 +7,27 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Cliente {
+model Producto {
   id     Int      @id @default(autoincrement())
   nombre String?  @db.VarChar(20)
   info   String?  @db.VarChar(255)
+  precio Float    @default(0.0)
+  stock  Int      @default(0)
   estado Boolean? @default(true)
-  ventas Venta[]
-}
 
-model Producto {
-  id          Int       @id @default(autoincrement())
-  nombre      String?   @db.VarChar(20)
-  info        String?   @db.VarChar(255)
-  estado      Boolean?  @default(true)
   categoriaId Int
   categoria   Categoria @relation(fields: [categoriaId], references: [id])
   marcaId     Int
   marca       Marca     @relation(fields: [marcaId], references: [id])
+  proveedorId Int
+  proveedor   Proveedor @relation(fields: [proveedorId], references: [id])
+  ventaId     Int?
+  Venta       Venta?    @relation(fields: [ventaId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("productos")
 }
 
 model Categoria {
@@ -35,25 +39,73 @@ model Categoria {
 }
 
 model Marca {
+  id          Int        @id @default(autoincrement())
+  nombre      String?    @db.VarChar(20)
+  info        String?    @db.VarChar(255)
+  estado      Boolean?   @default(true)
+  productos   Producto[]
+  Proveedor   Proveedor? @relation(fields: [proveedorId], references: [id])
+  proveedorId Int?
+}
+
+model Cliente {
+  id       Int      @id @default(autoincrement())
+  nombre   String?  @db.VarChar(20)
+  info     String?  @db.VarChar(255)
+  estado   Boolean? @default(true)
+  email    String?
+  telefono String?
+  deuda    Float    @default(0)
+  pagos    Pago[]
+  ventas   Venta[]
+}
+
+model Proveedor {
   id        Int        @id @default(autoincrement())
   nombre    String?    @db.VarChar(20)
   info      String?    @db.VarChar(255)
   estado    Boolean?   @default(true)
+  email     String?
+  telefono  String?
   productos Producto[]
-}
-
-model Proveedor {
-  id     Int      @id @default(autoincrement())
-  nombre String?  @db.VarChar(20)
-  info   String?  @db.VarChar(255)
-  estado Boolean? @default(true)
+  marcas    Marca[]
 }
 
 model Venta {
-  id        Int       @id @default(autoincrement())
-  fecha     DateTime? @default(now())
-  info      String?   @db.VarChar(255)
-  estado    Boolean?  @default(true)
+  id        Int        @id @default(autoincrement())
+  fecha     DateTime?  @default(now())
+  info      String?    @db.VarChar(255)
+  estado    Boolean?   @default(false)
   clienteId Int
-  cliente   Cliente   @relation(fields: [clienteId], references: [id])
+  cliente   Cliente    @relation(fields: [clienteId], references: [id], map: "Venta_clienteId_fkey")
+  productos Producto[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([clienteId], map: "Venta_clienteId_fkey")
+}
+
+// Tabla para los pagos de pedidos
+model Pedido {
+  id         Int      @id @default(autoincrement())
+  productoId Int
+  clienteId  Int
+  cantidad   Int
+  pricio     Float
+  total      Float
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@map(name: "pedidos")
+}
+
+// Tabla para los pagos de clientes
+model Pago {
+  id        Int      @id @default(autoincrement())
+  cliente   Cliente  @relation(fields: [clienteId], references: [id])
+  clienteId Int
+  monto     Float
+  fecha     DateTime @default(now())
+  nota      String?
 }

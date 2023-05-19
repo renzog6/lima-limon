@@ -6,6 +6,10 @@ import AddCliente from "./addCliente";
 import DeleteCliente from "./deleteCliente";
 import UpdateCliente from "./updateCliente";
 
+export const metadata = {
+  title: "Clientes",
+};
+
 export default async function ClienteList() {
   const columnas = [
     { Header: "Nombre", accessor: "nombre" },

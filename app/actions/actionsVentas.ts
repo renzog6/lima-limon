@@ -1,8 +1,8 @@
-import { Cliente } from "@prisma/client";
+import { Venta } from "@prisma/client";
 
-const apiUrl = `${process.env.apiUrl}/clientes`;
+const apiUrl = `${process.env.apiUrl}/ventas`;
 
-export async function getClientes() {
+export async function getVentas() {
   try {
     const res = await fetch(apiUrl, {
       cache: "no-store",
@@ -14,32 +14,32 @@ export async function getClientes() {
   }
 }
 
-export async function addCliente(cliente) {
+export async function addVenta(venta) {
   const res = await fetch(apiUrl, {
     method: "POST",
     mode: "no-cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(cliente),
+    body: JSON.stringify(venta),
   });
   return res;
 }
 
-export async function updateCliente(cliente: Cliente) {
-  const res = await fetch(`${apiUrl}/${cliente.id}`, {
+export async function updateVenta(venta: Venta) {
+  const res = await fetch(`${apiUrl}/${venta.id}`, {
     method: "POST",
     mode: "no-cors",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(cliente),
+    body: JSON.stringify(venta),
   });
   return res;
 }
 
-export async function deleteCliente(clienteId: number) {
-  const res = await fetch(`http://localhost:3000/api/clientes/${clienteId}`, {
+export async function deleteVenta(ventaId: number) {
+  const res = await fetch(`${apiUrl}/${ventaId}`, {
     method: "DELETE",
     mode: "no-cors",
   });

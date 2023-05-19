@@ -1,36 +1,36 @@
-//@/app/productos/categorias/addCategoria.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
-import { Categoria } from "@prisma/client";
-import { addCategoria } from "@/app/actions/actionsCategorias";
+import { Venta } from "@prisma/client";
+import { addVenta } from "@/app/actions/actionsVentas";
 
-export default function AddCategoria() {
+export default function AddVenta() {
   const [nombre, setNombre] = useState("");
   const [info, setInfo] = useState("");
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
   const router = useRouter();
+  const pathname = usePathname();
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
 
     setIsMutating(true);
-    const categoria = {
+    const venta = {
       nombre: nombre,
       info: info,
     };
-    //categoria.nombre = nombre;
-    //categoria.info = info;
-    addCategoria(categoria);
+
+    await addVenta(venta);
     setIsMutating(false);
 
     setNombre("");
     setInfo("");
-    router.refresh();
+
+    router.replace(pathname);
     setModal(false);
   }
 
@@ -55,7 +55,7 @@ export default function AddCategoria() {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Agregar Categoria</h3>
+          <h3 className="font-bold text-lg">Agregar Venta</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
               <label className="label font-bold">Nombre</label>
@@ -64,7 +64,7 @@ export default function AddCategoria() {
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
                 className="input w-full input-bordered"
-                placeholder="Categoria Name"
+                placeholder="Venta Name"
               />
             </div>
             <div className="form-control">

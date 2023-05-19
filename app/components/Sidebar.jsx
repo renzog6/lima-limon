@@ -62,6 +62,22 @@ export default function Sidebar({ show, setter }) {
             route="/productos"
             icon={<FaProductHunt />}
           />
+          <ul className="pl-4 mt-2">
+            <li>
+              <MenuItem
+                name="Categorias"
+                route="/productos/categorias"
+                icon={<FaProductHunt />}
+              />
+            </li>
+            <li>
+              <MenuItem
+                name="Marcas"
+                route="/productos/marcas"
+                icon={<FaProductHunt />}
+              />
+            </li>
+          </ul>
           <MenuItem name="Ventas" route="/ventas" icon={<MdSell />} />
         </div>
       </div>

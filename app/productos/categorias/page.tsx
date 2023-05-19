@@ -1,47 +1,42 @@
+//@/app/productos/categorias/page.tsx
 import AddCategoria from "./addCategoria";
 import DeleteCategoria from "./deleteCategoria";
 import UpdateCategoria from "./updateCategoria";
 
 import { Categoria } from "@prisma/client";
 import { getCategorias } from "@/app/actions/actionsCategorias";
+import Table from "@/app/components/Table";
 
 export const metadata = {
   title: "Categorias",
 };
 
 export default async function CategoriaList() {
-  const categorias: Categoria[] = await getCategorias();
-  return (
-    <div className="py-10 px-10">
-      <div className="py-2">
-        <AddCategoria />
-      </div>
-      <table className="table w-full">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nombre</th>
-            <th>Info</th>
-            <th>##</th>
-          </tr>
-        </thead>
-        <tbody>
-          {categorias.map((categoria, index) => (
-            <tr key={categoria.id}>
-              <td>{index + 1}</td>
-              <td>{categoria.nombre}</td>
-              <td>{categoria.info}</td>
-              <td className="flex">
-                <div className="mr-1">
-                  <UpdateCategoria {...categoria} />
-                </div>
+  const columnas = [
+    { Header: "Nombre", accessor: "nombre" },
+    { Header: "Info", accessor: "info" },
+    { Header: "Estado", accessor: "estado" },
+  ];
 
-                <DeleteCategoria {...categoria} />
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+  const categorias: Categoria[] = await getCategorias();
+
+  return (
+    <div>
+      <div className="flex justify-around items-center  h-[40px] bg-amber-300">
+        <p className="text-xl font-bold">Clientes</p>
+        <div className="">
+          <AddCategoria />
+        </div>
+      </div>
+      <div className="px-1 bg-amber-200">
+        <Table
+          titulo="Categorias"
+          columns={columnas}
+          data={categorias}
+          EditButton={UpdateCategoria}
+          DeleteButton={DeleteCategoria}
+        />
+      </div>
     </div>
   );
 }

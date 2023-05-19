@@ -38,12 +38,12 @@ export async function POST(request: Request) {
     }
   });
 
-  const listing = await prisma.proveedor.create({
+  const res = await prisma.proveedor.create({
     data: {
       nombre,
       info,
     },
   });
 
-  return NextResponse.json(listing);
+  return NextResponse.json(res);
 }

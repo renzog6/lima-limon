@@ -9,13 +9,6 @@ const Table = ({ titulo, columns, data, EditButton, DeleteButton }) => {
     row[columns[0].accessor].toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const estdo = (r, c) => {
-    if (c.accessor === "estado") {
-      return r[c.accessor] ? "TT" : "FF";
-    } else {
-      return r[c.accessor];
-    }
-  };
   return (
     <div className="w-full overflow-x-auto">
       <div className="px-1 flex justify-between items-center h-[40px]">
@@ -52,7 +45,7 @@ const Table = ({ titulo, columns, data, EditButton, DeleteButton }) => {
             >
               {columns.map((column, colIndex) => (
                 <td key={colIndex} className="px-4 py-2 whitespace-nowrap">
-                  {estdo(row, column)}
+                  {row[column.accessor]}
                 </td>
               ))}
               <td className="px-4 py-2 whitespace-nowrap text-right">
