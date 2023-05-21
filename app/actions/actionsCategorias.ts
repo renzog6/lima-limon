@@ -9,7 +9,8 @@ export async function getCategorias() {
       cache: "no-store",
       mode: "no-cors",
     });
-    return res.json();
+    const data = await res.json();
+    return data;
   } catch (error) {
     return [];
   }

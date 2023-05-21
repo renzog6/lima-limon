@@ -13,7 +13,7 @@ const nextConfig = {
   },
 
   env: {
-    apiUrl: "http://192.168.88.91:3000/api", // Cambia esto con tu URL de API real
+    apiUrl: "http://192.168.66.81:3000/api", // Cambia esto con tu URL de API real
   },
 
   httpAgentOptions: {
