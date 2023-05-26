@@ -10,7 +10,7 @@ async function fetchRequest(url: string, method: string, body: any = null) {
       headers: {
         "Content-Type": "application/json",
       },
-      //cache: "no-store" as RequestCache,
+      cache: "no-store" as RequestCache,
     };
 
     if (method !== "GET") {
@@ -21,7 +21,8 @@ async function fetchRequest(url: string, method: string, body: any = null) {
     const data = await res.json();
     return data;
   } catch (error) {
-    throw new Error((error as Error).message);
+    //throw new Error((error as Error).message);
+    return [];
   }
 }
 

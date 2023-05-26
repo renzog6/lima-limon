@@ -9,7 +9,6 @@ import { addProducto } from "@/app/actions/actionsProductos";
 import { getCategorias } from "@/app/actions/actionsCategorias";
 import { getMarcas } from "@/app/actions/actionsMarcas";
 import { getProveedores } from "@/app/actions/actionsProveedores";
-import Dialog from "../components/Dialog";
 
 export default function AddProducto() {
   const [modal, setModal] = useState(false);
@@ -19,7 +18,6 @@ export default function AddProducto() {
   const [marcas, setMarcas] = useState<Marca[]>([]);
 
   const router = useRouter();
-  const pathname = usePathname();
 
   const {
     register,
@@ -71,10 +69,6 @@ export default function AddProducto() {
       marcaId: data.marcaId,
       proveedorId: data.proveedorId,
     };
-
-    setTimeout(() => {
-      <Dialog estado={true} message={"res.data"} />;
-    }, 3000);
 
     const res = await addProducto(producto);
     console.log(res);
