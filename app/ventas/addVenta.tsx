@@ -1,36 +1,35 @@
+//@/app/ventas/addVenta.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-import { Venta } from "@prisma/client";
-import { addVenta } from "@/app/actions/actionsVentas";
+import { createVenta } from "@/app/actions/actionsVentas";
 
 export default function AddVenta() {
-  const [nombre, setNombre] = useState("");
+  const [fecha, setFecha] = useState("");
   const [info, setInfo] = useState("");
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
   const router = useRouter();
-  const pathname = usePathname();
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
 
     setIsMutating(true);
     const venta = {
-      nombre: nombre,
+      fehca: fecha,
       info: info,
     };
 
-    await addVenta(venta);
+    await createVenta(venta);
     setIsMutating(false);
 
-    setNombre("");
+    setFecha("");
     setInfo("");
 
-    router.replace(pathname);
+    router.refresh();
     setModal(false);
   }
 
@@ -61,8 +60,8 @@ export default function AddVenta() {
               <label className="label font-bold">Nombre</label>
               <input
                 type="text"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
+                value={fecha}
+                onChange={(e) => setFecha(e.target.value)}
                 className="input w-full input-bordered"
                 placeholder="Venta Name"
               />

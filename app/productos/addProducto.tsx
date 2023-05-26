@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-import { Producto, Categoria, Marca, Proveedor } from "@prisma/client";
+import { Categoria, Marca, Proveedor } from "@prisma/client";
 import { addProducto } from "@/app/actions/actionsProductos";
 import { getCategorias } from "@/app/actions/actionsCategorias";
 import { getMarcas } from "@/app/actions/actionsMarcas";
 import { getProveedores } from "@/app/actions/actionsProveedores";
+import Dialog from "../components/Dialog";
 
 export default function AddProducto() {
   const [modal, setModal] = useState(false);
@@ -56,7 +57,7 @@ export default function AddProducto() {
       setProveedores(proveedores);
     }
     fetchProveedores();
-  }, []);
+  }, [reset]);
 
   async function onSubmit(data) {
     setIsMutating(true);
@@ -71,6 +72,10 @@ export default function AddProducto() {
       proveedorId: data.proveedorId,
     };
 
+    setTimeout(() => {
+      <Dialog estado={true} message={"res.data"} />;
+    }, 3000);
+
     const res = await addProducto(producto);
     console.log(res);
     if (res.success) {
@@ -81,9 +86,9 @@ export default function AddProducto() {
       console.log("Error al guardar el producto:", res.error);
     }
 
+    router.refresh();
     setIsMutating(false);
     reset();
-    router.replace(pathname);
     setModal(false);
   }
 

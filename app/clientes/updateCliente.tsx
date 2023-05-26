@@ -1,3 +1,4 @@
+//@/app/clientes/updateCliente.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
@@ -21,10 +22,9 @@ export default function UpdateCliente(cliente: Cliente) {
     setIsMutating(true);
 
     const updated = { ...cliente, nombre: nombre, info: info };
+    updateCliente(updated);
 
-    updateCliente(updated); // Llama a la función de actualización del estado
     setIsMutating(false);
-
     router.refresh();
     setModal(false);
   }

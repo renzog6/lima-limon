@@ -5,7 +5,7 @@ const nextConfig = {
     appDir: true,
   },
 
-  output: "standalone",
+  //output: "standalone",
 
   i18n: {
     locales: ["es-AR", "en-US"],

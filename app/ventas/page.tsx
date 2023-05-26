@@ -1,3 +1,4 @@
+//@/app/ventas/page.tsx
 import { Venta } from "@prisma/client";
 import { getVentas } from "@/app/actions/actionsVentas";
 
@@ -5,6 +6,12 @@ import Table from "@/app/components/Table";
 import AddVenta from "./addVenta";
 import DeleteVenta from "./deleteVenta";
 import UpdateVenta from "./updateVenta";
+
+export const metadata = {
+  title: "Ventas",
+};
+export const dynamic = "force-dynamic";
+// 'auto' | 'force-dynamic' | 'error' | 'force-static'
 
 export default async function VentaList() {
   const columnas = [

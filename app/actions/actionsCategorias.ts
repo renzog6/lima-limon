@@ -1,48 +1,61 @@
-//@app/actions/actionsCategorias.ts
+//@/app/actions/actionsCategorias.ts
 import { Categoria } from "@prisma/client";
 
 const apiUrl = `${process.env.apiUrl}/productos/categorias`;
 
-export async function getCategorias() {
+async function fetchRequest(url: string, method: string, body: any = null) {
   try {
-    const res = await fetch(apiUrl, {
-      cache: "no-store",
-      mode: "no-cors",
-    });
-    return res.json();
+    const options: RequestInit = {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // cache: "no-store" as RequestCache,
+    };
+
+    if (method !== "GET") {
+      options.body = JSON.stringify(body);
+    }
+
+    const res = await fetch(url, options);
+    const data = await res.json();
+    return data;
   } catch (error) {
-    return [];
+    throw new Error((error as Error).message);
   }
 }
 
-export async function addCategoria(categoria) {
-  const res = await fetch(apiUrl, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(categoria),
-  });
-  return res;
+export async function getCategorias() {
+  try {
+    return fetchRequest(apiUrl, "GET");
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
 }
 
-export async function updateCategotria(categoria: Categoria) {
-  const res = await fetch(`${apiUrl}/${categoria.id}`, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(categoria),
-  });
-  return res;
+export async function createCategoria(categoria) {
+  try {
+    return fetchRequest(apiUrl, "POST", categoria);
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
 }
 
-export async function deleteCategotria(categoriaId: number) {
-  const res = await fetch(`${apiUrl}/${categoriaId}`, {
-    mode: "no-cors",
-    method: "DELETE",
-  });
-  return res;
+export async function updateCategoria(categoria: Categoria) {
+  try {
+    return fetchRequest(apiUrl, "PUT", categoria);
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+}
+
+export async function deleteCategoria(categoriaId: number) {
+  try {
+    const res = await fetch(`${apiUrl}/${categoriaId}`, {
+      method: "DELETE",
+    });
+    return res;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
 }

@@ -6,6 +6,11 @@ import AddProveedor from "./addProveedor";
 import DeleteProveedor from "./deleteProveedor";
 import UpdateProveedor from "./updateProveedor";
 
+export const metadata = {
+  title: "Proveedores",
+};
+export const dynamic = "force-dynamic";
+
 export default async function ProveedorList() {
   const columnas = [
     { Header: "Nombre", accessor: "nombre" },

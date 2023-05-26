@@ -5,8 +5,12 @@ const Table = ({ titulo, columns, data, EditButton, DeleteButton }) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Filtrar los datos basados en el término de búsqueda
-  const filteredData = data.filter((row) =>
-    row[columns[0].accessor].toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = data.filter(
+    (row) =>
+      row[columns[0].accessor]
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase()) ||
+      row[columns[1].accessor].toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (

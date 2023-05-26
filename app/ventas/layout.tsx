@@ -1,7 +1,4 @@
-export const metadata = {
-  title: "Ventas",
-};
-
+//@/app/ventas/layout.tsx
 const LayoutVentas = ({ children }) => {
   return (
     <div className="min-h-full max-w-full">

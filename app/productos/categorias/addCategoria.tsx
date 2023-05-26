@@ -4,8 +4,7 @@
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Categoria } from "@prisma/client";
-import { addCategoria } from "@/app/actions/actionsCategorias";
+import { createCategoria } from "@/app/actions/actionsCategorias";
 
 export default function AddCategoria() {
   const [nombre, setNombre] = useState("");
@@ -23,13 +22,13 @@ export default function AddCategoria() {
       nombre: nombre,
       info: info,
     };
-    //categoria.nombre = nombre;
-    //categoria.info = info;
-    addCategoria(categoria);
+
+    createCategoria(categoria);
     setIsMutating(false);
 
     setNombre("");
     setInfo("");
+
     router.refresh();
     setModal(false);
   }

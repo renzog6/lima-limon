@@ -1,3 +1,4 @@
+//@/app/productos/categorias/deleteCategoria.tsx
 "use client";
 
 import { useState } from "react";
@@ -5,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FiDelete } from "react-icons/fi";
 
 import { Categoria } from "@prisma/client";
-import { deleteCategotria } from "@/app/actions/actionsCategorias";
+import { deleteCategoria } from "@/app/actions/actionsCategorias";
 
 export default function DeleteCategoria(categoria: Categoria) {
   const [modal, setModal] = useState(false);
@@ -15,7 +16,7 @@ export default function DeleteCategoria(categoria: Categoria) {
 
   async function handleDelete(categoriaId: number) {
     setIsMutating(true);
-    deleteCategotria(categoriaId);
+    deleteCategoria(categoriaId);
     setIsMutating(false);
 
     router.refresh();

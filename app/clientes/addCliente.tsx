@@ -1,10 +1,10 @@
+//@/app/clientes/addCliente.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
-import { Cliente } from "@prisma/client";
-import { addCliente } from "@/app/actions/actionsClientes";
+import { createCliente } from "@/app/actions/actionsClientes";
 
 export default function AddCliente() {
   const [nombre, setNombre] = useState("");
@@ -13,7 +13,6 @@ export default function AddCliente() {
   const [isMutating, setIsMutating] = useState(false);
 
   const router = useRouter();
-  const pathname = usePathname();
 
   async function handleSubmit(e: SyntheticEvent) {
     e.preventDefault();
@@ -24,13 +23,13 @@ export default function AddCliente() {
       info: info,
     };
 
-    await addCliente(cliente);
+    createCliente(cliente);
     setIsMutating(false);
 
     setNombre("");
     setInfo("");
 
-    router.replace(pathname);
+    router.refresh();
     setModal(false);
   }
 

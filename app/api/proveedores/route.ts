@@ -1,11 +1,10 @@
 import { NextResponse } from "next/server";
-
 import prisma from "@/lib/prismadb";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const proveedores = await prisma.proveedor.findMany({
-      // where: { estado: true },
+      where: { estado: true },
       orderBy: {
         nombre: "asc",
       },
@@ -17,7 +16,6 @@ export async function GET(request: Request) {
 
     return NextResponse.json(proveedores);
   } catch (error: any) {
-    console.log(error);
     throw new Error(error);
   }
 }

@@ -1,6 +1,4 @@
-export const metadata = {
-  title: "Clientes",
-};
+//@/app/clientes/layout.tsx
 
 const LayoutClientes = ({ children }) => {
   return (

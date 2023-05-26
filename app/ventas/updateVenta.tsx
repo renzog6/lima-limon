@@ -1,3 +1,4 @@
+//@/app/ventas/updateVenta.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
@@ -8,7 +9,9 @@ import { Venta } from "@prisma/client";
 import { updateVenta } from "@/app/actions/actionsVentas";
 
 export default function UpdateVenta(venta: Venta) {
-  const [nombre, setNombre] = useState(venta.nombre || "");
+  const [fecha, setFecha] = useState<Date>(
+    venta.fecha ? new Date(venta.fecha) : new Date()
+  );
   const [info, setInfo] = useState(venta.info || "");
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
@@ -17,14 +20,12 @@ export default function UpdateVenta(venta: Venta) {
 
   async function handleUpdate(e: SyntheticEvent) {
     e.preventDefault();
-
     setIsMutating(true);
 
-    const updated = { ...venta, nombre: nombre, info: info };
+    const updated = { ...venta, fecha: fecha, info: info };
+    updateVenta(updated);
 
-    updateVenta(updated); // Llama a la función de actualización del estado
     setIsMutating(false);
-
     router.refresh();
     setModal(false);
   }
@@ -54,15 +55,15 @@ export default function UpdateVenta(venta: Venta) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Edit {venta.nombre}</h3>
+          <h3 className="font-bold text-lg">Edit {venta.id}</h3>
           <form onSubmit={handleUpdate}>
             <div className="form-control">
               <label className="label font-bold">Nombre</label>
               <input
                 id="nombre"
                 type="text"
-                value={nombre}
-                onChange={(e) => setNombre(e.target.value)}
+                value={fecha.toISOString()}
+                onChange={(e) => setFecha(new Date(e.target.value))}
                 className="input w-full input-bordered"
                 placeholder="Venta Name"
               />

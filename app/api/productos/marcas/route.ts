@@ -1,16 +1,16 @@
-import { NextResponse } from "next/server";
+//@/api/productos/marcas/routes.ts
 
-import prisma from "@/lib/prismadb";
-
-/* Code Status
+/**  Code Status
 200 OK
 202 Accepted
 204 No Content
 400 Bad Request
 404 Not Found
-*/
+****************/
+import { NextResponse } from "next/server";
+import prisma from "@/lib/prismadb";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const marcas = await prisma.marca.findMany({
       where: { estado: true },
@@ -18,35 +18,51 @@ export async function GET(request: Request) {
         nombre: "asc",
       },
     });
-
-    const safe = marcas.map((marca) => ({
-      ...marca,
-    }));
-
-    return NextResponse.json(marcas);
-  } catch (error: any) {
-    console.log(error);
-    throw new Error(error);
+    return NextResponse.json(marcas, { status: 200 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
   }
 }
 
-export async function POST(request: Request) {
-  const body = await request.json();
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { nombre, info } = body;
 
-  const { nombre, info } = body;
+    const marca = await prisma.marca.create({
+      data: {
+        nombre,
+        info,
+      },
+    });
 
-  Object.keys(body).forEach((value: any) => {
-    if (!body[value]) {
-      NextResponse.error();
-    }
-  });
+    return NextResponse.json(marca, { status: 200 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
+  }
+}
 
-  const res = await prisma.marca.create({
-    data: {
-      nombre,
-      info,
-    },
-  });
+export async function PUT(req: Request) {
+  try {
+    const body = await req.json();
+    const { id, nombre, info } = body;
 
-  return NextResponse.json(res);
+    const marca = await prisma.marca.update({
+      where: { id },
+      data: { nombre, info },
+    });
+
+    return NextResponse.json(marca, { status: 200 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
+  }
 }

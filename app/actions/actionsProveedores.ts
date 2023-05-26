@@ -5,8 +5,7 @@ const apiUrl = `${process.env.apiUrl}/proveedores`;
 export async function getProveedores() {
   try {
     const res = await fetch(apiUrl, {
-      mode: "no-cors",
-      cache: "no-store",
+      //cache: "no-store",
     });
     return await res.json();
   } catch (error) {
@@ -17,7 +16,6 @@ export async function getProveedores() {
 export async function addProveedor(proveedor) {
   const res = await fetch(apiUrl, {
     method: "POST",
-    mode: "no-cors",
     headers: {
       "Content-Type": "application/json",
     },
@@ -29,7 +27,7 @@ export async function addProveedor(proveedor) {
 export async function updateProveedor(proveedor: Proveedor) {
   const res = await fetch(`${apiUrl}/${proveedor.id}`, {
     method: "POST",
-    mode: "no-cors",
+
     headers: {
       "Content-Type": "application/json",
     },
@@ -41,7 +39,6 @@ export async function updateProveedor(proveedor: Proveedor) {
 export async function deleteProveedor(proveedorId: number) {
   const res = await fetch(`${apiUrl}/${proveedorId}`, {
     method: "DELETE",
-    mode: "no-cors",
   });
   return res;
 }

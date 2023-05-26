@@ -1,3 +1,4 @@
+//@/app/productos/page.tsx
 import { Producto } from "@prisma/client";
 import { getProductos } from "@/app/actions/actionsProductos";
 
@@ -5,6 +6,11 @@ import Table from "@/app/components/Table";
 import AddProducto from "./addProducto";
 import DeleteProducto from "./deleteProducto";
 import UpdateProducto from "./updateProducto";
+
+export const metadata = {
+  title: "Productos",
+};
+export const dynamic = "force-dynamic";
 
 export default async function ProductoList() {
   const columnas = [

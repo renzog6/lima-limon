@@ -1,3 +1,4 @@
+//@/app/ventas/deleteVenta.tsx
 "use client";
 
 import { useState } from "react";
@@ -15,7 +16,7 @@ export default function DeleteVenta(venta: Venta) {
 
   async function handleDelete(ventaId: number) {
     setIsMutating(true);
-    deleteVenta(ventaId); // Llama a la función de actualización del estado
+    deleteVenta(ventaId);
     setIsMutating(false);
 
     router.refresh();
@@ -47,7 +48,7 @@ export default function DeleteVenta(venta: Venta) {
       <div className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">
-            Seguro que desea BORRAR: {venta.nombre} ?
+            Seguro que desea BORRAR: {venta.id} ?
           </h3>
           <div className="modal-action">
             <button type="button" className="btn" onClick={handleChange}>

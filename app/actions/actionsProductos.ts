@@ -5,8 +5,7 @@ const apiUrl = `${process.env.apiUrl}/productos`;
 export async function getProductos() {
   try {
     const res = await fetch(apiUrl, {
-      cache: "no-store",
-      mode: "no-cors",
+      //cache: "no-store",
     });
     return res.json();
   } catch (error) {
@@ -18,7 +17,7 @@ export async function addProducto(producto) {
   try {
     const res = await fetch(apiUrl, {
       method: "POST",
-      mode: "no-cors",
+
       headers: {
         "Content-Type": "application/json",
       },
@@ -41,7 +40,7 @@ export async function addProducto(producto) {
 export async function updateProducto(producto: Producto) {
   const res = await fetch(`${apiUrl}/${producto.id}`, {
     method: "POST",
-    mode: "no-cors",
+
     headers: {
       "Content-Type": "application/json",
     },
@@ -53,7 +52,6 @@ export async function updateProducto(producto: Producto) {
 export async function deleteProducto(productoId: number) {
   const res = await fetch(`${apiUrl}/${productoId}`, {
     method: "DELETE",
-    mode: "no-cors",
   });
   return res;
 }

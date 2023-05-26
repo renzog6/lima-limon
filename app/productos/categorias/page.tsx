@@ -1,15 +1,16 @@
-//@/app/productos/categorias/page.tsx
+//@/app/categorias/page.tsx
+import { Categoria } from "@prisma/client";
+import { getCategorias } from "@/app/actions/actionsCategorias";
+
+import Table from "@/app/components/Table";
 import AddCategoria from "./addCategoria";
 import DeleteCategoria from "./deleteCategoria";
 import UpdateCategoria from "./updateCategoria";
 
-import { Categoria } from "@prisma/client";
-import { getCategorias } from "@/app/actions/actionsCategorias";
-import Table from "@/app/components/Table";
-
 export const metadata = {
   title: "Categorias",
 };
+export const dynamic = "force-dynamic";
 
 export default async function CategoriaList() {
   const columnas = [
@@ -23,12 +24,12 @@ export default async function CategoriaList() {
   return (
     <div>
       <div className="flex justify-around items-center  h-[40px] bg-amber-300">
-        <p className="text-xl font-bold">Clientes</p>
+        <p className="text-xl font-bold">Categorias</p>
         <div className="">
           <AddCategoria />
         </div>
       </div>
-      <div className="px-1 bg-amber-200">
+      <div className="px-1 bg-blue-400">
         <Table
           titulo="Categorias"
           columns={columnas}

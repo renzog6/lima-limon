@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Marca } from "@prisma/client";
-import { updateCategotria } from "@/app/actions/actionsMarcas";
+import { updateMarca } from "@/app/actions/actionsMarcas";
 import { RiEdit2Line } from "react-icons/ri";
 
 export default function UpdateMarca(marca: Marca) {
@@ -20,9 +20,10 @@ export default function UpdateMarca(marca: Marca) {
     e.preventDefault();
 
     setIsMutating(true);
-    marca.nombre = nombre;
-    marca.info = info;
-    updateCategotria(marca);
+    const updatedMarca = { ...marca }; // Hacer una copia del objeto marca
+    updatedMarca.nombre = nombre;
+    updatedMarca.info = info;
+    updateMarca(updatedMarca);
     setIsMutating(false);
 
     router.refresh();

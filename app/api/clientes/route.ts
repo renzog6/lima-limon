@@ -1,49 +1,67 @@
+//@/api/clientes/routes.ts
 import { NextResponse } from "next/server";
-
 import prisma from "@/lib/prismadb";
 
-export async function GET(request: Request) {
+export async function GET() {
   try {
     const clientes = await prisma.cliente.findMany({
-      // where: { estado: true },
+      where: { estado: true },
       orderBy: {
         nombre: "asc",
       },
     });
-    const safeclientes = clientes.map((cliente) => ({
+    /** 
+    const safe = clientes.map((cliente) => ({
       ...cliente,
-      //createdAt: cliente.createdAt.toISOString(),
     }));
-
-    return NextResponse.json(clientes);
+    */
+    return NextResponse.json(clientes, { status: 200 });
   } catch (error: any) {
     console.log(error);
     throw new Error(error);
   }
 }
 
-export async function POST(request: Request) {
-  /*  const currentUser = await getCurrentUser();
+export async function POST(req: Request) {
+  try {
+    const body = await req.json();
+    const { nombre, info } = body;
 
-  if (!currentUser) {
-    return NextResponse.error();
+    const cliente = await prisma.cliente.create({
+      data: {
+        nombre,
+        info,
+      },
+    });
+
+    return NextResponse.json(cliente, { status: 200 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
   }
-*/
-  const body = await request.json();
-  const { nombre, info } = body;
+}
 
-  Object.keys(body).forEach((value: any) => {
-    if (!body[value]) {
-      NextResponse.error();
+export async function PUT(req: Request) {
+  try {
+    const body = await req.json();
+    const { id, nombre, info } = body;
+
+    if (!id || typeof id !== "number") {
+      throw new Error("Invalid ID");
     }
-  });
 
-  const res = await prisma.cliente.create({
-    data: {
-      nombre,
-      info,
-    },
-  });
+    const cliente = await prisma.cliente.update({
+      where: { id },
+      data: { nombre, info },
+    });
 
-  return NextResponse.json(res);
+    return NextResponse.json(cliente, { status: 200 });
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
+  }
 }

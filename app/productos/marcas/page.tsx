@@ -10,6 +10,7 @@ import Table from "@/app/components/Table";
 export const metadata = {
   title: "Marcas",
 };
+export const dynamic = "force-dynamic";
 
 export default async function MarcaList() {
   const columnas = [

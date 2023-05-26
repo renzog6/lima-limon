@@ -1,3 +1,4 @@
+//@/app/clientes/deleteCliente.tsx
 "use client";
 
 import { useState } from "react";

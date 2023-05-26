@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FiDelete } from "react-icons/fi";
 
 import { Marca } from "@prisma/client";
-import { deleteCategotria } from "@/app/actions/actionsMarcas";
+import { deleteMarca } from "@/app/actions/actionsMarcas";
 import { RiDeleteBin5Line } from "react-icons/ri";
 
 export default function DeleteMarca(marca: Marca) {
@@ -16,7 +16,7 @@ export default function DeleteMarca(marca: Marca) {
 
   async function handleDelete(marcaId: number) {
     setIsMutating(true);
-    deleteCategotria(marcaId);
+    deleteMarca(marcaId);
     setIsMutating(false);
 
     router.refresh();

@@ -1,3 +1,4 @@
+//@/app/clientes/page.tsx
 import { Cliente } from "@prisma/client";
 import { getClientes } from "@/app/actions/actionsClientes";
 
@@ -9,6 +10,7 @@ import UpdateCliente from "./updateCliente";
 export const metadata = {
   title: "Clientes",
 };
+export const dynamic = "force-dynamic";
 
 export default async function ClienteList() {
   const columnas = [
@@ -27,7 +29,7 @@ export default async function ClienteList() {
           <AddCliente />
         </div>
       </div>
-      <div className="px-1 bg-amber-200">
+      <div className="px-1 bg-blue-400">
         <Table
           titulo="Clientes"
           columns={columnas}

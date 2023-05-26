@@ -1,47 +1,61 @@
+//@/app/actions/actionsVentas.ts
 import { Venta } from "@prisma/client";
 
 const apiUrl = `${process.env.apiUrl}/ventas`;
 
-export async function getVentas() {
+async function fetchRequest(url: string, method: string, body: any = null) {
   try {
-    const res = await fetch(apiUrl, {
-      cache: "no-store",
-      mode: "no-cors",
-    });
-    return res.json();
+    const options: RequestInit = {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      // cache: "no-store" as RequestCache,
+    };
+
+    if (method !== "GET") {
+      options.body = JSON.stringify(body);
+    }
+
+    const res = await fetch(url, options);
+    const data = await res.json();
+    return data;
   } catch (error) {
-    return [];
+    throw new Error((error as Error).message);
   }
 }
 
-export async function addVenta(venta) {
-  const res = await fetch(apiUrl, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(venta),
-  });
-  return res;
+export async function getVentas() {
+  try {
+    return fetchRequest(apiUrl, "GET");
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+}
+
+export async function createVenta(venta) {
+  try {
+    return fetchRequest(apiUrl, "POST", venta);
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
 }
 
 export async function updateVenta(venta: Venta) {
-  const res = await fetch(`${apiUrl}/${venta.id}`, {
-    method: "POST",
-    mode: "no-cors",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(venta),
-  });
-  return res;
+  try {
+    return fetchRequest(apiUrl, "PUT", venta);
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
 }
 
 export async function deleteVenta(ventaId: number) {
-  const res = await fetch(`${apiUrl}/${ventaId}`, {
-    method: "DELETE",
-    mode: "no-cors",
-  });
-  return res;
+  try {
+    const res = await fetch(`${apiUrl}/${ventaId}`, {
+      method: "DELETE",
+    });
+    return res;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
 }

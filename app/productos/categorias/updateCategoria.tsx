@@ -1,3 +1,4 @@
+//@/app/productos/categorias/updateCategoria.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
@@ -5,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Categoria } from "@prisma/client";
-import { updateCategotria } from "@/app/actions/actionsCategorias";
+import { updateCategoria } from "@/app/actions/actionsCategorias";
 
 export default function UpdateCategoria(categoria: Categoria) {
   const [nombre, setNombre] = useState(categoria.nombre || "");
@@ -19,11 +20,11 @@ export default function UpdateCategoria(categoria: Categoria) {
     e.preventDefault();
 
     setIsMutating(true);
-    categoria.nombre = nombre;
-    categoria.info = info;
-    updateCategotria(categoria);
-    setIsMutating(false);
 
+    const updated = { ...categoria, nombre: nombre, info: info };
+    updateCategoria(updated);
+
+    setIsMutating(false);
     router.refresh();
     setModal(false);
   }
