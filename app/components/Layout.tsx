@@ -1,5 +1,5 @@
 "use client";
-// @/components/Layout/index.js
+
 import React, { useState } from "react";
 import Sidebar from "./Sidebar";
 import MenuBarMobile from "./MenuBarMobile";

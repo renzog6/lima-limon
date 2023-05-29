@@ -13,7 +13,12 @@ const nextConfig = {
   },
 
   env: {
-    apiUrl: "http://192.168.88.91:3000/api", // Cambia esto con tu URL de API real
+    apiUrl:
+      process.env.NODE_ENV === "development"
+        ? "http://192.168.88.91:3000/api" // development api
+        : "http://192.168.88.80/api", // production api
+    //apiUrl: "http://192.168.88.80/api",
+    //apiUrl: "http://192.168.88.91:3000/api",
   },
 
   httpAgentOptions: {

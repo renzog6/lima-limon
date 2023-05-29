@@ -1,4 +1,4 @@
-// @/components/Layout/MenuBarMobile.js
+// @/components/Layout/MenuBarMobile.tsx
 import React, { ReactNode } from "react";
 import Link from "next/link";
 import Image from "next/image";
@@ -11,6 +11,9 @@ export default function MenuBarMobile({ setter }) {
   return (
     <nav className="md:hidden z-20 fixed top-0 left-0 right-0 h-[60px] bg-black flex [&>*]:my-auto px-2">
       <button
+        id="MenuSideBar"
+        title="MenuSideBar"
+        type="button"
         className="text-4xl flex text-white"
         onClick={() => {
           setter((oldVal) => !oldVal);

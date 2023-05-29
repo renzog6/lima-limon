@@ -32,7 +32,6 @@
     "typescript": "5.0.4"
   },
   "devDependencies": {
-    "@next/bundle-analyzer": "^13.4.4",
     "prisma": "^4.14.1",
     "standard": "^17.0.0"
   }
