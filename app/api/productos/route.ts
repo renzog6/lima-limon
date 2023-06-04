@@ -11,12 +11,14 @@ export async function GET(request: Request) {
       },
       include: {
         categoria: true,
+        marca: true,
       },
     });
 
     const safe = productos.map((producto) => ({
       ...producto,
       categoria: producto.categoria.nombre,
+      marca: producto.marca.nombre,
     }));
     return NextResponse.json(safe);
   } catch (error: any) {

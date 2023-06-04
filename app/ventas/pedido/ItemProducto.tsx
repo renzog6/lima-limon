@@ -1,6 +1,7 @@
 //@/app/ventas/pedido/ItemProducto.tsx
+import { ProductoToCart } from "@/app/types";
 
-const ItemProducto = ({ producto }) => {
+const ItemProducto = (producto: ProductoToCart) => {
   return (
     <div className="flex flex-row items-center justify-items-center ">
       <div className="basis-1/2 columns-1 items-center">
@@ -10,7 +11,7 @@ const ItemProducto = ({ producto }) => {
         <div className="">{producto.categoria}</div>
       </div>
       <div className="basis-1/4 flex justify-center">
-        <strong>{producto.precio}</strong>
+        <strong>{"$ " + producto.precio}</strong>
       </div>
       <div className="basis-1/4 flex justify-center">{producto.stock}</div>
     </div>

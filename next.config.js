@@ -15,10 +15,8 @@ const nextConfig = {
   env: {
     apiUrl:
       process.env.NODE_ENV === "development"
-        ? "http://192.168.88.91:3000/api" // development api
-        : "http://192.168.88.80/api", // production api
-    //apiUrl: "http://192.168.88.80/api",
-    //apiUrl: "http://192.168.88.91:3000/api",
+        ? "http://192.168.66.81:3000/api" // development api
+        : "http://192.168.66.81/api", // production api
   },
 
   httpAgentOptions: {

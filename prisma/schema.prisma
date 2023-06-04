@@ -14,11 +14,11 @@ model Producto {
   precio      Float     @default(0)
   stock       Int       @default(0)
   estado      Boolean?  @default(true)
-  categoriaId Int
   marcaId     Int
-  proveedorId Int
-  categoria   Categoria @relation(fields: [categoriaId], references: [id])
   marca       Marca     @relation(fields: [marcaId], references: [id])
+  categoriaId Int
+  categoria   Categoria @relation(fields: [categoriaId], references: [id], onDelete: NoAction)
+  proveedorId Int
   proveedor   Proveedor @relation(fields: [proveedorId], references: [id])
   ventaId     Int?
   venta       Venta?    @relation(fields: [ventaId], references: [id])

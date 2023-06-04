@@ -17,7 +17,6 @@ export async function addProducto(producto) {
   try {
     const res = await fetch(apiUrl, {
       method: "POST",
-
       headers: {
         "Content-Type": "application/json",
       },
@@ -40,7 +39,6 @@ export async function addProducto(producto) {
 export async function updateProducto(producto: Producto) {
   const res = await fetch(`${apiUrl}/${producto.id}`, {
     method: "POST",
-
     headers: {
       "Content-Type": "application/json",
     },
