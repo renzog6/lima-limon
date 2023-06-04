@@ -6,6 +6,7 @@ import Table from "@/app/components/Table";
 import AddVenta from "./addVenta";
 import DeleteVenta from "./deleteVenta";
 import UpdateVenta from "./updateVenta";
+import Link from "next/link";
 
 export const metadata = {
   title: "Ventas",
@@ -27,7 +28,7 @@ export default async function VentaList() {
       <div className="flex justify-around items-center  h-[40px] bg-amber-300">
         <p className="text-xl font-bold">Ventas</p>
         <div className="">
-          <AddVenta />
+          <Link href="/ventas/pedido">Agregar</Link>
         </div>
       </div>
       <div className="px-1 bg-amber-200">

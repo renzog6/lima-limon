@@ -17,13 +17,15 @@ model Producto {
   categoriaId Int
   marcaId     Int
   proveedorId Int
-  ventaId     Int?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
   categoria   Categoria @relation(fields: [categoriaId], references: [id])
   marca       Marca     @relation(fields: [marcaId], references: [id])
   proveedor   Proveedor @relation(fields: [proveedorId], references: [id])
-  Venta       Venta?    @relation(fields: [ventaId], references: [id])
+  ventaId     Int?
+  venta       Venta?    @relation(fields: [ventaId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Pedido    Pedido[]
 
   @@index([categoriaId], map: "productos_categoriaId_fkey")
   @@index([marcaId], map: "productos_marcaId_fkey")
@@ -97,11 +99,12 @@ model Venta {
 
 model Pedido {
   id         Int      @id @default(autoincrement())
-  productoId Int
   clienteId  Int
   cantidad   Int
   pricio     Float
   total      Float
+  productoId Int
+  producto   Producto @relation(fields: [productoId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 

@@ -1,8 +1,21 @@
-import { Categoria } from "@prisma/client";
+import { Categoria, Producto } from "@prisma/client";
 
 export type SafeCategoria = Omit<Categoria, "estado"> & {
   estado: true;
 };
+
+export interface Product {
+  id: number;
+  name: string;
+  price: number;
+  imagePath: string;
+}
+
+export interface CartItem {
+  product: Producto;
+  qty: number;
+}
+
 /*
 export type SafeReservation = Omit<
   Reservation,
