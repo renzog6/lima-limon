@@ -1,13 +1,11 @@
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 import { SlHome } from "react-icons/sl";
 import { MdSell } from "react-icons/md";
 import { FaTshirt, FaRedhat, FaProductHunt } from "react-icons/fa";
 
 export default function Sidebar({ show, setter }) {
-  const router = useRouter();
-
   // Define our base class
   const className =
     "bg-black w-[250px] transition-[margin-left] ease-in-out duration-500 fixed md:static top-0 bottom-0 left-0 z-40";
@@ -17,11 +15,11 @@ export default function Sidebar({ show, setter }) {
   // Clickable menu items
   const MenuItem = ({ icon, name, route }) => {
     // Highlight menu item based on currently displayed route
+    const pathname = usePathname();
     const colorClass =
-      router.pathname === route
-        ? "text-white"
+      pathname === route
+        ? "text-white bg-gray-800"
         : "text-white/50 hover:text-white";
-
     return (
       <Link
         href={route}
@@ -51,7 +49,7 @@ export default function Sidebar({ show, setter }) {
       <div className={`${className}${appendClass}`}>
         <div className="flex flex-col">
           <MenuItem name="Home" route="/" icon={<SlHome />} />
-          <MenuItem name="Clientes" route="clientes" icon={<FaTshirt />} />
+          <MenuItem name="Clientes" route="/clientes" icon={<FaTshirt />} />
           <MenuItem
             name="Proveedores"
             route="/proveedores"

@@ -5,7 +5,14 @@ import ItemProducto from "./ItemProducto";
 import AddToCart from "./addToCart";
 import { BsCartPlus } from "react-icons/bs";
 
+import { useSelector, useDispatch } from "react-redux";
+import { useAppSelector } from "@/app/redux/store";
+import AddToCartBtn from "@/components/Cart/AddToCartBtn";
+import { TotalPriceSelector } from "@/app/redux/features/cartSlice";
+
 const ListProductos = ({ data }) => {
+  const totalPrice = useAppSelector(TotalPriceSelector);
+
   const [searchTerm, setSearchTerm] = useState("");
   // Filtrar los datos basados en el término de búsqueda
   const filteredData = data.filter(
@@ -17,7 +24,6 @@ const ListProductos = ({ data }) => {
     <>
       <div className="w-full overflow-x-auto">
         <div className="px-1 flex justify-between items-center h-[40px]">
-          <p className="text-sm md:text-lg font-semibold">Productos: </p>
           <input
             type="text"
             className="px-2 py-1 w-32 md:w-64 border border-gray-300 rounded"
@@ -26,13 +32,12 @@ const ListProductos = ({ data }) => {
             onChange={(e) => setSearchTerm(e.target.value)}
           />
           <div className="flex flex-row items-center justify-center">
-            <BsCartPlus size={30} color="green" />
-            <p className=""> Total: $3456</p>
+            <p className=""> Total: ${totalPrice}</p>
           </div>
         </div>
       </div>
       <div>
-        <div className="flex flex-row items-center justify-items-center h-[30px] bg-emerald-400 border border-gray-300">
+        <div className="flex flex-row items-center justify-items-center h-[40px] bg-emerald-400 border border-gray-300">
           <div className="basis-3/4 flex justify-center">
             <strong className="basis-1/2 columns-1 items-center">
               Producto
@@ -54,7 +59,8 @@ const ListProductos = ({ data }) => {
             </div>
 
             <div className="basis-1/4 flex justify-center">
-              <div className=""> {AddToCart && <AddToCart {...row} />}</div>
+              {/* <div className=""> {AddToCart && <AddToCart {...row} />}</div> */}
+              {AddToCartBtn && <AddToCartBtn product={...row} />}
             </div>
           </div>
         ))}

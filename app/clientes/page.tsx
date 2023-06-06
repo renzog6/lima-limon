@@ -2,14 +2,11 @@
 import { Cliente } from "@prisma/client";
 import { getClientes } from "@/app/actions/actionsClientes";
 
-import Table from "@/app/components/Table";
+import Table from "@/components/Table";
 import AddCliente from "./addCliente";
 import DeleteCliente from "./deleteCliente";
 import UpdateCliente from "./updateCliente";
 
-export const metadata = {
-  title: "Clientes",
-};
 export const dynamic = "force-dynamic";
 
 export default async function ClienteList() {

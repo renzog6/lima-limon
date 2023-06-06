@@ -5,11 +5,8 @@ import UpdateMarca from "./updateMarca";
 
 import { Marca } from "@prisma/client";
 import { getMarcas } from "@/app/actions/actionsMarcas";
-import Table from "@/app/components/Table";
+import Table from "@/components/Table";
 
-export const metadata = {
-  title: "Marcas",
-};
 export const dynamic = "force-dynamic";
 
 export default async function MarcaList() {

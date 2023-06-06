@@ -71,7 +71,6 @@ export default function AddProducto() {
     };
 
     const res = await addProducto(producto);
-    console.log(res);
     if (res.success) {
       // La solicitud fue exitosa, puedes acceder a los datos con res.data
       console.log("El producto se ha guardado exitosamente:", res.data);

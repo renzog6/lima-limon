@@ -1,3 +1,4 @@
+//@/components/Navbar.tsx
 import Link from "next/link";
 import Image from "next/image";
 import { FiMenu } from "react-icons/fi";
@@ -6,7 +7,7 @@ import logo from "@/images/logo.png";
 
 const Navbar = () => {
   return (
-    <div className="navbar h-[60px] bg-white dark:bg-black">
+    <div className="top-0 left-0 right-0 h-[60px] bg-black flex [&>*]:my-auto">
       <div className="flex-none">
         <button title="menu" className="btn btn-square btn-ghost">
           <FiMenu />

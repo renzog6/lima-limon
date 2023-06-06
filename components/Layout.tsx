@@ -10,7 +10,7 @@ export default function Layout({ children }) {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
-    <div className="w-full">
+    <div className="">
       <Navbar />
       <div className="flex">
         <MenuBarMobile setter={setShowSidebar} />

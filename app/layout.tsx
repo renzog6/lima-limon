@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
-import Layout from "@/app/components/Layout";
+import Layout from "@/components/Layout";
 import "@/style/globals.css";
+import Providers from "./redux/Providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -15,9 +16,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html data-theme="lemonade" lang="es">
+    <html data-theme="lemonade" lang="es" className="h-full bg-gray-100">
       <body className={inter.className}>
-        <Layout>{children}</Layout>
+        <Providers>
+          <Layout>{children}</Layout>
+        </Providers>
       </body>
     </html>
   );

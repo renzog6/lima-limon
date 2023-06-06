@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.btn {
-  @apply rounded-sm;
-}
 /*
 tr {
   @apply bg-white;

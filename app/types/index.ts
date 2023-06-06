@@ -21,14 +21,6 @@ export type ProductoToCart = Omit<
 export type SafeCategoria = Omit<Categoria, "estado"> & {
   estado: true;
 };
-
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  imagePath: string;
-}
-
 export interface CartItem {
   product: Producto;
   qty: number;

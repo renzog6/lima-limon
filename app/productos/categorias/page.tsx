@@ -2,14 +2,11 @@
 import { Categoria } from "@prisma/client";
 import { getCategorias } from "@/app/actions/actionsCategorias";
 
-import Table from "@/app/components/Table";
+import Table from "@/components/Table";
 import AddCategoria from "./addCategoria";
 import DeleteCategoria from "./deleteCategoria";
 import UpdateCategoria from "./updateCategoria";
 
-export const metadata = {
-  title: "Categorias",
-};
 export const dynamic = "force-dynamic";
 
 export default async function CategoriaList() {

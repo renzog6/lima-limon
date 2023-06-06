@@ -29,7 +29,7 @@ export default function AddToCart(producto: ProductoToCart) {
   return (
     <div>
       <button
-        title="edit"
+        title="cart"
         className="mr-2 text-blue-500 hover:text-blue-700"
         onClick={handleChange}
       >
@@ -48,7 +48,7 @@ export default function AddToCart(producto: ProductoToCart) {
       <div className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">Agregar a Carrito:</h3>
-          <h2 className="">
+          <h2 className="py-2">
             {producto.categoria + " - "}
             <strong>{producto.nombre}</strong>
           </h2>
@@ -58,21 +58,20 @@ export default function AddToCart(producto: ProductoToCart) {
               <input
                 id="cantidad"
                 type="number"
-                value={cantidad}
+                value={cantidad === 0 ? "" : cantidad}
                 onChange={(e) => setCantidad(Number(e.target.value))}
-                className="block w-1/2 rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-1/2 rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-400 sm:text-sm sm:leading-6"
                 placeholder="0"
               />
             </div>
-            <div className="flex flex-row">
-              <label className="label">Total: $ </label>
+            <div className="flex flex-row rounded-md ring-1 ring-inset my-2">
               <label className="label font-bold">
-                {producto.precio * cantidad}
+                {"Total: $ " + producto.precio * cantidad}
               </label>
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Carrar
+                Cerrar
               </button>
               {!isMutating ? (
                 <button type="submit" className="btn btn-primary">

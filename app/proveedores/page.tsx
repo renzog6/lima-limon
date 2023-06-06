@@ -1,14 +1,12 @@
+//@/app/proveedores/page.tsx
 import { Proveedor } from "@prisma/client";
 import { getProveedores } from "@/app/actions/actionsProveedores";
 
-import Table from "@/app/components/Table";
+import Table from "@/components/Table";
 import AddProveedor from "./addProveedor";
 import DeleteProveedor from "./deleteProveedor";
 import UpdateProveedor from "./updateProveedor";
 
-export const metadata = {
-  title: "Proveedores",
-};
 export const dynamic = "force-dynamic";
 
 export default async function ProveedorList() {
