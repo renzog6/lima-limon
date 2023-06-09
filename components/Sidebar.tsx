@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { SlHome } from "react-icons/sl";
 import { MdSell } from "react-icons/md";
 import { FaTshirt, FaRedhat, FaProductHunt } from "react-icons/fa";
+import { GiCash } from "react-icons/gi";
 
 export default function Sidebar({ show, setter }) {
   // Define our base class
@@ -49,6 +50,7 @@ export default function Sidebar({ show, setter }) {
       <div className={`${className}${appendClass}`}>
         <div className="flex flex-col">
           <MenuItem name="Home" route="/" icon={<SlHome />} />
+          <MenuItem name="Caja" route="/cajas" icon={<GiCash />} />
           <MenuItem name="Clientes" route="/clientes" icon={<FaTshirt />} />
           <MenuItem
             name="Proveedores"

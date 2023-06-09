@@ -1,6 +1,6 @@
 //@/app/proveedores/page.tsx
 import { Proveedor } from "@prisma/client";
-import { getProveedores } from "@/app/actions/actionsProveedores";
+import { getProveedores } from "@/app/hooks/useProveedores";
 
 import Table from "@/components/Table";
 import AddProveedor from "./addProveedor";

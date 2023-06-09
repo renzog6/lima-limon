@@ -20,7 +20,6 @@ export async function DELETE(
     });
 
     venta?.pedidos.map((item) => {
-      console.log(">>>>>> " + JSON.stringify(item));
       sumarCantidadStockPedido(
         item.productoId,
         item.cantidad + item.producto.stock

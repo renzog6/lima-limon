@@ -4,7 +4,7 @@ import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Proveedor } from "@prisma/client";
-import { addProveedor } from "@/app/actions/actionsProveedores";
+import { addProveedor } from "@/app/hooks/useProveedores";
 
 export default function AddProveedor() {
   const [nombre, setNombre] = useState("");

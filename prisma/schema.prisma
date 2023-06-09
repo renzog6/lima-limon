@@ -77,7 +77,7 @@ model Proveedor {
   marcas    proveedores_marcas[]
   productos Producto[]
   pagos     Pago[]
-  Compra    Compra[]
+  compras   Compra[]
 
   @@map("proveedores")
 }
@@ -86,16 +86,15 @@ model Compra {
   id        Int       @id @default(autoincrement())
   fecha     DateTime? @default(now())
   info      String?   @db.VarChar(255)
-  estado    Boolean?  @default(false)
+  estado    Boolean?  @default(true)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   total     Float?    @default(0)
-  pedidos   Pedido[]
 
   proveedorId Int
   proveedor   Proveedor @relation(fields: [proveedorId], references: [id], map: "Compra_proveedorId_fkey")
-
-  pagos Pago[]
+  pedidos     Pedido[]
+  pagos       Pago[]
 
   @@index([proveedorId], map: "Compra_proveedorId_fkey")
   @@map("compras")
@@ -105,16 +104,15 @@ model Venta {
   id        Int       @id @default(autoincrement())
   fecha     DateTime? @default(now())
   info      String?   @db.VarChar(255)
-  estado    Boolean?  @default(false)
+  estado    Boolean?  @default(true)
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   total     Float?    @default(0)
-  pedidos   Pedido[]
 
   clienteId Int
-  cliente   Cliente @relation(fields: [clienteId], references: [id], map: "Venta_clienteId_fkey")
-
-  cobros Cobro[]
+  cliente   Cliente  @relation(fields: [clienteId], references: [id], map: "Venta_clienteId_fkey")
+  pedidos   Pedido[]
+  cobros    Cobro[]
 
   @@index([clienteId], map: "Venta_clienteId_fkey")
   @@map("ventas")
@@ -174,11 +172,12 @@ model Cobro {
 model Caja {
   id            Int       @id @default(autoincrement())
   nombre        String?
+  saldo         Float?    @default(0)
+  estado        Boolean?  @default(true)
   fechaApertura DateTime  @default(now())
   fechaCierre   DateTime?
   ingresos      Cobro[]
   egresos       Pago[]
-  saldo         Float?    @default(0)
 
   @@map("cajas")
 }

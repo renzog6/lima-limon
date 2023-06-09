@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Cliente } from "@prisma/client";
-import { updateCliente } from "@/app/actions/actionsClientes";
+import { updateCliente } from "@/app/hooks/useClientes";
 
 export default function UpdateCliente(cliente: Cliente) {
   const [nombre, setNombre] = useState(cliente.nombre || "");

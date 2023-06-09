@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FaTrash } from "react-icons/fa";
 
 import { Proveedor } from "@prisma/client";
-import { deleteProveedor } from "@/app/actions/actionsProveedores";
+import { deleteProveedor } from "@/app/hooks/useProveedores";
 
 export default function DeleteProveedor(proveedor: Proveedor) {
   const [modal, setModal] = useState(false);

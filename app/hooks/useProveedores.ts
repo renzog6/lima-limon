@@ -1,3 +1,4 @@
+//@/app/hooks/useProveedores.ts
 import { Proveedor } from "@prisma/client";
 
 const apiUrl = `${process.env.apiUrl}/proveedores`;

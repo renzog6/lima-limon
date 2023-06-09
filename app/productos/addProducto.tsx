@@ -5,10 +5,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import { Categoria, Marca, Proveedor } from "@prisma/client";
-import { addProducto } from "@/app/actions/actionsProductos";
-import { getCategorias } from "@/app/actions/actionsCategorias";
-import { getMarcas } from "@/app/actions/actionsMarcas";
-import { getProveedores } from "@/app/actions/actionsProveedores";
+import { addProducto } from "@/app/hooks/useProductos";
+import { getCategorias } from "@/app/hooks/useCategorias";
+import { getMarcas } from "@/app/hooks/useMarcas";
+import { getProveedores } from "@/app/hooks/useProveedores";
 
 export default function AddProducto() {
   const [modal, setModal] = useState(false);

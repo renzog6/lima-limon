@@ -4,7 +4,7 @@
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { createCategoria } from "@/app/actions/actionsCategorias";
+import { createCategoria } from "@/app/hooks/useCategorias";
 
 export default function AddCategoria() {
   const [nombre, setNombre] = useState("");

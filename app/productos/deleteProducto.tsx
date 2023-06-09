@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FaTrash } from "react-icons/fa";
 
 import { Producto } from "@prisma/client";
-import { deleteProducto } from "@/app/actions/actionsProductos";
+import { deleteProducto } from "@/app/hooks/useProductos";
 
 export default function DeleteProducto(producto: Producto) {
   const [modal, setModal] = useState(false);

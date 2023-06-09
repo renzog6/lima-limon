@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Categoria } from "@prisma/client";
-import { updateCategoria } from "@/app/actions/actionsCategorias";
+import { updateCategoria } from "@/app/hooks/useCategorias";
 
 export default function UpdateCategoria(categoria: Categoria) {
   const [nombre, setNombre] = useState(categoria.nombre || "");

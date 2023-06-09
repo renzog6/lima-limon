@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FiDelete } from "react-icons/fi";
 
 import { Marca } from "@prisma/client";
-import { deleteMarca } from "@/app/actions/actionsMarcas";
+import { deleteMarca } from "@/app/hooks/useMarcas";
 import { RiDeleteBin5Line } from "react-icons/ri";
 
 export default function DeleteMarca(marca: Marca) {

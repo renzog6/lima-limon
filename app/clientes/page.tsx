@@ -1,6 +1,6 @@
 //@/app/clientes/page.tsx
 import { Cliente } from "@prisma/client";
-import { getClientes } from "@/app/actions/actionsClientes";
+import { getClientes } from "@/app/hooks/useClientes";
 
 import Table from "@/components/Table";
 import AddCliente from "./addCliente";

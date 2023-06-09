@@ -30,32 +30,71 @@ export async function GET() {
 
 export async function POST(req: Request) {
   try {
-    const body = await req.json();
-    const { fecha, info, clienteId, total, cartItems } = body;
+    const data = await req.json();
+    const { fecha, info, clienteId, total, cartItems } = data;
 
-    const venta = await prisma.venta.create({
+    // Validate the data
+    if (!fecha) {
+      return NextResponse.json(
+        { error: "Please provide an order date" },
+        { status: 400 }
+      );
+    }
+    if (!clienteId) {
+      return NextResponse.json(
+        { error: "Please provide a customer id" },
+        { status: 400 }
+      );
+    }
+    if (!Number.isInteger(total) || total <= 0) {
+      return NextResponse.json(
+        { error: "Please provide a positive order total" },
+        { status: 400 }
+      );
+    }
+
+    // Check if the customer exists
+    const customer = await prisma.cliente.findUnique({
+      where: { id: Number(clienteId) },
+    });
+    if (!customer) {
+      return NextResponse.json(
+        { error: "The customer does not exist" },
+        { status: 404 }
+      );
+    }
+
+    // Create the order
+    const order = await prisma.venta.create({
       data: {
         fecha: fecha,
-        info: info,
-        estado: true,
+        cliente: { connect: { id: Number(clienteId) } },
         total: total,
-        cliente: {
-          connect: { id: Number(clienteId) }, // Conecta con la categoría existente usando el ID
-        },
+        info: info,
       },
     });
-    const listPedidos = cartItems.map((item) => ({
-      productoId: item.product.id,
-      cantidad: item.qty,
-      precio: item.product.precio,
-      ventaId: venta.id,
-    }));
 
-    const resPedido = await prisma.pedido.createMany({
-      data: listPedidos,
-    });
+    // Create the order details
+    for (const item of cartItems) {
+      await prisma.pedido.create({
+        data: {
+          productoId: item.product.id,
+          cantidad: item.qty,
+          precio: item.product.precio,
+          ventaId: order.id,
+        },
+      });
+    }
 
-    return NextResponse.json(venta, { status: 200 });
+    // Update the stock
+    for (const item of cartItems) {
+      await prisma.producto.update({
+        where: { id: item.product.id },
+        data: { stock: item.product.stock - item.qty },
+      });
+    }
+
+    return NextResponse.json({ data: order }, { status: 201 });
   } catch (error: unknown) {
     return NextResponse.json(
       { error: (error as Error).message },

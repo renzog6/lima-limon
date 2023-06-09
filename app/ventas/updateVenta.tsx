@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Venta } from "@prisma/client";
-import { updateVenta } from "@/app/actions/actionsVentas";
+import { updateVenta } from "@/app/hooks/useVentas";
 
 export default function UpdateVenta(venta: Venta) {
   const [fecha, setFecha] = useState<Date>(
@@ -62,7 +62,7 @@ export default function UpdateVenta(venta: Venta) {
               <input
                 id="nombre"
                 type="text"
-                value={fecha.toISOString()}
+                value={fecha.toString()}
                 onChange={(e) => setFecha(new Date(e.target.value))}
                 className="input w-full input-bordered"
                 placeholder="Venta Name"

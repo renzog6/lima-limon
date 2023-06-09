@@ -4,7 +4,7 @@
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { createCliente } from "@/app/actions/actionsClientes";
+import { createCliente } from "@/app/hooks/useClientes";
 
 export default function AddCliente() {
   const [nombre, setNombre] = useState("");

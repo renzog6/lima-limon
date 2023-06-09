@@ -4,7 +4,7 @@
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { createVenta } from "@/app/actions/actionsVentas";
+import { createVenta } from "@/app/hooks/useVentas";
 
 export default function AddVenta() {
   const [fecha, setFecha] = useState("");

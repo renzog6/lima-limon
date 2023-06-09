@@ -1,4 +1,4 @@
-//@/app/actions/actionsMarcas.ts
+//@/app/hooks/useMarcas.ts
 import { Marca } from "@prisma/client";
 
 const apiUrl = `${process.env.apiUrl}/productos/marcas`;

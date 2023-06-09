@@ -25,9 +25,8 @@ const CartPage = () => {
         <CartItemCard key={item.product.id} cartItem={item} />
       ))}
       <div className="flex flex-row items-end justify-items-end h-[40px] bg-emerald-600 border border-gray-300">
-        <p className="text-slate-600 ml-auto mr-4">
-          Total Price:{" "}
-          <span className="text-slate-900 font-bold">{totalPrice} $</span>
+        <p className="text-slate-600 ml-auto mr-4 justify-items-center">
+          Total $ <span className="text-slate-900 font-bold">{totalPrice}</span>
         </p>
       </div>
       <div className="flex flex-row justify-around h-[50px] bg-emerald-100 border border-gray-300">

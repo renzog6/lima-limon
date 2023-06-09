@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Marca } from "@prisma/client";
-import { updateMarca } from "@/app/actions/actionsMarcas";
+import { updateMarca } from "@/app/hooks/useMarcas";
 import { RiEdit2Line } from "react-icons/ri";
 
 export default function UpdateMarca(marca: Marca) {

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Producto } from "@prisma/client";
-import { updateProducto } from "@/app/actions/actionsProductos";
+import { updateProducto } from "@/app/hooks/useProductos";
 
 export default function UpdateProducto(producto: Producto) {
   const [nombre, setNombre] = useState(producto.nombre || "");

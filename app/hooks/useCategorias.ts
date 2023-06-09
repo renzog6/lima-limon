@@ -1,7 +1,7 @@
-//@/app/actions/actionsClientes.ts
-import { Cliente } from "@prisma/client";
+//@/app/hooks/useCategorias.ts
+import { Categoria } from "@prisma/client";
 
-const apiUrl = `${process.env.apiUrl}/clientes`;
+const apiUrl = `${process.env.apiUrl}/productos/categorias`;
 
 async function fetchRequest(url: string, method: string, body: any = null) {
   try {
@@ -21,12 +21,11 @@ async function fetchRequest(url: string, method: string, body: any = null) {
     const data = await res.json();
     return data;
   } catch (error) {
-    //throw new Error((error as Error).message);
-    return [];
+    throw new Error((error as Error).message);
   }
 }
 
-export async function getClientes() {
+export async function getCategorias() {
   try {
     return fetchRequest(apiUrl, "GET");
   } catch (error) {
@@ -34,25 +33,25 @@ export async function getClientes() {
   }
 }
 
-export async function createCliente(cliente) {
+export async function createCategoria(categoria) {
   try {
-    return fetchRequest(apiUrl, "POST", cliente);
+    return fetchRequest(apiUrl, "POST", categoria);
   } catch (error) {
     throw new Error((error as Error).message);
   }
 }
 
-export async function updateCliente(cliente: Cliente) {
+export async function updateCategoria(categoria: Categoria) {
   try {
-    return fetchRequest(apiUrl, "PUT", cliente);
+    return fetchRequest(apiUrl, "PUT", categoria);
   } catch (error) {
     throw new Error((error as Error).message);
   }
 }
 
-export async function deleteCliente(clienteId: number) {
+export async function deleteCategoria(categoriaId: number) {
   try {
-    const res = await fetch(`${apiUrl}/${clienteId}`, {
+    const res = await fetch(`${apiUrl}/${categoriaId}`, {
       method: "DELETE",
     });
     return res;

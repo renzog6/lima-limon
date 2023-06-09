@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Proveedor } from "@prisma/client";
-import { updateProveedor } from "@/app/actions/actionsProveedores";
+import { updateProveedor } from "@/app/hooks/useProveedores";
 
 export default function UpdateProveedor(proveedor: Proveedor) {
   const [nombre, setNombre] = useState(proveedor.nombre || "");

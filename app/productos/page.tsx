@@ -1,6 +1,6 @@
 //@/app/productos/page.tsx
 import { Producto } from "@prisma/client";
-import { getProductos } from "@/app/actions/actionsProductos";
+import { getProductos } from "@/app/hooks/useProductos";
 
 import Table from "@/components/Table";
 import AddProducto from "./addProducto";

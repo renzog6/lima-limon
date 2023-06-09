@@ -4,7 +4,7 @@ import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Marca } from "@prisma/client";
-import { createMarca } from "@/app/actions/actionsMarcas";
+import { createMarca } from "@/app/hooks/useMarcas";
 
 export default function AddMarca() {
   const [nombre, setNombre] = useState("");

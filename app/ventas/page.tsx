@@ -1,6 +1,6 @@
 //@/app/ventas/page.tsx
 import { Venta } from "@prisma/client";
-import { getVentas } from "@/app/actions/actionsVentas";
+import { getVentas } from "@/app/hooks/useVentas";
 
 import ListVentas from "./ListVentas";
 

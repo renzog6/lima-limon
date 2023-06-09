@@ -1,3 +1,4 @@
+//@/app/hooks/useProductos.ts
 import { Producto } from "@prisma/client";
 
 const apiUrl = `${process.env.apiUrl}/productos`;

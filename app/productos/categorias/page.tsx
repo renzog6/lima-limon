@@ -1,6 +1,6 @@
 //@/app/categorias/page.tsx
 import { Categoria } from "@prisma/client";
-import { getCategorias } from "@/app/actions/actionsCategorias";
+import { getCategorias } from "@/app/hooks/useCategorias";
 
 import Table from "@/components/Table";
 import AddCategoria from "./addCategoria";

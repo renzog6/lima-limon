@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FaTrash } from "react-icons/fa";
 
 import { Cliente } from "@prisma/client";
-import { deleteCliente } from "@/app/actions/actionsClientes";
+import { deleteCliente } from "@/app/hooks/useClientes";
 
 export default function DeleteCliente(cliente: Cliente) {
   const [modal, setModal] = useState(false);
