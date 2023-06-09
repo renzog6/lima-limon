@@ -1,7 +1,9 @@
+//@/prisma/seed.js
 const { PrismaClient } = require("@prisma/client");
 const {
   clientes,
   proveedores,
+  proveedores_marcas,
   categorias,
   marcas,
   productos,
@@ -10,6 +12,11 @@ const prisma = new PrismaClient();
 
 const load = async () => {
   try {
+    await prisma.venta.deleteMany();
+    console.log("Deleted records in ventas table");
+    await prisma.$queryRaw`ALTER TABLE Ventas AUTO_INCREMENT = 1`;
+    console.log("reset Ventas auto increment to 1");
+
     await prisma.producto.deleteMany();
     console.log("Deleted records in productos table");
     await prisma.$queryRaw`ALTER TABLE Productos AUTO_INCREMENT = 1`;
@@ -39,18 +46,25 @@ const load = async () => {
       data: clientes,
     });
     console.log("Added clientes data");
-    await prisma.proveedor.createMany({
-      data: proveedores,
-    });
-    console.log("Added proveedores data");
+
     await prisma.categoria.createMany({
       data: categorias,
     });
     console.log("Added categorias data");
+
     await prisma.marca.createMany({
       data: marcas,
     });
     console.log("Added marcas data");
+
+    await prisma.proveedor.createMany({
+      data: proveedores,
+    });
+    await prisma.proveedores_marcas.createMany({
+      data: proveedores_marcas,
+    });
+    console.log("Added proveedores data");
+
     await prisma.producto.createMany({
       data: productos,
     });

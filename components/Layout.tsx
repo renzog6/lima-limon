@@ -10,7 +10,7 @@ export default function Layout({ children }) {
   const [showSidebar, setShowSidebar] = useState(false);
 
   return (
-    <div className="">
+    <div className="overflow-hidden rounded-xl bg-gradient-to-r from-amber-200 to-orange-400">
       <Navbar />
       <div className="flex">
         <MenuBarMobile setter={setShowSidebar} />

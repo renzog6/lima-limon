@@ -25,7 +25,7 @@ const AddToCartBtn = (props: Props) => {
     return (
       <div className="flex justify-center">
         <Button onClick={() => dispatch(increment(props.product))}>
-          <BsCartPlus size={20} />
+          <BsCartPlus size={17} />
         </Button>
       </div>
     );

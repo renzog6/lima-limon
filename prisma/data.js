@@ -1,4 +1,4 @@
-const { Prisma } = require("@prisma/client");
+//@/prisma/data.js
 
 const clientes = [
   {
@@ -21,7 +21,24 @@ const proveedores = [
     info: "Test",
   },
 ];
-
+const proveedores_marcas = [
+  {
+    marcaId: 1,
+    proveedorId: 1,
+  },
+  {
+    marcaId: 2,
+    proveedorId: 1,
+  },
+  {
+    marcaId: 2,
+    proveedorId: 2,
+  },
+  {
+    marcaId: 3,
+    proveedorId: 2,
+  },
+];
 const categorias = [
   {
     nombre: "Textil - 250ml",
@@ -85,6 +102,7 @@ const productos = [
 module.exports = {
   clientes,
   proveedores,
+  proveedores_marcas,
   categorias,
   marcas,
   productos,

@@ -15,7 +15,7 @@ const Navbar = () => {
       </div>
       <div className="flex-1">
         <Link className="btn btn-ghost normal-case text-xl" href="/">
-          Lima Limon
+          <strong className="text-yellow-300">Lima Limon</strong>
         </Link>
       </div>
       <div className="flex-1">

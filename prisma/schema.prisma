@@ -1,3 +1,5 @@
+//@/prisma/schema.prisma
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,24 +15,20 @@ model Producto {
   info        String?   @db.VarChar(255)
   precio      Float     @default(0)
   stock       Int       @default(0)
-  estado      Boolean?  @default(true)
+  estado      Boolean   @default(true)
   marcaId     Int
-  marca       Marca     @relation(fields: [marcaId], references: [id])
   categoriaId Int
-  categoria   Categoria @relation(fields: [categoriaId], references: [id], onDelete: NoAction)
   proveedorId Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  pedidos     Pedido[]
+  categoria   Categoria @relation(fields: [categoriaId], references: [id], onDelete: NoAction)
+  marca       Marca     @relation(fields: [marcaId], references: [id])
   proveedor   Proveedor @relation(fields: [proveedorId], references: [id])
-  ventaId     Int?
-  venta       Venta?    @relation(fields: [ventaId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Pedido    Pedido[]
 
   @@index([categoriaId], map: "productos_categoriaId_fkey")
   @@index([marcaId], map: "productos_marcaId_fkey")
   @@index([proveedorId], map: "productos_proveedorId_fkey")
-  @@index([ventaId], map: "productos_ventaId_fkey")
   @@map("productos")
 }
 
@@ -45,12 +43,12 @@ model Categoria {
 }
 
 model Marca {
-  id          Int         @id @default(autoincrement())
-  nombre      String?     @db.VarChar(20)
-  info        String?     @db.VarChar(255)
-  estado      Boolean?    @default(true)
+  id          Int                  @id @default(autoincrement())
+  nombre      String?              @db.VarChar(20)
+  info        String?              @db.VarChar(255)
+  estado      Boolean?             @default(true)
+  proveedores proveedores_marcas[]
   productos   Producto[]
-  proveedores Proveedor[] @relation("marcatoproveedor")
 
   @@map("marcas")
 }
@@ -63,35 +61,60 @@ model Cliente {
   email    String?
   telefono String?
   deuda    Float    @default(0)
-  pagos    Pago[]
   ventas   Venta[]
+  cobros   Cobro[]
 
   @@map("clientes")
 }
 
 model Proveedor {
-  id        Int        @id @default(autoincrement())
-  nombre    String?    @db.VarChar(20)
-  info      String?    @db.VarChar(255)
-  estado    Boolean?   @default(true)
+  id        Int                  @id @default(autoincrement())
+  nombre    String?              @db.VarChar(20)
+  info      String?              @db.VarChar(255)
+  estado    Boolean?             @default(true)
   email     String?
   telefono  String?
+  marcas    proveedores_marcas[]
   productos Producto[]
-  marcas    Marca[]    @relation("marcatoproveedor")
+  pagos     Pago[]
+  Compra    Compra[]
 
   @@map("proveedores")
 }
 
+model Compra {
+  id        Int       @id @default(autoincrement())
+  fecha     DateTime? @default(now())
+  info      String?   @db.VarChar(255)
+  estado    Boolean?  @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  total     Float?    @default(0)
+  pedidos   Pedido[]
+
+  proveedorId Int
+  proveedor   Proveedor @relation(fields: [proveedorId], references: [id], map: "Compra_proveedorId_fkey")
+
+  pagos Pago[]
+
+  @@index([proveedorId], map: "Compra_proveedorId_fkey")
+  @@map("compras")
+}
+
 model Venta {
-  id        Int        @id @default(autoincrement())
-  fecha     DateTime?  @default(now())
-  info      String?    @db.VarChar(255)
-  estado    Boolean?   @default(false)
+  id        Int       @id @default(autoincrement())
+  fecha     DateTime? @default(now())
+  info      String?   @db.VarChar(255)
+  estado    Boolean?  @default(false)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  total     Float?    @default(0)
+  pedidos   Pedido[]
+
   clienteId Int
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-  productos Producto[]
-  cliente   Cliente    @relation(fields: [clienteId], references: [id], map: "Venta_clienteId_fkey")
+  cliente   Cliente @relation(fields: [clienteId], references: [id], map: "Venta_clienteId_fkey")
+
+  cobros Cobro[]
 
   @@index([clienteId], map: "Venta_clienteId_fkey")
   @@map("ventas")
@@ -99,26 +122,74 @@ model Venta {
 
 model Pedido {
   id         Int      @id @default(autoincrement())
-  clienteId  Int
   cantidad   Int
-  pricio     Float
-  total      Float
-  productoId Int
-  producto   Producto @relation(fields: [productoId], references: [id])
+  precio     Float
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
+  productoId Int
+  producto   Producto @relation(fields: [productoId], references: [id])
+  ventaId    Int?
+  venta      Venta?   @relation(fields: [ventaId], references: [id], onDelete: Cascade)
+  compraId   Int?
+  compra     Compra?  @relation(fields: [compraId], references: [id], onDelete: Cascade)
 
+  @@index([productoId], map: "Pedido_productoId_fkey")
   @@map("pedidos")
 }
 
 model Pago {
   id        Int      @id @default(autoincrement())
-  clienteId Int
-  monto     Float
   fecha     DateTime @default(now())
+  monto     Float
+  formaPago String?
   nota      String?
-  cliente   Cliente  @relation(fields: [clienteId], references: [id])
 
-  @@index([clienteId], map: "pagos_clienteId_fkey")
+  proveedorId Int
+  proveedor   Proveedor @relation(fields: [proveedorId], references: [id])
+  compraId    Int?
+  compra      Compra?   @relation(fields: [compraId], references: [id])
+  cajaId      Int
+  caja        Caja?     @relation(fields: [cajaId], references: [id])
+
   @@map("pagos")
+}
+
+model Cobro {
+  id        Int      @id @default(autoincrement())
+  fecha     DateTime @default(now())
+  monto     Float
+  formaPago String?
+  nota      String?
+
+  clienteId Int
+  cliente   Cliente @relation(fields: [clienteId], references: [id])
+  cajaId    Int?
+  caja      Caja?   @relation(fields: [cajaId], references: [id])
+  ventaId   Int?
+  venta     Venta?  @relation(fields: [ventaId], references: [id])
+
+  @@map("cobros")
+}
+
+model Caja {
+  id            Int       @id @default(autoincrement())
+  nombre        String?
+  fechaApertura DateTime  @default(now())
+  fechaCierre   DateTime?
+  ingresos      Cobro[]
+  egresos       Pago[]
+  saldo         Float?    @default(0)
+
+  @@map("cajas")
+}
+
+model proveedores_marcas {
+  marcaId     Int
+  proveedorId Int
+  marcas      Marca     @relation(fields: [marcaId], references: [id], onDelete: Cascade, map: "_marcatoproveedor_A_fkey")
+  proveedores Proveedor @relation(fields: [proveedorId], references: [id], onDelete: Cascade, map: "_marcatoproveedor_B_fkey")
+
+  @@unique([marcaId, proveedorId], map: "_marcatoproveedor_AB_unique")
+  @@index([proveedorId], map: "_marcatoproveedor_B_index")
+  @@map("_proveedores_marcas")
 }

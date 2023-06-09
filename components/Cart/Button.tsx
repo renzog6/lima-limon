@@ -58,7 +58,7 @@ export const Button = ({
       className={`
  
         ${getVariant(variant)}  transition duration-500  ${
-        !paddingLess && "py-2 px-4"
+        !paddingLess && "py-2 px-2"
       }  ${!square && "rounded-md"} active:scale-95 ${className} `}
     >
       {children}

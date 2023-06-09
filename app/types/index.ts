@@ -1,4 +1,4 @@
-import { Categoria, Producto } from "@prisma/client";
+import { Categoria, Pedido, Producto } from "@prisma/client";
 
 /**
  * Model Producto
@@ -16,6 +16,16 @@ export type ProductoToCart = Omit<
   marca: string;
   categoria: string;
   estado: boolean | null;
+};
+
+export type SafePedido = Omit<
+  Pedido,
+  "createdAt" | "updatedAt" | "ventaId" | "proveedorId"
+> & {
+  id: number;
+  precio: number;
+  cantidad: number;
+  producto: string;
 };
 
 export type SafeCategoria = Omit<Categoria, "estado"> & {

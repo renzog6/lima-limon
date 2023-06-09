@@ -44,7 +44,9 @@ const Table = ({ titulo, columns, data, EditButton, DeleteButton }) => {
             <tr
               key={rowIndex}
               className={`${
-                rowIndex % 2 === 0 ? "bg-gray-100" : "bg-slate-300"
+                rowIndex % 2 === 0
+                  ? "bg-gray-100 bg-opacity-30"
+                  : "bg-slate-300 bg-opacity-30"
               } hover:bg-gray-200`}
             >
               {columns.map((column, colIndex) => (

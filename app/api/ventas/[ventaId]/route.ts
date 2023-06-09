@@ -1,6 +1,7 @@
 //@/api/ventas/[ventaId]/routes.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
+import { clearScreenDown } from "readline";
 
 export async function DELETE(
   request: Request,
@@ -13,7 +14,20 @@ export async function DELETE(
       throw new Error("Invalid ID");
     }
 
-    const res = await prisma.venta.deleteMany({
+    const venta = await prisma.venta.findUnique({
+      where: { id: ventaId },
+      include: { pedidos: { include: { producto: true } } },
+    });
+
+    venta?.pedidos.map((item) => {
+      console.log(">>>>>> " + JSON.stringify(item));
+      sumarCantidadStockPedido(
+        item.productoId,
+        item.cantidad + item.producto.stock
+      );
+    });
+
+    const res = await prisma.venta.delete({
       where: {
         id: ventaId,
       },
@@ -26,4 +40,11 @@ export async function DELETE(
       { status: 500 }
     );
   }
+}
+
+async function sumarCantidadStockPedido(productoId: number, newStock: number) {
+  await prisma.producto.update({
+    where: { id: productoId },
+    data: { stock: newStock },
+  });
 }

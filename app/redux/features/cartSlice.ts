@@ -1,3 +1,4 @@
+//@/app/redux/features/cartSlice.ts
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Producto } from "@prisma/client";
 import { RootState } from "../store";
@@ -18,13 +19,13 @@ export const cartSlice = createSlice({
       const cartItem = state.cartItems.find(
         (el) => el.product.id === action.payload.id
       );
-      if (cartItem) cartItem.qty++;
-      else {
+      if (!cartItem) {
         state.cartItems.push({
           product: action.payload,
           qty: 1,
         });
       }
+      if (cartItem && cartItem.qty < action.payload.stock) cartItem.qty++;
     },
 
     decrement: (state, action: PayloadAction<Producto>) => {
@@ -39,6 +40,12 @@ export const cartSlice = createSlice({
           );
         }
       }
+    },
+
+    resetCartItems: (state) => {
+      return {
+        cartItems: [],
+      };
     },
   },
 });
@@ -62,6 +69,6 @@ export const TotalPriceSelector = createSelector([cartItems], (cartItems) =>
   )
 );
 
-export const { increment, decrement } = cartSlice.actions;
+export const { increment, decrement, resetCartItems } = cartSlice.actions;
 
 export default cartSlice.reducer;

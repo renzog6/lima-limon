@@ -8,13 +8,22 @@ export async function GET() {
       orderBy: {
         nombre: "asc",
       },
+      include: {
+        marcas: {
+          include: {
+            marcas: true,
+          },
+        },
+      },
     });
-    const safeproveedores = proveedores.map((proveedor) => ({
+
+    const safeProveedores = proveedores.map((proveedor) => ({
       ...proveedor,
-      //createdAt: proveedor.createdAt.toISOString(),
+      marcas: proveedor.marcas.map((proveedorMarca) => proveedorMarca.marcas),
+      proveedores_marcas: undefined, // Eliminar el campo proveedores_marcas
     }));
 
-    return NextResponse.json(proveedores);
+    return NextResponse.json(safeProveedores);
   } catch (error: any) {
     throw new Error(error);
   }

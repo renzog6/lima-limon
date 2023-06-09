@@ -1,30 +1,34 @@
-//@/api/ventas/routes.ts
+//@/api/ventas/pedidos/routes.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
-    const ventas = await prisma.venta.findMany({
-      where: { estado: true },
-      orderBy: {
-        fecha: "asc",
-      },
+    const { searchParams } = new URL(request.url);
+    var ventaId = Number(searchParams.get("ventaId")); //Number(params.ventaId);
+
+    if (!ventaId || typeof ventaId !== "number") {
+      throw new Error("Invalid ID");
+    }
+
+    const pedidos = await prisma.pedido.findMany({
+      where: { ventaId: ventaId },
       include: {
-        pedidos: true,
-        cliente: true,
+        producto: true,
       },
     });
 
-    const safe = ventas.map((venta) => ({
-      ...venta,
-      fecha: venta.fecha !== null ? venta.fecha.toLocaleDateString() : null,
-      cliente: venta.cliente.nombre,
+    const safe = pedidos.map((item) => ({
+      ...item,
+      producto: item.producto.nombre,
     }));
 
     return NextResponse.json(safe);
-  } catch (error: any) {
-    console.log(error);
-    throw new Error(error);
+  } catch (error: unknown) {
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
   }
 }
 

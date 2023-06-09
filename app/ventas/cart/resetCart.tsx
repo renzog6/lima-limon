@@ -1,22 +1,22 @@
-//@/app/ventas/deleteVenta.tsx
+//@/app/ventas/cart/resetCart.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FaTrash } from "react-icons/fa";
+import { Button } from "@/components/Cart/Button";
+import { resetCartItems } from "@/app/redux/features/cartSlice";
+import { useDispatch } from "react-redux";
 
-import { Venta } from "@prisma/client";
-import { deleteVenta } from "@/app/actions/actionsVentas";
-
-export default function DeleteVenta(venta: Venta) {
+const ResetCart = () => {
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
   const router = useRouter();
+  const dispatch = useDispatch();
 
-  async function handleDelete(ventaId: number) {
+  async function handleDelete() {
     setIsMutating(true);
-    deleteVenta(ventaId);
+    dispatch(resetCartItems());
     setIsMutating(false);
     router.refresh();
     setModal(false);
@@ -28,14 +28,9 @@ export default function DeleteVenta(venta: Venta) {
 
   return (
     <div>
-      <button
-        title="delete"
-        className="text-red-500 hover:text-red-700"
-        onClick={handleChange}
-      >
-        <FaTrash />
-      </button>
-
+      <Button variant="danger" className="w-36 h-10" onClick={handleChange}>
+        Vaciar
+      </Button>
       <input
         aria-label="modal-delete"
         type="checkbox"
@@ -47,7 +42,7 @@ export default function DeleteVenta(venta: Venta) {
       <div className="modal">
         <div className="modal-box">
           <h3 className="font-bold text-lg">
-            Seguro que desea BORRAR: {venta.id} ?
+            Seguro que desea VACIAR el carrito ?
           </h3>
           <div className="modal-action">
             <button type="button" className="btn" onClick={handleChange}>
@@ -56,10 +51,10 @@ export default function DeleteVenta(venta: Venta) {
             {!isMutating ? (
               <button
                 type="button"
-                onClick={() => handleDelete(venta.id)}
-                className="btn btn-primary"
+                onClick={handleDelete}
+                className="btn btn-warning"
               >
-                Borar
+                Borrar
               </button>
             ) : (
               <button type="button" className="btn loading">
@@ -71,4 +66,6 @@ export default function DeleteVenta(venta: Venta) {
       </div>
     </div>
   );
-}
+};
+
+export default ResetCart;

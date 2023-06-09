@@ -9,9 +9,9 @@ async function PagePedido() {
   const productos: ProductoToCart[] = await getProductos();
 
   return (
-    <div className="">
+    <>
       <ListProductos data={productos} />
-    </div>
+    </>
   );
 }
 

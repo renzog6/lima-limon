@@ -57,9 +57,7 @@ const ListProductos = ({ data }) => {
             <div className="basis-3/4">
               <ItemProducto {...row} />
             </div>
-
             <div className="basis-1/4 flex justify-center">
-              {/* <div className=""> {AddToCart && <AddToCart {...row} />}</div> */}
               {AddToCartBtn && <AddToCartBtn product={...row} />}
             </div>
           </div>
