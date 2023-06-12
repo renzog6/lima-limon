@@ -2,12 +2,9 @@
 "use client";
 import { useState } from "react";
 import ItemProducto from "./ItemProducto";
-import AddToCart from "./addToCart";
-import { BsCartPlus } from "react-icons/bs";
-
-import { useSelector, useDispatch } from "react-redux";
-import { useAppSelector } from "@/app/redux/store";
 import AddToCartBtn from "@/components/Cart/AddToCartBtn";
+
+import { useAppSelector } from "@/app/redux/store";
 import { TotalPriceSelector } from "@/app/redux/features/cartSlice";
 
 const ListProductos = ({ data }) => {

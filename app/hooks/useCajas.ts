@@ -1,7 +1,7 @@
-//@/app/hooks/useVentas.ts
-import { Venta } from "@prisma/client";
+//@/app/hooks/useCajas.ts
+import { Caja } from "@prisma/client";
 
-const apiUrl = `${process.env.apiUrl}/ventas`;
+const apiUrl = `${process.env.apiUrl}/cajas`;
 
 async function fetchRequest(url: string, method: string, body: any = null) {
   try {
@@ -25,7 +25,7 @@ async function fetchRequest(url: string, method: string, body: any = null) {
   }
 }
 
-export async function getVentas() {
+export async function getCajas() {
   try {
     return fetchRequest(apiUrl, "GET");
   } catch (error) {
@@ -33,25 +33,25 @@ export async function getVentas() {
   }
 }
 
-export async function createVenta(venta) {
+export async function createCaja(caja) {
   try {
-    return fetchRequest(apiUrl, "POST", venta);
+    return fetchRequest(apiUrl, "POST", caja);
   } catch (error) {
     throw new Error((error as Error).message);
   }
 }
 
-export async function updateVenta(venta: Venta) {
+export async function updateCaja(caja: Caja) {
   try {
-    return fetchRequest(apiUrl, "PUT", venta);
+    return fetchRequest(apiUrl, "PUT", caja);
   } catch (error) {
     throw new Error((error as Error).message);
   }
 }
 
-export async function deleteVenta(ventaId: number) {
+export async function deleteCaja(cajaId: number) {
   try {
-    const res = await fetch(`${apiUrl}/${ventaId}`, {
+    const res = await fetch(`${apiUrl}/${cajaId}`, {
       method: "DELETE",
     });
     return res;

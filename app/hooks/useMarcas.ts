@@ -9,7 +9,7 @@ async function fetchRequest(url: string, method: string, body: any = null) {
     headers: {
       "Content-Type": "application/json",
     },
-    // cache: "no-store" as RequestCache,
+    cache: "no-store" as RequestCache,
   };
 
   if (method !== "GET") {

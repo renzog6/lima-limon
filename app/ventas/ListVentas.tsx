@@ -2,7 +2,6 @@
 "use client";
 import { useState } from "react";
 
-import AddToCartBtn from "@/components/Cart/AddToCartBtn";
 import DeleteVenta from "./deleteVenta";
 import UpdateVenta from "./updateVenta";
 import DetailPedido from "./detailPedido";
@@ -31,7 +30,7 @@ const ListProductos = ({ data }) => {
           <strong className="basis-1/4 flex justify-center">Fecha</strong>
           <strong className="basis-1/4 flex justify-center">Cliente</strong>
           <strong className="basis-1/4 flex justify-center">Importe</strong>
-          <strong className="basis-1/4 flex justify-center">Pedido</strong>
+          <strong className="basis-1/4 flex justify-center">###</strong>
         </div>
         {filteredData.map((row, rowIndex) => (
           <div
@@ -40,9 +39,7 @@ const ListProductos = ({ data }) => {
           >
             <div className="basis-1/4 flex justify-center">{row.fecha}</div>
             <div className="basis-1/4 flex justify-center">{row.cliente}</div>
-            <div className="basis-1/4 flex justify-center">
-              {"$ " + row.total}
-            </div>
+            <div className="basis-1/4 flex justify-center">{row.total}</div>
             <div className="basis-1/4 flex justify-center">
               <div className="px-4 py-2 whitespace-nowrap text-right">
                 <div className=" flex flex-row">

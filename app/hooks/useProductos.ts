@@ -3,12 +3,17 @@ import { Producto } from "@prisma/client";
 
 const apiUrl = `${process.env.apiUrl}/productos`;
 
-export async function getProductos() {
+export async function getProductos(paraPedido = false) {
   try {
     const res = await fetch(apiUrl, {
-      //cache: "no-store",
+      cache: "no-store" as RequestCache,
     });
-    return res.json();
+    const data = await res.json();
+
+    if (paraPedido) {
+      return data.filter((producto) => producto.stock !== 0);
+    }
+    return data;
   } catch (error) {
     return [];
   }

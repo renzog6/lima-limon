@@ -57,10 +57,12 @@ export default function SaveCart() {
 
   async function onSubmit(data) {
     setIsMutating(true);
+
     const venta = {
       fecha: startDate,
       clienteId: data.clienteId,
       total: totalPrice,
+      saldo: hacePago ? totalPrice - data.importe : 0,
       info: data.info,
       cartItems: cartItems,
     };
@@ -73,7 +75,7 @@ export default function SaveCart() {
         const cobro = {
           cobroFecha: startDate,
           cobroMonto: data.importe,
-          cobroFormaPago: data.nota,
+          cobroFormaPago: data.formaPago,
           cobroNota: data.nota,
           clienteId: data.clienteId,
           ventaId: res.data.id,
@@ -81,13 +83,11 @@ export default function SaveCart() {
         };
         const resCobro = await createCobro(cobro);
         if (resCobro.data) {
-          // La solicitud fue exitosa, puedes acceder a los datos con res.data
           console.log(
             "El producto se ha guardado exitosamente:",
             resCobro.data
           );
         } else {
-          // Hubo un error en la solicitud, puedes acceder al objeto de error con res.error
           console.log("Error al guardar el producto:", resCobro.error);
         }
       }
@@ -207,7 +207,7 @@ export default function SaveCart() {
                         className="input w-full input-bordered h-9"
                       >
                         <option value="Efectivo">Efectivo</option>
-                        <option value="Transferecia">Transferecia</option>
+                        <option value="Transferencia">Transferencia</option>
                       </select>
 
                       {errors.precio && (

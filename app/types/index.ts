@@ -36,6 +36,11 @@ export interface CartItem {
   qty: number;
 }
 
+export type FormaPago = {
+  Efectivo;
+  Transferecia;
+};
+
 /*
 export type SafeReservation = Omit<
   Reservation,

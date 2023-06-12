@@ -1,6 +1,7 @@
 //@/api/ventas/routes.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
+import { updateClientes } from "../clientes/updateClientes";
 
 export async function GET() {
   try {
@@ -31,7 +32,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const { fecha, info, clienteId, total, cartItems } = data;
+    const { fecha, info, clienteId, total, saldo, cartItems } = data;
 
     // Validate the data
     if (!fecha) {
@@ -70,6 +71,7 @@ export async function POST(req: Request) {
         fecha: fecha,
         cliente: { connect: { id: Number(clienteId) } },
         total: total,
+        saldo: saldo,
         info: info,
       },
     });
@@ -93,6 +95,9 @@ export async function POST(req: Request) {
         data: { stock: item.product.stock - item.qty },
       });
     }
+
+    //Actualiza el saldo del Cliente
+    updateClientes(clienteId, total);
 
     return NextResponse.json({ data: order }, { status: 201 });
   } catch (error: unknown) {

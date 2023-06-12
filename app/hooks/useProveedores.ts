@@ -6,7 +6,7 @@ const apiUrl = `${process.env.apiUrl}/proveedores`;
 export async function getProveedores() {
   try {
     const res = await fetch(apiUrl, {
-      //cache: "no-store",
+      cache: "no-store" as RequestCache,
     });
     return await res.json();
   } catch (error) {

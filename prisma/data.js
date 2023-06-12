@@ -99,6 +99,25 @@ const productos = [
   },
 ];
 
+const cajas = [
+  {
+    id: 1,
+    nombre: "Efectivo",
+    saldo: 0,
+    estado: true,
+    fechaApertura: new Date("2023-01-01 00:00:00.00"),
+    fechaCierre: null,
+  },
+  {
+    id: 2,
+    nombre: "Transferencia",
+    saldo: 0,
+    estado: true,
+    fechaApertura: new Date("2023-01-01 00:00:00.00"),
+    fechaCierre: null,
+  },
+];
+
 module.exports = {
   clientes,
   proveedores,
@@ -106,4 +125,5 @@ module.exports = {
   categorias,
   marcas,
   productos,
+  cajas,
 };

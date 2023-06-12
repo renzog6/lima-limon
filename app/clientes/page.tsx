@@ -12,8 +12,8 @@ export const dynamic = "force-dynamic";
 export default async function ClienteList() {
   const columnas = [
     { Header: "Nombre", accessor: "nombre" },
+    { Header: "Saldo", accessor: "saldo" },
     { Header: "Info", accessor: "info" },
-    { Header: "Estado", accessor: "estado" },
   ];
 
   const clientes: Cliente[] = await getClientes();

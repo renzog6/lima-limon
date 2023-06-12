@@ -1,6 +1,8 @@
 //@/api/cajas/cobros/routes.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
+import { updateCajas } from "../updateCajas";
+import { updateClientes } from "../../clientes/updateClientes";
 
 export async function GET() {
   try {
@@ -32,7 +34,6 @@ export async function POST(req: Request) {
       cobroNota,
       clienteId,
       ventaId,
-      cajaId,
     } = data;
 
     // Validate the data
@@ -54,16 +55,38 @@ export async function POST(req: Request) {
       );
     }
 
+    const tipoCaja = await prisma.caja.findFirst({
+      where: { nombre: cobroFormaPago },
+    });
+    if (!tipoCaja) {
+      return NextResponse.json(
+        { error: "The caja does not exist" },
+        { status: 404 }
+      );
+    }
+
     const cobro = await prisma.cobro.create({
       data: {
         fecha: cobroFecha,
-        monto: cobroMonto,
+        monto: Number(cobroMonto),
         formaPago: cobroFormaPago,
         nota: cobroNota,
         cliente: { connect: { id: Number(clienteId) } },
         venta: { connect: { id: Number(ventaId) } },
+        caja: { connect: { id: tipoCaja.id } },
       },
     });
+
+    const updateCaja = await updateCajas(cobroFormaPago);
+    if (!updateCaja) {
+      return NextResponse.json(
+        { error: "The caja does not exist" },
+        { status: 404 }
+      );
+    }
+
+    //Actualiza el saldo del Cliente
+    updateClientes(clienteId, Number(cobroMonto) * -1);
 
     return NextResponse.json({ data: cobro }, { status: 200 });
   } catch (error: unknown) {

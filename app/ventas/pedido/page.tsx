@@ -6,7 +6,7 @@ import { getProductos } from "@/app/hooks/useProductos";
 export const dynamic = "force-dynamic";
 
 async function PagePedido() {
-  const productos: ProductoToCart[] = await getProductos();
+  const productos: ProductoToCart[] = await getProductos(true);
 
   return (
     <>

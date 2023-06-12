@@ -7,6 +7,7 @@ const {
   categorias,
   marcas,
   productos,
+  cajas,
 } = require("./data.js");
 const prisma = new PrismaClient();
 
@@ -21,6 +22,16 @@ const load = async () => {
     console.log("Deleted records in productos table");
     await prisma.$queryRaw`ALTER TABLE Productos AUTO_INCREMENT = 1`;
     console.log("reset Productos auto increment to 1");
+
+    await prisma.cobro.deleteMany();
+    console.log("Deleted records in cobross table");
+    await prisma.$queryRaw`ALTER TABLE Cobros AUTO_INCREMENT = 1`;
+    console.log("reset Cobros auto increment to 1");
+
+    await prisma.caja.deleteMany();
+    console.log("Deleted records in cajas table");
+    await prisma.$queryRaw`ALTER TABLE Cajas AUTO_INCREMENT = 1`;
+    console.log("reset Cajas auto increment to 1");
 
     await prisma.cliente.deleteMany();
     console.log("Deleted records in clientes table");
@@ -41,6 +52,11 @@ const load = async () => {
     console.log("Deleted records in marcas table");
     await prisma.$queryRaw`ALTER TABLE Marcas AUTO_INCREMENT = 1`;
     console.log("reset Marcas auto increment to 1");
+
+    await prisma.caja.createMany({
+      data: cajas,
+    });
+    console.log("Added cajas data");
 
     await prisma.cliente.createMany({
       data: clientes,

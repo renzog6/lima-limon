@@ -60,7 +60,7 @@ model Cliente {
   estado   Boolean? @default(true)
   email    String?
   telefono String?
-  deuda    Float    @default(0)
+  saldo    Float    @default(0)
   ventas   Venta[]
   cobros   Cobro[]
 
@@ -90,6 +90,7 @@ model Compra {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   total     Float?    @default(0)
+  saldo     Float?    @default(0)
 
   proveedorId Int
   proveedor   Proveedor @relation(fields: [proveedorId], references: [id], map: "Compra_proveedorId_fkey")
@@ -108,6 +109,7 @@ model Venta {
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   total     Float?    @default(0)
+  saldo     Float?    @default(0)
 
   clienteId Int
   cliente   Cliente  @relation(fields: [clienteId], references: [id], map: "Venta_clienteId_fkey")
