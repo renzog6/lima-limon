@@ -18,7 +18,7 @@ export async function GET() {
 
     const safe = ventas.map((venta) => ({
       ...venta,
-      fecha: venta.fecha !== null ? venta.fecha.toLocaleDateString() : null,
+      //   fecha: venta.fecha !== null ? venta.fecha.toLocaleDateString() : null,
       cliente: venta.cliente.nombre,
     }));
 
@@ -110,8 +110,8 @@ export async function POST(req: Request) {
 
 export async function PUT(req: Request) {
   try {
-    const body = await req.json();
-    const { id, fecha, info } = body;
+    const data = await req.json();
+    const { id, fecha, info, clienteId, total, saldo, cartItems } = data;
 
     if (!id || typeof id !== "number") {
       throw new Error("Invalid ID");
@@ -119,7 +119,11 @@ export async function PUT(req: Request) {
 
     const venta = await prisma.venta.update({
       where: { id },
-      data: { fecha, info },
+      data: {
+        fecha: fecha,
+        cliente: { connect: { id: Number(clienteId) } },
+        info: info,
+      },
     });
 
     return NextResponse.json(venta, { status: 200 });

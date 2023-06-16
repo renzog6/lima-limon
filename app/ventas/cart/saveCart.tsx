@@ -9,15 +9,13 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-
 import { Cliente } from "@prisma/client";
 import { Button } from "@/components/Cart";
 import { getClientes } from "@/app/hooks/useClientes";
 import { createVenta } from "@/app/hooks/useVentas";
 import { useDispatch } from "react-redux";
 import { createCobro } from "@/app/hooks/useCobros";
+import InputDate from "@/components/InputDate";
 
 export default function SaveCart() {
   const [modal, setModal] = useState(false);
@@ -54,6 +52,10 @@ export default function SaveCart() {
     }
     fetchClientes();
   }, [reset, totalPrice]);
+
+  const handleDateChange = (date) => {
+    setStartDate(date); // Actualiza el estado de startDate en SaveCart
+  };
 
   async function onSubmit(data) {
     setIsMutating(true);
@@ -135,10 +137,7 @@ export default function SaveCart() {
                 Fecha
               </label>
               <div className="input input-bordered h-8 content-center justify-center">
-                <DatePicker
-                  selected={startDate}
-                  onChange={(date) => setStartDate(date)}
-                />
+                <InputDate date={startDate} onChange={handleDateChange} />
               </div>
             </div>
             <div className="form-control">

@@ -2,20 +2,32 @@
 @tailwind components;
 @tailwind utilities;
 
-/*
-tr {
-  @apply bg-white;
-  @apply border-b;
-  @apply dark:bg-gray-900;
-  @apply dark:border-gray-700;
-}
+@layer components {
+  .btn {
+    @apply focus:outline-none text-white font-medium text-sm rounded-lg;
+  }
 
-th {
-  @apply px-6;
-  @apply py-4;
-  @apply font-medium;
-  @apply text-red-900;
-  @apply whitespace-nowrap;
-  @apply dark:text-white;
+  .btn-primary {
+    @apply bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
+  }
+
+  .btn-red {
+    @apply bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 px-5 py-2.5 mr-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900;
+  }
+
+  .btn-green {
+    @apply bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 px-5 py-2.5 mr-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800;
+  }
+
+  .modal-box {
+    @apply relative bg-white rounded-lg shadow dark:bg-gray-700;
+  }
+
+  .modal-header {
+    @apply flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600;
+  }
+
+  .modal-footer {
+    @apply flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600 w-full;
+  }
 }
-*/

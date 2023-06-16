@@ -5,6 +5,7 @@ import { useState } from "react";
 import DeleteVenta from "./deleteVenta";
 import UpdateVenta from "./updateVenta";
 import DetailPedido from "./detailPedido";
+import { convertDateToTable } from "@/lib/utilDates";
 
 const ListProductos = ({ data }) => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -37,7 +38,9 @@ const ListProductos = ({ data }) => {
             key={rowIndex}
             className="flex flex-row items-center px-2 bg-gradient-to-b from-yellow-100 to-amber-200 py-1 w-full  hover:bg-gray-200"
           >
-            <div className="basis-1/4 flex justify-center">{row.fecha}</div>
+            <div className="basis-1/4 flex justify-center">
+              {convertDateToTable(row.fecha)}
+            </div>
             <div className="basis-1/4 flex justify-center">{row.cliente}</div>
             <div className="basis-1/4 flex justify-center">{row.total}</div>
             <div className="basis-1/4 flex justify-center">

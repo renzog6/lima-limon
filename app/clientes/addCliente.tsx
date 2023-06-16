@@ -77,11 +77,15 @@ export default function AddCliente() {
               />
             </div>
             <div className="modal-action">
-              <button type="button" className="btn" onClick={handleChange}>
+              <button
+                type="button"
+                className="btn btn-primary"
+                onClick={handleChange}
+              >
                 Cerrar
               </button>
               {!isMutating ? (
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-green">
                   Guardar
                 </button>
               ) : (

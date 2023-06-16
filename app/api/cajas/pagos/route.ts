@@ -1,4 +1,4 @@
-//@/api/cajas/cobros/routes.ts
+//@/api/cajas/pagos/routes.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import { updateCajas } from "../updateCajas";
@@ -6,20 +6,20 @@ import { updateClientes } from "../../clientes/updateClientes";
 
 export async function GET() {
   try {
-    const cobros = await prisma.cobro.findMany({
+    const pagos = await prisma.pago.findMany({
       take: 10,
       orderBy: {
         fecha: "desc",
       },
       include: {
-        cliente: true,
+        proveedor: true,
       },
     });
 
-    const safes = cobros.map((cobro) => ({
-      ...cobro,
-      fecha: cobro.fecha !== null ? cobro.fecha.toLocaleDateString() : null,
-      cliente: cobro.cliente !== null ? cobro.cliente.nombre : "none",
+    const safes = pagos.map((pago) => ({
+      ...pago,
+      fecha: pago.fecha !== null ? pago.fecha.toLocaleDateString() : null,
+      proveedor: pago.proveedor !== null ? pago.proveedor.nombre : "none",
     }));
 
     return NextResponse.json(safes, { status: 200 });
@@ -33,16 +33,16 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
     const {
-      cobroFecha,
-      cobroMonto,
-      cobroFormaPago,
-      cobroNota,
+      pagoFecha,
+      pagoMonto,
+      pagoFormaPago,
+      pagoNota,
       clienteId,
       ventaId,
     } = data;
 
     // Validate the data
-    if (!cobroFecha) {
+    if (!pagoFecha) {
       return NextResponse.json(
         { error: "Please provide an order date" },
         { status: 400 }
@@ -61,7 +61,7 @@ export async function POST(req: Request) {
     }
 
     const tipoCaja = await prisma.caja.findFirst({
-      where: { nombre: cobroFormaPago },
+      where: { nombre: pagoFormaPago },
     });
     if (!tipoCaja) {
       return NextResponse.json(
@@ -70,19 +70,19 @@ export async function POST(req: Request) {
       );
     }
 
-    const cobro = await prisma.cobro.create({
+    const pago = await prisma.pago.create({
       data: {
-        fecha: cobroFecha,
-        monto: Number(cobroMonto),
-        formaPago: cobroFormaPago,
-        nota: cobroNota,
-        cliente: { connect: { id: Number(clienteId) } },
-        venta: { connect: { id: Number(ventaId) } },
+        fecha: pagoFecha,
+        monto: Number(pagoMonto),
+        formaPago: pagoFormaPago,
+        nota: pagoNota,
+        proveedor: { connect: { id: Number(clienteId) } },
+        compra: { connect: { id: Number(ventaId) } },
         caja: { connect: { id: tipoCaja.id } },
       },
     });
 
-    const updateCaja = await updateCajas(cobroFormaPago);
+    const updateCaja = await updateCajas(pagoFormaPago);
     if (!updateCaja) {
       return NextResponse.json(
         { error: "The caja does not exist" },
@@ -91,9 +91,9 @@ export async function POST(req: Request) {
     }
 
     //Actualiza el saldo del Cliente
-    updateClientes(clienteId, Number(cobroMonto) * -1);
+    updateClientes(clienteId, Number(pagoMonto) * -1);
 
-    return NextResponse.json({ data: cobro }, { status: 200 });
+    return NextResponse.json({ data: pago }, { status: 200 });
   } catch (error: unknown) {
     return NextResponse.json(
       { error: (error as Error).message },
@@ -111,12 +111,12 @@ export async function PUT(req: Request) {
       throw new Error("Invalid ID");
     }
 
-    const cobro = await prisma.cobro.update({
+    const pago = await prisma.pago.update({
       where: { id },
       data: { nombre, info },
     });
 
-    return NextResponse.json(cobro, { status: 200 });
+    return NextResponse.json(pago, { status: 200 });
   } catch (error: unknown) {
     return NextResponse.json(
       { error: (error as Error).message },

@@ -51,16 +51,20 @@ export default function DeleteCliente(cliente: Cliente) {
             Seguro que desea BORRAR: {cliente.nombre} ?
           </h3>
           <div className="modal-action">
-            <button type="button" className="btn" onClick={handleChange}>
+            <button
+              type="button"
+              className="btn btn-primary"
+              onClick={handleChange}
+            >
               Cerrar
             </button>
             {!isMutating ? (
               <button
                 type="button"
                 onClick={() => handleDelete(cliente.id)}
-                className="btn btn-primary"
+                className="btn btn-red"
               >
-                Borar
+                Borrar
               </button>
             ) : (
               <button type="button" className="btn loading">

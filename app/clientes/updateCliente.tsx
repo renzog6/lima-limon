@@ -54,7 +54,9 @@ export default function UpdateCliente(cliente: Cliente) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Edit {cliente.nombre}</h3>
+          <div className="modal-header">
+            <h3 className="font-bold text-lg">Editar: {cliente.nombre}</h3>
+          </div>
           <form onSubmit={handleUpdate}>
             <div className="form-control">
               <label className="label font-bold">Nombre</label>
@@ -78,18 +80,24 @@ export default function UpdateCliente(cliente: Cliente) {
               />
             </div>
             <div className="modal-action">
-              <button type="button" className="btn" onClick={handleChange}>
-                Carrar
-              </button>
-              {!isMutating ? (
-                <button type="submit" className="btn btn-primary">
-                  Guardar
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={handleChange}
+                >
+                  Carrar
                 </button>
-              ) : (
-                <button type="button" className="btn loading">
-                  Guardando...
-                </button>
-              )}
+                {!isMutating ? (
+                  <button type="submit" className="btn btn-green">
+                    Guardar
+                  </button>
+                ) : (
+                  <button type="button" className="btn loading">
+                    Guardando...
+                  </button>
+                )}
+              </div>
             </div>
           </form>
         </div>

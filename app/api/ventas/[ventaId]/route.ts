@@ -1,7 +1,6 @@
 //@/api/ventas/[ventaId]/routes.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
-import { clearScreenDown } from "readline";
 
 export async function DELETE(
   request: Request,

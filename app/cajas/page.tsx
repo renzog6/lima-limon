@@ -1,8 +1,8 @@
 //@/app/cajas/page.tsx
 
 import { Caja } from "@prisma/client";
-import ListCajas from "./ListCajas";
 import { getCajas } from "../hooks/useCajas";
+import ListCajas from "./ListCajas";
 
 export const dynamic = "force-dynamic";
 
