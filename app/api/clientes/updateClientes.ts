@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 
-export async function updateClientes(clienteId, monto) {
+export async function updateClientes(clienteId, importe) {
   try {
     const cliente = await prisma.cliente.findUnique({
       where: { id: Number(clienteId) },
@@ -16,7 +16,7 @@ export async function updateClientes(clienteId, monto) {
 
     const update = await prisma.cliente.update({
       where: { id: cliente.id },
-      data: { saldo: cliente.saldo + monto },
+      data: { saldo: cliente.saldo + importe },
     });
 
     return NextResponse.json(update);

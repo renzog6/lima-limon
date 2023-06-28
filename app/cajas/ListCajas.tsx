@@ -1,5 +1,7 @@
 //@/app/cajas/ListCajas.tsx
 
+import Link from "next/link";
+
 const ListCajas = ({ data }) => {
   const total = data.reduce((sum, caja) => sum + caja.saldo, 0.0);
 
@@ -19,7 +21,11 @@ const ListCajas = ({ data }) => {
           <div className="basis-1/3 flex justify-center ">
             {row.saldo.toLocaleString()}
           </div>
-          <div className="basis-1/3 flex justify-center">Details</div>
+          <div className="basis-1/3 flex justify-center">
+            <Link href={"/cajas/" + row.id} className="mx-auto">
+              Details
+            </Link>
+          </div>
         </div>
       ))}
       <div className="flex flex-row items-center px-2 h-8 bg-gradient-to-r from-green-200 to-green-500 py-1 w-full  hover:bg-gray-200 font-semibold">

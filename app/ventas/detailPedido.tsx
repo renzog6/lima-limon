@@ -1,11 +1,10 @@
 //@/app/ventas/detailPedido.tsx
 "use client";
 
-import { SyntheticEvent, useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-
-import { Pedido, Venta } from "@prisma/client";
+import { useState } from "react";
 import { FiList } from "react-icons/fi";
+
+import { Venta } from "@prisma/client";
 import { getPedidos } from "../api/ventas/pedidos/getPedidos";
 import { SafePedido } from "../types";
 
@@ -72,7 +71,7 @@ export default function DetailPedido(venta: Venta) {
 
           <div className="modal-action">
             <button type="button" className="btn" onClick={handleChange}>
-              Carrar
+              Cerrar
             </button>
           </div>
         </div>

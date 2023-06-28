@@ -1,7 +1,7 @@
 const getVariant = (variant?: VariantType) => {
   switch (variant) {
     case "primary":
-      return "bg-violet-500 hover:bg-violet-700  text-white shadow shadow-violet-600/25 hover:shadow-violet-600/75";
+      return "bg-gray-500 hover:bg-gray-700  text-white shadow shadow-gray-600/25 hover:shadow-gray-600/75";
     case "danger":
       return "bg-red-500 hover:bg-red-700 text-white  shadow shadow-red-600/25 hover:shadow-red-600/75";
     case "success":
@@ -17,10 +17,9 @@ const getVariant = (variant?: VariantType) => {
     case "outline-warning":
       return "bg-white text-amber-400 border border-amber-500 hover:text-white hover:bg-amber-500  ";
     case "outline-primary":
-      return "bg-white text-violet-500 border border-violet-500 hover:text-white hover:bg-violet-700  ";
-
+      return "bg-white text-gray-500 border border-gray-500 hover:text-white hover:bg-gray-700  ";
     default:
-      return "bg-violet-500 hover:bg-violet-700 text-white shadow shadow-violet-600/25 hover:shadow-violet-600/75";
+      return "bg-gray-500 hover:bg-gray-700 text-white shadow shadow-gray-600/25 hover:shadow-gray-600/75";
   }
 };
 
@@ -56,10 +55,9 @@ export const Button = ({
       {...props}
       type={type}
       className={`
- 
-        ${getVariant(variant)}  transition duration-500  ${
-        !paddingLess && "py-2 px-2"
-      }  ${!square && "rounded-md"} active:scale-95 ${className} `}
+      ${getVariant(variant)}  transition duration-500  
+      ${paddingLess ? "" : "py-2 px-2"}
+      ${square ? "" : "rounded md:rounded-md"} active:scale-95 ${className} `}
     >
       {children}
     </button>

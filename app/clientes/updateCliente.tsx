@@ -86,7 +86,7 @@ export default function UpdateCliente(cliente: Cliente) {
                   className="btn btn-primary"
                   onClick={handleChange}
                 >
-                  Carrar
+                  Cerrar
                 </button>
                 {!isMutating ? (
                   <button type="submit" className="btn btn-green">

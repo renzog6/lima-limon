@@ -4,8 +4,15 @@ import prisma from "@/lib/prismadb";
 
 export async function GET(request: Request) {
   try {
+    const { searchParams } = new URL(request.url);
+
+    const pgnum = +(searchParams.get("pgnum") ?? 0);
+    const pgsize = +(searchParams.get("pgsize") ?? 15);
+
     const productos = await prisma.producto.findMany({
       where: { estado: true },
+      skip: pgnum * pgsize,
+      take: pgsize,
       orderBy: {
         nombre: "asc",
       },

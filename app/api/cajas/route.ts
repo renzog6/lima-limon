@@ -1,8 +1,36 @@
 //@/api/cajas/routes.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
+/** 
+export async function GET(req: Request) {
+  try {
+    const tipoCaja = req.query.tipoCaja as TipoCaja;
 
-export async function GET() {
+    const cajas = await prisma.caja.findMany({
+      where: {
+        tipo: tipoCaja,
+      },
+      orderBy: {
+        nombre: "asc",
+      },
+    });
+
+    const safes = cajas.map((caja) => ({
+      ...caja,
+      fechaApertura:
+        caja.fechaApertura !== null
+          ? caja.fechaApertura.toLocaleDateString()
+          : null,
+    }));
+
+    return NextResponse.json(safes, { status: 200 });
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+*/
+export async function GET(req: Request) {
   try {
     const cajas = await prisma.caja.findMany({
       orderBy: {
@@ -28,7 +56,7 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const { cajaFecha, cajaMonto, clienteId } = data;
+    const { tipoCaja, cajaFecha, cajaSaldo, clienteId } = data;
 
     // Validate the data
     if (!cajaFecha) {
@@ -51,8 +79,9 @@ export async function POST(req: Request) {
 
     const caja = await prisma.caja.create({
       data: {
+        tipo: tipoCaja,
         fechaApertura: cajaFecha,
-        saldo: cajaMonto,
+        saldo: cajaSaldo,
       },
     });
 

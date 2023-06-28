@@ -5,6 +5,7 @@ import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { createCliente } from "@/app/hooks/useClientes";
+import { Button } from "@/components/Cart";
 
 export default function AddCliente() {
   const [nombre, setNombre] = useState("");
@@ -39,9 +40,13 @@ export default function AddCliente() {
 
   return (
     <div>
-      <button className="btn  btn-sm btn-secondary" onClick={handleChange}>
+      <Button
+        variant="warning"
+        className="w-36 h-8 py-0"
+        onClick={handleChange}
+      >
         Agregar
-      </button>
+      </Button>
 
       <input
         id="modal"

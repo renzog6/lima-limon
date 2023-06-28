@@ -43,11 +43,11 @@ model Categoria {
 }
 
 model Marca {
-  id          Int                  @id @default(autoincrement())
-  nombre      String?              @db.VarChar(20)
-  info        String?              @db.VarChar(255)
-  estado      Boolean?             @default(true)
-  proveedores proveedores_marcas[]
+  id          Int         @id @default(autoincrement())
+  nombre      String?     @db.VarChar(20)
+  info        String?     @db.VarChar(255)
+  estado      Boolean?    @default(true)
+  proveedores Proveedor[]
   productos   Producto[]
 
   @@map("marcas")
@@ -68,13 +68,14 @@ model Cliente {
 }
 
 model Proveedor {
-  id        Int                  @id @default(autoincrement())
-  nombre    String?              @db.VarChar(20)
-  info      String?              @db.VarChar(255)
-  estado    Boolean?             @default(true)
+  id        Int        @id @default(autoincrement())
+  nombre    String?    @db.VarChar(20)
+  info      String?    @db.VarChar(255)
+  estado    Boolean?   @default(true)
   email     String?
   telefono  String?
-  marcas    proveedores_marcas[]
+  saldo     Float      @default(0)
+  marcas    Marca[]
   productos Producto[]
   pagos     Pago[]
   compras   Compra[]
@@ -137,60 +138,83 @@ model Pedido {
   @@map("pedidos")
 }
 
+model Caja {
+  id            Int              @id @default(autoincrement())
+  tipo          TipoCaja?        @default(Efectivo)
+  nombre        String?
+  saldo         Float?           @default(0.0)
+  estado        Boolean          @default(true)
+  fechaApertura DateTime         @default(now())
+  fechaCierre   DateTime?
+  movimientos   CajaMovimiento[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cajas")
+}
+
+enum TipoCaja {
+  Efectivo
+  Electronico
+  Otra
+}
+
+model CajaMovimiento {
+  id      Int            @id @default(autoincrement())
+  fecha   DateTime       @default(now())
+  tipo    TipoMovimiento
+  importe Float          @default(0)
+  info    String?
+
+  cajaId Int?
+  caja   Caja? @relation(fields: [cajaId], references: [id])
+
+  // One-to-one relationship between CajaMovimiento-Pago
+  pago Pago?
+
+  // One-to-one relationship between CajaMovimiento-Cobro
+  cobro Cobro?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("cajas_movimientos")
+}
+
+enum TipoMovimiento {
+  Pago
+  Cobro
+  Iterno_Pago
+  intero_Cobro
+}
+
 model Pago {
-  id        Int      @id @default(autoincrement())
-  fecha     DateTime @default(now())
-  monto     Float
-  formaPago String?
-  nota      String?
+  id    Int      @id @default(autoincrement())
+  fecha DateTime @default(now())
 
   proveedorId Int
   proveedor   Proveedor @relation(fields: [proveedorId], references: [id])
   compraId    Int?
   compra      Compra?   @relation(fields: [compraId], references: [id])
-  cajaId      Int
-  caja        Caja?     @relation(fields: [cajaId], references: [id])
+
+  movimientoId Int?            @unique
+  movimiento   CajaMovimiento? @relation(fields: [movimientoId], references: [id])
 
   @@map("pagos")
 }
 
 model Cobro {
-  id        Int      @id @default(autoincrement())
-  fecha     DateTime @default(now())
-  monto     Float
-  formaPago String?
-  nota      String?
+  id    Int      @id @default(autoincrement())
+  fecha DateTime @default(now())
 
   clienteId Int
   cliente   Cliente @relation(fields: [clienteId], references: [id])
-  cajaId    Int?
-  caja      Caja?   @relation(fields: [cajaId], references: [id])
   ventaId   Int?
   venta     Venta?  @relation(fields: [ventaId], references: [id])
 
+  movimientoId Int?            @unique
+  movimiento   CajaMovimiento? @relation(fields: [movimientoId], references: [id])
+
   @@map("cobros")
-}
-
-model Caja {
-  id            Int       @id @default(autoincrement())
-  nombre        String?
-  saldo         Float?    @default(0)
-  estado        Boolean   @default(true)
-  fechaApertura DateTime  @default(now())
-  fechaCierre   DateTime?
-  ingresos      Cobro[]
-  egresos       Pago[]
-
-  @@map("cajas")
-}
-
-model proveedores_marcas {
-  marcaId     Int
-  proveedorId Int
-  marcas      Marca     @relation(fields: [marcaId], references: [id], onDelete: Cascade, map: "_marcatoproveedor_A_fkey")
-  proveedores Proveedor @relation(fields: [proveedorId], references: [id], onDelete: Cascade, map: "_marcatoproveedor_B_fkey")
-
-  @@unique([marcaId, proveedorId], map: "_marcatoproveedor_AB_unique")
-  @@index([proveedorId], map: "_marcatoproveedor_B_index")
-  @@map("_proveedores_marcas")
 }

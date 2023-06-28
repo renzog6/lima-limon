@@ -3,7 +3,6 @@ const { PrismaClient } = require("@prisma/client");
 const {
   clientes,
   proveedores,
-  proveedores_marcas,
   categorias,
   marcas,
   productos,
@@ -74,12 +73,11 @@ const load = async () => {
     console.log("Added marcas data");
 
     await prisma.proveedor.createMany({
-      data: proveedores,
+      data: proveedores.map((proveedor) => ({
+        nombre: proveedor.nombre,
+        info: proveedor.info,
+      })),
     });
-    await prisma.proveedores_marcas.createMany({
-      data: proveedores_marcas,
-    });
-    console.log("Added proveedores data");
 
     await prisma.producto.createMany({
       data: productos,

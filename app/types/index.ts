@@ -1,4 +1,5 @@
-import { Categoria, Pedido, Producto, Venta } from "@prisma/client";
+//@/app/types/index.ts
+import { Caja, Categoria, Pedido, Producto, Venta } from "@prisma/client";
 
 /**
  * Model Producto
@@ -46,28 +47,21 @@ export interface CartItem {
   qty: number;
 }
 
+export type CajaSimple = Pick<Caja, "nombre"> & {
+  id: number;
+  nombre: string;
+};
+
 export type FormaPago = {
   Efectivo;
   Transferecia;
 };
 
-/*
-export type SafeReservation = Omit<
-  Reservation,
-  "createdAt" | "startDate" | "endDate" | "res"
-> & {
-  createdAt: string;
-  startDate: string;
-  endDate: string;
-  res: SafeListing;
+export type CajaMovimientoSafe = {
+  fecha: Date;
+  tipo: string;
+  importe: number;
+  info: string | null;
+  desdeCajaId: number;
+  hastaCajaId: number;
 };
-
-export type SafeUser = Omit<
-  User,
-  "createdAt" | "updatedAt" | "emailVerified"
-> & {
-  createdAt: string;
-  updatedAt: string;
-  emailVerified: string | null;
-};
-*/

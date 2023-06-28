@@ -9,18 +9,14 @@ export async function GET() {
         nombre: "asc",
       },
       include: {
-        marcas: {
-          include: {
-            marcas: true,
-          },
-        },
+        marcas: true,
       },
     });
 
     const safeProveedores = proveedores.map((proveedor) => ({
       ...proveedor,
-      marcas: proveedor.marcas.map((proveedorMarca) => proveedorMarca.marcas),
-      proveedores_marcas: undefined, // Eliminar el campo proveedores_marcas
+      //marcas: proveedor.marcas.map((proveedorMarca) => proveedorMarca.marcas),
+      //proveedores_marcas: undefined, // Eliminar el campo proveedores_marcas
     }));
 
     return NextResponse.json(safeProveedores);
@@ -36,11 +32,12 @@ export async function POST(request: Request) {
     return NextResponse.error();
   }
 */
-  const body = await request.json();
-  const { nombre, info } = body;
+  const data = await request.json();
+  const { nombre, info, marcas } = data;
+  //const { nombre, info, marcas } = data; PARA AGREGAR VARIAS MARCAS
 
-  Object.keys(body).forEach((value: any) => {
-    if (!body[value]) {
+  Object.keys(data).forEach((value: any) => {
+    if (!data[value]) {
       NextResponse.error();
     }
   });
@@ -49,6 +46,9 @@ export async function POST(request: Request) {
     data: {
       nombre,
       info,
+      //marcas: {
+      //connect: marcas.map((id) => ({ id })), PARA AGREGAR VARIAS MARCAS
+      //},
     },
   });
 

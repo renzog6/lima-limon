@@ -6,7 +6,7 @@ import {
   decrement,
 } from "@/app/redux/features/cartSlice";
 import { useAppSelector, useAppDispatch } from "@/app/redux/store";
-import { Button } from "./Button";
+import { Button } from "../ui/Button";
 import QtyBtn from "./QtyBtn";
 import { Producto } from "@prisma/client";
 import { BsCartPlus } from "react-icons/bs";

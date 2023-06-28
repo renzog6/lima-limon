@@ -1,10 +1,12 @@
+//@/components/ui/Sidebar.tsx
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { SlHome } from "react-icons/sl";
 import { MdSell } from "react-icons/md";
-import { FaTshirt, FaRedhat, FaProductHunt } from "react-icons/fa";
+import { FaTshirt, FaRedhat, FaProductHunt, FaMoneyBill } from "react-icons/fa";
 import { GiCash } from "react-icons/gi";
+import { BiCreditCard } from "react-icons/bi";
 
 export default function Sidebar({ show, setter }) {
   // Define our base class
@@ -50,7 +52,23 @@ export default function Sidebar({ show, setter }) {
       <div className={`${className}${appendClass}`}>
         <div className="flex flex-col">
           <MenuItem name="Home" route="/" icon={<SlHome />} />
-          <MenuItem name="Caja" route="/cajas" icon={<GiCash />} />
+          <MenuItem name="Cajas" route="/cajas" icon={<GiCash />} />
+          <ul className="pl-4 mt-2">
+            <li>
+              <MenuItem
+                name="Cobros"
+                route="/cajas/cobros"
+                icon={<FaMoneyBill />}
+              />
+            </li>
+            <li>
+              <MenuItem
+                name="Pagos"
+                route="/cajas/pagos"
+                icon={<BiCreditCard />}
+              />
+            </li>
+          </ul>
           <MenuItem name="Clientes" route="/clientes" icon={<FaTshirt />} />
           <MenuItem
             name="Proveedores"

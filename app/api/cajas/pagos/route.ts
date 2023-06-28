@@ -3,7 +3,12 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import { updateCajas } from "../updateCajas";
 import { updateClientes } from "../../clientes/updateClientes";
+import { TipoMovimiento } from "@prisma/client";
 
+/**
+ *
+ * @returns Lista de Pagos
+ */
 export async function GET() {
   try {
     const pagos = await prisma.pago.findMany({
@@ -13,6 +18,7 @@ export async function GET() {
       },
       include: {
         proveedor: true,
+        movimiento: true,
       },
     });
 
@@ -20,6 +26,7 @@ export async function GET() {
       ...pago,
       fecha: pago.fecha !== null ? pago.fecha.toLocaleDateString() : null,
       proveedor: pago.proveedor !== null ? pago.proveedor.nombre : "none",
+      importe: pago.movimiento?.importe,
     }));
 
     return NextResponse.json(safes, { status: 200 });
@@ -33,11 +40,12 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
     const {
+      pagoInterno,
       pagoFecha,
-      pagoMonto,
-      pagoFormaPago,
-      pagoNota,
-      clienteId,
+      pagoImporte,
+      pagoInfo,
+      pagoCajaId,
+      pagoClienteId,
       ventaId,
     } = data;
 
@@ -49,7 +57,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if the customer exists
+    // If el movimiento es interno, el ID es del Jefe
+    let clienteId = pagoInterno ? 1 : pagoClienteId;
     const customer = await prisma.cliente.findUnique({
       where: { id: Number(clienteId) },
     });
@@ -61,7 +70,7 @@ export async function POST(req: Request) {
     }
 
     const tipoCaja = await prisma.caja.findFirst({
-      where: { nombre: pagoFormaPago },
+      where: { id: +pagoCajaId },
     });
     if (!tipoCaja) {
       return NextResponse.json(
@@ -73,16 +82,22 @@ export async function POST(req: Request) {
     const pago = await prisma.pago.create({
       data: {
         fecha: pagoFecha,
-        monto: Number(pagoMonto),
-        formaPago: pagoFormaPago,
-        nota: pagoNota,
         proveedor: { connect: { id: Number(clienteId) } },
-        compra: { connect: { id: Number(ventaId) } },
-        caja: { connect: { id: tipoCaja.id } },
+        //compra: { connect: { id: Number(ventaId) } },
+        //Creamos el Movimiento
+        movimiento: {
+          create: {
+            fecha: pagoFecha,
+            tipo: TipoMovimiento.Pago,
+            importe: Number(pagoImporte),
+            info: pagoInfo,
+            caja: { connect: { id: tipoCaja.id } },
+          },
+        },
       },
     });
 
-    const updateCaja = await updateCajas(pagoFormaPago);
+    const updateCaja = await updateCajas(tipoCaja);
     if (!updateCaja) {
       return NextResponse.json(
         { error: "The caja does not exist" },
@@ -91,7 +106,7 @@ export async function POST(req: Request) {
     }
 
     //Actualiza el saldo del Cliente
-    updateClientes(clienteId, Number(pagoMonto) * -1);
+    updateClientes(clienteId, Number(pagoImporte));
 
     return NextResponse.json({ data: pago }, { status: 200 });
   } catch (error: unknown) {

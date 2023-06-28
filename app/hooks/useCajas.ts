@@ -33,6 +33,20 @@ export async function getCajas() {
   }
 }
 
+export async function getCajaDetalle(cajaId: number) {
+  try {
+    const res = await fetch(`${apiUrl}/${cajaId}`, {
+      method: "GET",
+      cache: "no-store" as RequestCache,
+    });
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+}
+
 export async function createCaja(caja) {
   try {
     return fetchRequest(apiUrl, "POST", caja);
@@ -55,6 +69,14 @@ export async function deleteCaja(cajaId: number) {
       method: "DELETE",
     });
     return res;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+}
+
+export async function movimientoEntreCajas(movimiento) {
+  try {
+    return fetchRequest(`${apiUrl}/movimientos`, "POST", movimiento);
   } catch (error) {
     throw new Error((error as Error).message);
   }

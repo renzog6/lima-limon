@@ -16,11 +16,18 @@ import { createVenta } from "@/app/hooks/useVentas";
 import { useDispatch } from "react-redux";
 import { createCobro } from "@/app/hooks/useCobros";
 import InputDate from "@/components/InputDate";
+import InputSelectCajas from "@/components/InputSelectCajas";
+import { CajaSimple } from "@/app/types";
+import { getCajas } from "@/app/hooks/useCajas";
 
-export default function SaveCart() {
+const SaveCart = () => {
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
   const [clientes, setClientes] = useState<Cliente[]>([]);
+
+  const [cajas, setCajas] = useState<CajaSimple[]>([]);
+  const [cajaSelected, setCajaSelected] = useState<CajaSimple>(cajas[0]);
+
   const [startDate, setStartDate] = useState(new Date());
   const [hacePago, setHacePago] = useState(true);
 
@@ -44,6 +51,13 @@ export default function SaveCart() {
         info: "",
       });
     }, 1000);
+    //Carga Lista de Categorias
+    async function fetchCajas() {
+      const cajas = await getCajas();
+      setCajas(cajas);
+      setCajaSelected(cajas[0]);
+    }
+    fetchCajas();
 
     //Carga Lista de Categorias
     async function fetchClientes() {
@@ -55,6 +69,10 @@ export default function SaveCart() {
 
   const handleDateChange = (date) => {
     setStartDate(date); // Actualiza el estado de startDate en SaveCart
+  };
+
+  const handleCajaChange = (caja) => {
+    setCajaSelected(caja);
   };
 
   async function onSubmit(data) {
@@ -75,13 +93,13 @@ export default function SaveCart() {
       console.log("El producto se ha guardado exitosamente:", res.data);
       if (hacePago) {
         const cobro = {
+          cobroInterno: false,
           cobroFecha: startDate,
-          cobroMonto: data.importe,
-          cobroFormaPago: data.formaPago,
-          cobroNota: data.nota,
-          clienteId: data.clienteId,
+          cobroImporte: data.importe,
+          cobroInfo: data.info,
+          cobroCajaId: cajaSelected.id,
+          cobroClienteId: data.clienteId,
           ventaId: res.data.id,
-          cajaId: 1,
         };
         const resCobro = await createCobro(cobro);
         if (resCobro.data) {
@@ -136,7 +154,7 @@ export default function SaveCart() {
               <label htmlFor="date" className="label font-bold">
                 Fecha
               </label>
-              <div className="input input-bordered h-8 content-center justify-center">
+              <div className="input input-bordered h-9 content-center justify-center">
                 <InputDate date={startDate} onChange={handleDateChange} />
               </div>
             </div>
@@ -160,8 +178,9 @@ export default function SaveCart() {
             <div className="form-control">
               <label className="label font-bold">Nota</label>
               <input
+                id="cartInfo"
                 type="text"
-                {...register("nota")}
+                {...register("info")}
                 className="input w-full input-bordered h-9"
                 placeholder="Info"
               />
@@ -174,7 +193,7 @@ export default function SaveCart() {
               >
                 <label className="label font-bold">Pago?</label>
                 <input
-                  id="pago"
+                  id="cartPago"
                   title="Pago"
                   type="checkbox"
                   checked={hacePago}
@@ -188,6 +207,7 @@ export default function SaveCart() {
                   <div className="form-control basis-1/2 px-1">
                     <label className="label font-bold">Importe</label>
                     <input
+                      id="cartImporte"
                       type="number"
                       step="0.01"
                       {...register("importe", { required: true })}
@@ -199,36 +219,35 @@ export default function SaveCart() {
                     )}
                   </div>
                   <div className="form-control basis-1/2">
-                    <div className="form-control basis-1/2 px-1">
+                    <div className="form-control basis-1/2 px-1 bordered">
                       <label className="label font-bold">Forma de Pago</label>
-                      <select
-                        {...register("formaPago", { required: true })}
-                        className="input w-full input-bordered h-9"
-                      >
-                        <option value="Efectivo">Efectivo</option>
-                        <option value="Transferencia">Transferencia</option>
-                      </select>
-
-                      {errors.precio && (
-                        <span className="error">*Requerido</span>
-                      )}
+                      <div className="input input-bordered h-9">
+                        <InputSelectCajas
+                          cajas={cajas}
+                          onChange={handleCajaChange}
+                        />
+                      </div>
                     </div>
                   </div>
                 </div>
               )}
             </div>
             <div className="modal-action">
-              <button type="button" className="btn" onClick={handleChange}>
+              <Button
+                variant="danger"
+                className="w-36 h-10"
+                onClick={handleChange}
+              >
                 Cerrar
-              </button>
+              </Button>
               {!isMutating ? (
-                <button type="submit" className="btn btn-primary">
+                <Button variant="success" type="submit" className="w-36 h-10">
                   Guardar
-                </button>
+                </Button>
               ) : (
-                <button type="button" className="btn loading">
+                <Button variant="success" type="submit" className="w-36 h-10">
                   Guardando...
-                </button>
+                </Button>
               )}
             </div>
           </form>
@@ -236,4 +255,6 @@ export default function SaveCart() {
       </div>
     </div>
   );
-}
+};
+
+export default SaveCart;

@@ -3,16 +3,22 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import { updateCajas } from "../updateCajas";
 import { updateClientes } from "../../clientes/updateClientes";
+import { TipoMovimiento } from "@prisma/client";
 
+/**
+ *
+ * @returns Lista de Cobros
+ */
 export async function GET() {
   try {
     const cobros = await prisma.cobro.findMany({
-      take: 10,
+      take: 20,
       orderBy: {
         fecha: "desc",
       },
       include: {
         cliente: true,
+        movimiento: true,
       },
     });
 
@@ -20,6 +26,7 @@ export async function GET() {
       ...cobro,
       fecha: cobro.fecha !== null ? cobro.fecha.toLocaleDateString() : null,
       cliente: cobro.cliente !== null ? cobro.cliente.nombre : "none",
+      importe: cobro.movimiento?.importe,
     }));
 
     return NextResponse.json(safes, { status: 200 });
@@ -33,11 +40,12 @@ export async function POST(req: Request) {
   try {
     const data = await req.json();
     const {
+      cobroInterno,
       cobroFecha,
-      cobroMonto,
-      cobroFormaPago,
-      cobroNota,
-      clienteId,
+      cobroImporte,
+      cobroInfo,
+      cobroCajaId,
+      cobroClienteId,
       ventaId,
     } = data;
 
@@ -49,7 +57,8 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if the customer exists
+    // If el movimiento es interno, el ID es del Jefe
+    let clienteId = cobroInterno ? 1 : cobroClienteId;
     const customer = await prisma.cliente.findUnique({
       where: { id: Number(clienteId) },
     });
@@ -61,7 +70,7 @@ export async function POST(req: Request) {
     }
 
     const tipoCaja = await prisma.caja.findFirst({
-      where: { nombre: cobroFormaPago },
+      where: { id: Number(cobroCajaId) },
     });
     if (!tipoCaja) {
       return NextResponse.json(
@@ -73,16 +82,22 @@ export async function POST(req: Request) {
     const cobro = await prisma.cobro.create({
       data: {
         fecha: cobroFecha,
-        monto: Number(cobroMonto),
-        formaPago: cobroFormaPago,
-        nota: cobroNota,
         cliente: { connect: { id: Number(clienteId) } },
-        venta: { connect: { id: Number(ventaId) } },
-        caja: { connect: { id: tipoCaja.id } },
+        //venta: { connect: { id: Number(ventaId) } },
+        //Creamos el Movimiento
+        movimiento: {
+          create: {
+            fecha: cobroFecha,
+            tipo: TipoMovimiento.Cobro,
+            importe: Number(cobroImporte),
+            info: cobroInfo,
+            caja: { connect: { id: tipoCaja.id } },
+          },
+        },
       },
     });
 
-    const updateCaja = await updateCajas(cobroFormaPago);
+    const updateCaja = await updateCajas(tipoCaja);
     if (!updateCaja) {
       return NextResponse.json(
         { error: "The caja does not exist" },
@@ -91,7 +106,7 @@ export async function POST(req: Request) {
     }
 
     //Actualiza el saldo del Cliente
-    updateClientes(clienteId, Number(cobroMonto) * -1);
+    updateClientes(clienteId, Number(cobroImporte) * -1);
 
     return NextResponse.json({ data: cobro }, { status: 200 });
   } catch (error: unknown) {

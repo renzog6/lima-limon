@@ -4,7 +4,7 @@ import { getVentas } from "@/app/hooks/useVentas";
 
 import ListVentas from "./ListVentas";
 
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 // 'auto' | 'force-dynamic' | 'error' | 'force-static'
 
 export default async function VentaList() {

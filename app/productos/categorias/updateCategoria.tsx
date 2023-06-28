@@ -79,7 +79,7 @@ export default function UpdateCategoria(categoria: Categoria) {
             </div>
             <div className="modal-action">
               <button type="button" className="btn" onClick={handleChange}>
-                Carrar
+                Cerrar
               </button>
               {!isMutating ? (
                 <button type="submit" className="btn btn-primary">

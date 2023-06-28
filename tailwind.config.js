@@ -11,8 +11,11 @@ module.exports = {
     },
 
     extend: {
-      /*
-        backgroundImage: {
+      fontFamily: {
+        sans: ["var(--font-inter)"],
+        mono: ["var(--font-roboto-mono)"],
+      },
+      backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
           "conic-gradient(from 180deg at 60% 40%, var(--tw-gradient-stops))",
@@ -23,7 +26,6 @@ module.exports = {
       gridTemplateRows: {
         header: "64px auto", // 👈 for the navbar layout. adds grid-rows-header class
       },
-    */
     },
   },
   daisyui: {
@@ -44,31 +46,11 @@ module.exports = {
       },
       "light",
       "dark",
-      "cupcake",
-      "bumblebee",
-      "emerald",
-      "corporate",
-      "retro",
-      "valentine",
-      "halloween",
-      "garden",
       "forest",
-      "aqua",
-      "lofi",
-      "pastel",
-      "fantasy",
-      "wireframe",
       "black",
       "luxury",
       "dracula",
-      "cmyk",
-      "autumn",
-      "business",
-      "acid",
       "lemonade",
-      "night",
-      "coffee",
-      "winter",
     ],
   },
   plugins: [require("daisyui")],

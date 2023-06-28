@@ -6,10 +6,11 @@ import CartItemCard from "@/components/Cart/CartItemCard";
 
 import SaveCart from "./saveCart";
 import ResetCart from "./resetCart";
+import { getCajas } from "@/app/hooks/useCajas";
 
 export const dynamic = "force-dynamic";
 
-const CartPage = () => {
+const CartPage = async () => {
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalPrice = useAppSelector(TotalPriceSelector);
 

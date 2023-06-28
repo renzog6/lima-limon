@@ -2,8 +2,8 @@
 
 const clientes = [
   {
-    nombre: "Cliente 11",
-    info: "Test",
+    nombre: "Vale - Lima Limon",
+    info: "Para uso Interno",
   },
   {
     nombre: "Cliente 22",
@@ -13,32 +13,15 @@ const clientes = [
 
 const proveedores = [
   {
-    nombre: "Proveedor 00",
-    info: "Test",
+    nombre: "Vale - Lima Limon",
+    info: "Para uso Interno",
   },
   {
     nombre: "Proveedor 33",
     info: "Test",
   },
 ];
-const proveedores_marcas = [
-  {
-    marcaId: 1,
-    proveedorId: 1,
-  },
-  {
-    marcaId: 2,
-    proveedorId: 1,
-  },
-  {
-    marcaId: 2,
-    proveedorId: 2,
-  },
-  {
-    marcaId: 3,
-    proveedorId: 2,
-  },
-];
+
 const categorias = [
   {
     nombre: "Textil - 250ml",
@@ -102,6 +85,7 @@ const productos = [
 const cajas = [
   {
     id: 1,
+    tipo: "Efectivo",
     nombre: "Efectivo",
     saldo: 0,
     estado: true,
@@ -110,7 +94,8 @@ const cajas = [
   },
   {
     id: 2,
-    nombre: "Transferencia",
+    tipo: "Electronico",
+    nombre: "Electronico",
     saldo: 0,
     estado: true,
     fechaApertura: new Date("2023-01-01 00:00:00.00"),
@@ -121,7 +106,6 @@ const cajas = [
 module.exports = {
   clientes,
   proveedores,
-  proveedores_marcas,
   categorias,
   marcas,
   productos,

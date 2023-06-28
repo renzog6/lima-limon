@@ -1,9 +1,9 @@
+//@/app/proveedores/addProveedor.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { Proveedor } from "@prisma/client";
 import { addProveedor } from "@/app/hooks/useProveedores";
 
 export default function AddProveedor() {

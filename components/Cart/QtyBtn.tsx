@@ -1,7 +1,7 @@
 import React from "react";
 
 import { TrashIcon } from "@heroicons/react/24/solid";
-import { Button } from "./Button";
+import { Button } from "../ui/Button";
 import { BsPlusCircle } from "react-icons/bs";
 import { FiMinusCircle } from "react-icons/fi";
 interface Props {

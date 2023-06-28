@@ -8,7 +8,7 @@ import { FaTrash } from "react-icons/fa";
 import { Venta } from "@prisma/client";
 import { deleteVenta } from "@/app/hooks/useVentas";
 
-export default function DeleteVenta(venta: Venta) {
+const DeleteVenta = (venta: Venta) => {
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
@@ -71,4 +71,6 @@ export default function DeleteVenta(venta: Venta) {
       </div>
     </div>
   );
-}
+};
+
+export default DeleteVenta;

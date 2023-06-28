@@ -1,6 +1,5 @@
 import Image from "next/image";
 import logo from "@/images/logo.png";
-import InputSelect from "@/components/InputSelect";
 
 export default function Home() {
   return (
@@ -16,13 +15,15 @@ export default function Home() {
         />
       </div>
       <div className="">
-        <label className="flex justify-center">
-          <span className="text-gray-700 font-semibold text-2xl">
+        <label htmlFor="titulo" className="flex justify-center">
+          <span id="titulo" className="text-gray-700 font-semibold text-2xl">
             Liman Limon
           </span>
         </label>
-        <label className="flex justify-center text-lg">
-          <span className="text-gray-700">Aromas y Fragancias</span>
+        <label htmlFor="sub-titulo" className="flex justify-center text-lg">
+          <span id="sub-titulo" className="text-gray-700">
+            Aromas y Fragancias
+          </span>
         </label>
       </div>
     </main>

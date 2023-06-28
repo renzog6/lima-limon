@@ -1,7 +1,7 @@
 //@/app/cajas/cobros/ListCobros.tsx
 
 const ListCobros = ({ data }) => {
-  const total = data.reduce((sum, cobro) => sum + cobro.monto, 0.0);
+  const total = data.reduce((sum, cobro) => sum + cobro.importe, 0.0);
 
   return (
     <>
@@ -20,7 +20,7 @@ const ListCobros = ({ data }) => {
             <div className="basis-1/2 text-sm md:text-lg">{row.fecha}</div>
           </div>
           <div className="basis-1/3 flex justify-center ">
-            {row.monto.toLocaleString()}
+            {row.importe.toLocaleString()}
           </div>
           <div className="basis-1/3 flex justify-center">Details</div>
         </div>

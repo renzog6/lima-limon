@@ -1,9 +1,21 @@
-import { Inter } from "next/font/google";
-import Layout from "@/components/Layout";
+//@/app/layout.tsx
+import { Inter, Roboto_Mono } from "next/font/google";
+import { Suspense } from "react";
+import Layout from "@/components/ui/Layout";
+import Loading from "./loading";
 import "@/style/globals.css";
-import Providers from "./redux/Providers";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-inter",
+});
+
+const roboto_mono = Roboto_Mono({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-roboto-mono",
+});
 
 export const metadata = {
   title: "Lima Limon App",
@@ -16,11 +28,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html data-theme="lemonade" lang="es">
+    <html
+      data-theme="lemonade"
+      lang="es"
+      className={`${inter.variable} ${roboto_mono.variable}`}
+    >
       <body className={inter.className}>
-        <Providers>
+        <Suspense fallback={<Loading />}>
           <Layout>{children}</Layout>
-        </Providers>
+        </Suspense>
       </body>
     </html>
   );
