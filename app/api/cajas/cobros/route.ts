@@ -6,7 +6,8 @@ import { updateClientes } from "../../clientes/updateClientes";
 import { TipoMovimiento } from "@prisma/client";
 
 /**
- *
+ *GET- List Cobros
+ 
  * @returns Lista de Cobros
  */
 export async function GET() {

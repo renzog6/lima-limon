@@ -12,7 +12,7 @@ const MovimientoDetail = () => {
       {" "}
       <button
         title="edit"
-        className="mr-2 text-green-700 hover:text-blue-700"
+        className="mr-1 text-green-700 hover:text-blue-700"
         onClick={handleChange}
       >
         <FiList />

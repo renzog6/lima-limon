@@ -3,6 +3,11 @@ import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import { updateClientes } from "../clientes/updateClientes";
 
+/**
+ * GET - List All Ventas
+ *
+ * @returns  {Array<Object>} An array of order objects
+ */
 export async function GET() {
   try {
     const ventas = await prisma.venta.findMany({
@@ -18,17 +23,23 @@ export async function GET() {
 
     const safe = ventas.map((venta) => ({
       ...venta,
-      //   fecha: venta.fecha !== null ? venta.fecha.toLocaleDateString() : null,
+      //fecha: venta.fecha !== null ? venta.fecha.toLocaleDateString() : null,
       cliente: venta.cliente.nombre,
     }));
 
     return NextResponse.json(safe);
-  } catch (error: any) {
-    console.log(error);
-    throw new Error(error);
+    //return NextResponse.json({ message: "OK", safe }, { status: 200 });
+  } catch (error) {
+    return NextResponse.json({ message: "Error", error }, { status: 500 });
   }
 }
 
+/**
+ * POST /ventas - Create a new Venta
+ *
+ * @param req Datos para crear la venta
+ * @returns {Object} The created order object
+ */
 export async function POST(req: Request) {
   try {
     const data = await req.json();
@@ -108,6 +119,12 @@ export async function POST(req: Request) {
   }
 }
 
+/**
+ * PUT /ventas/:id - Update an existing venta
+ *
+ * @param req
+ * @returns {Object} The updated venta
+ */
 export async function PUT(req: Request) {
   try {
     const data = await req.json();

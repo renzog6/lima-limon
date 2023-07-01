@@ -25,7 +25,7 @@ export async function GET(
 
     const safes = movimientos.map((mov) => ({
       ...mov,
-      fecha: mov.fecha.toLocaleDateString(),
+      fecha: mov.fecha,
       quien:
         mov.pago != null
           ? mov.pago.proveedor.nombre

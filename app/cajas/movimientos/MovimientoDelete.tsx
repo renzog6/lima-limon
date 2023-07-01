@@ -11,7 +11,7 @@ const MovimientoDelete = () => {
     <div>
       <button
         title="delete"
-        className="text-red-500 hover:text-red-700"
+        className="mr-1 text-red-500 hover:text-red-700"
         onClick={handleChange}
       >
         <FaTrash />

@@ -1,13 +1,12 @@
 //@/app/ventas/pedido/ListProductos.tsx
 "use client";
 import { useState } from "react";
-
 import DeleteVenta from "./deleteVenta";
 import UpdateVenta from "./updateVenta";
 import DetailPedido from "./detailPedido";
 import { convertDateToTable } from "@/lib/utilDates";
 
-const ListProductos = ({ data }) => {
+const ListVentas = ({ data }) => {
   const [searchTerm, setSearchTerm] = useState("");
   // Filtrar los datos basados en el término de búsqueda
   const filteredData = data.filter((row) =>
@@ -65,4 +64,4 @@ const ListProductos = ({ data }) => {
     </>
   );
 };
-export default ListProductos;
+export default ListVentas;

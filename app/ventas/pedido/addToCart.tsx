@@ -35,7 +35,6 @@ export default function AddToCart(producto: ProductoToCart) {
       >
         <BsCartPlus size={20} color="green" />
       </button>
-
       <input
         id="modal-update"
         aria-label="modal-update"

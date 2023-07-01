@@ -1,33 +1,43 @@
-//@/components/Navbar.tsx
+//@/components/ui/Navbar.tsx
 import Link from "next/link";
 import Image from "next/image";
 import { FiMenu } from "react-icons/fi";
 
 import logo from "@/images/logo.png";
+import { FaUser } from "react-icons/fa";
+import Box from "./Box";
 
-const Navbar = () => {
+const Navbar = ({ setter }) => {
   return (
-    <div className="top-0 left-0 right-0 h-[60px] bg-black flex [&>*]:my-auto">
-      <div className="flex-none">
-        <button title="menu" className="btn btn-square btn-ghost">
-          <FiMenu />
-        </button>
-      </div>
-      <div className="flex-1">
-        <Link className="btn btn-ghost normal-case text-xl" href="/">
-          <strong className="text-yellow-300">Lima Limon</strong>
-        </Link>
-      </div>
-      <div className="flex-1">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src={logo.src}
-          alt="Company Logo"
-          width={50}
-          height={50}
-        />
-      </div>
-    </div>
+    <>
+      <Box>
+        <nav className="flex flex-row h-[60px] w-full items-center">
+          <button
+            id="MenuSideBar"
+            title="MenuSideBar"
+            type="button"
+            className="flex text-white items-center ml-2"
+            onClick={() => {
+              setter((oldVal) => !oldVal);
+            }}
+          >
+            <FiMenu size={26} />
+          </button>
+          <Link href="/" className="mx-auto">
+            <Image
+              className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70]"
+              src={logo.src}
+              alt="Company Logo"
+              width={50}
+              height={50}
+            />
+          </Link>
+          <Link className="flex text-white items-center mr-2" href="/">
+            <FaUser size={26} />
+          </Link>
+        </nav>
+      </Box>
+    </>
   );
 };
 

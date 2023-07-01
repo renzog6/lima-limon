@@ -9,8 +9,6 @@ import { useRouter } from "next/navigation";
 import { CajaSimple } from "../types";
 import InputDate from "@/components/InputDate";
 
-import React from "react";
-
 const MovimientoEntreCajas = ({ cajas }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);

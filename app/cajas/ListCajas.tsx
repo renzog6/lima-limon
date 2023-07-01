@@ -8,9 +8,9 @@ const ListCajas = ({ data }) => {
   return (
     <>
       <div className="flex flex-row content-center px-2 h-8 bg-gradient-to-r from-green-200 to-green-500 py-1 w-full  hover:bg-gray-200 font-semibold">
-        <div className="basis-1/3 ">Caja</div>
-        <div className="basis-1/3 flex justify-center">Saldo</div>
-        <div className="basis-1/3 flex justify-center">#</div>
+        <div className="basis-1/4 ">Caja</div>
+        <div className="basis-1/2 flex justify-center">Saldo</div>
+        <div className="basis-1/4 flex justify-center">#</div>
       </div>
       {data.map((row, rowIndex) => (
         <div
@@ -23,17 +23,17 @@ const ListCajas = ({ data }) => {
           </div>
           <div className="basis-1/3 flex justify-center">
             <Link href={"/cajas/" + row.id} className="mx-auto">
-              Details
+              Detalle
             </Link>
           </div>
         </div>
       ))}
       <div className="flex flex-row items-center px-2 h-8 bg-gradient-to-r from-green-200 to-green-500 py-1 w-full  hover:bg-gray-200 font-semibold">
-        <div className="basis-1/3">Total</div>
-        <div className="basis-1/3 flex justify-center">
+        <div className="basis-1/4">Total</div>
+        <div className="basis-1/2 flex justify-center">
           $ {total.toLocaleString()}
         </div>
-        <div className="basis-1/3 flex justify-center">#</div>
+        <div className="basis-1/4 flex justify-center">#</div>
       </div>
     </>
   );

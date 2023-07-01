@@ -1,20 +1,12 @@
 //@/app/layout.tsx
-import { Inter, Roboto_Mono } from "next/font/google";
+import { Figtree } from "next/font/google";
 import { Suspense } from "react";
 import Layout from "@/components/ui/Layout";
 import Loading from "./loading";
 import "@/style/globals.css";
 
-const inter = Inter({
+const font = Figtree({
   subsets: ["latin"],
-  display: "swap",
-  variable: "--font-inter",
-});
-
-const roboto_mono = Roboto_Mono({
-  subsets: ["latin"],
-  display: "swap",
-  variable: "--font-roboto-mono",
 });
 
 export const metadata = {
@@ -28,12 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html
-      data-theme="lemonade"
-      lang="es"
-      className={`${inter.variable} ${roboto_mono.variable}`}
-    >
-      <body className={inter.className}>
+    <html lang="es">
+      <body className={font.className}>
         <Suspense fallback={<Loading />}>
           <Layout>{children}</Layout>
         </Suspense>

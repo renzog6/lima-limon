@@ -92,7 +92,7 @@ export async function POST(req: Request) {
     }
 
     const infoMovimineto =
-      "Intermo - Desde: " + desdeCaja.nombre + "  Hasta: " + hastaCaja.nombre;
+      "Intermo: De " + desdeCaja.nombre + " a " + hastaCaja.nombre;
 
     //Creamos Egresos
     const pago = await prisma.pago.create({

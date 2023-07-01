@@ -12,7 +12,7 @@ const MovimientoEdit = () => {
       {" "}
       <button
         title="edit"
-        className="mr-2 text-blue-500 hover:text-blue-700"
+        className="mr-1 text-blue-500 hover:text-blue-700"
         onClick={handleChange}
       >
         <FiEdit color="blue" />

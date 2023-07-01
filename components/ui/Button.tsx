@@ -55,9 +55,10 @@ export const Button = ({
       {...props}
       type={type}
       className={`
-      ${getVariant(variant)}  transition duration-500  
-      ${paddingLess ? "" : "py-2 px-2"}
-      ${square ? "" : "rounded md:rounded-md"} active:scale-95 ${className} `}
+      ${getVariant(variant)} transition duration-500       
+      ${
+        square ? "" : "rounded md:rounded-md"
+      } active:scale-95 ${className} items-center justify-center flex`}
     >
       {children}
     </button>
