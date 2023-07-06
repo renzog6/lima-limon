@@ -140,9 +140,9 @@ model Pedido {
 
 model Caja {
   id            Int              @id @default(autoincrement())
-  tipo          TipoCaja?        @default(Efectivo)
-  nombre        String?
-  saldo         Float?           @default(0.0)
+  tipo          TipoCaja         @default(Efectivo)
+  nombre        String
+  saldo         Float            @default(0.0)
   estado        Boolean          @default(true)
   fechaApertura DateTime         @default(now())
   fechaCierre   DateTime?

@@ -80,6 +80,7 @@ export async function POST(req: Request) {
     const caja = await prisma.caja.create({
       data: {
         tipo: tipoCaja,
+        nombre: tipoCaja,
         fechaApertura: cajaFecha,
         saldo: cajaSaldo,
       },

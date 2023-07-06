@@ -1,5 +1,4 @@
 //@/app/cajas/page.tsx
-
 import { Caja } from "@prisma/client";
 import { getCajas } from "../hooks/useCajas";
 import ListCajas from "./ListCajas";
@@ -10,27 +9,27 @@ import MovimientoEgresoACajas from "./MovimientoEgresoDeCajas";
 
 export const dynamic = "force-dynamic";
 
-export default async function pageCajas() {
+const PageCajas = async () => {
   const cajas: Caja[] = await getCajas();
   return (
     <>
-      <div className="min-h-full max-w-full">
-        <div className="flex flex-row justify-around items-center  h-[50px] bg-amber-300 border border-amber-500">
-          <div className="h-10 w-1/4 mx-1 flex items-center justify-center">
+      <div className="max-w-full min-h-full">
+        <div className="flex flex-row justify-around items-center h-[50px] bg-amber-300 border border-amber-500">
+          <div className="flex items-center justify-center w-1/4 h-10 mx-1">
             <span className="flex items-center justify-center">
-              <FaCashRegister />
-              <strong className="h2 mx-1">Cajas</strong>
+              <FaCashRegister size={"20"} />
+              <strong className="mx-1 h2">Cajas</strong>
             </span>
           </div>
-          <div className="h-10 w-1/4 mx-1 flex items-center justify-center">
+          <div className="flex items-center justify-center w-1/4 h-10 mx-1">
             {MovimientoIngresoACajas && (
               <MovimientoIngresoACajas cajas={cajas} />
             )}
           </div>
-          <div className="h-10 w-1/4 mx-1 flex items-center justify-center">
+          <div className="flex items-center justify-center w-1/4 h-10 mx-1">
             <MovimientoEgresoACajas cajas={cajas} />
           </div>
-          <div className="h-10 w-1/4 mx-1 flex items-center justify-center">
+          <div className="flex items-center justify-center w-1/4 h-10 mx-1">
             <MovimientoEntreCajas cajas={cajas} />
           </div>
         </div>
@@ -40,4 +39,6 @@ export default async function pageCajas() {
       </div>
     </>
   );
-}
+};
+
+export default PageCajas;

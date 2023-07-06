@@ -34,6 +34,19 @@ export async function getClientes() {
   }
 }
 
+export async function getClienteById(clienteId: number) {
+  try {
+    const res = await fetch(`${apiUrl}/${clienteId}`, {
+      method: "GET",
+      cache: "no-store" as RequestCache,
+    });
+    const data = await res.json();
+    return data as Cliente;
+  } catch (error) {
+    throw new Error((error as Error).message);
+  }
+}
+
 export async function createCliente(cliente) {
   try {
     return fetchRequest(apiUrl, "POST", cliente);

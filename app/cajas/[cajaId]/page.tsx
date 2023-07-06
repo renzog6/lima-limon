@@ -1,23 +1,17 @@
 //@/app/cajas/[cajaId]/page.tsx
 
-import { getCajaDetalle } from "@/app/hooks/useCajas";
+import { getCajaById } from "@/app/hooks/useCajas";
 import MovimientoList from "../movimientos/MovimientoList";
+import { getCajaAllMoviminetos } from "@/app/_actions/getCajaAllMoviminetos";
+import { Caja } from "@prisma/client";
 
 export default async function pageCajaId({ params: { cajaId } }) {
-  const movimientos = await getCajaDetalle(cajaId);
+  const caja: Caja = await getCajaById(+cajaId);
+  const movimientos = await getCajaAllMoviminetos(caja.id);
   return (
     <>
-      <div className="min-h-full max-w-full">
-        <div className="flex flex-row justify-around items-center  h-[50px] bg-amber-300 border border-amber-500">
-          <div className="h-10 w-1/3 mx-1 flex items-center justify-center">
-            <span className="flex items-center justify-center">
-              <strong className="h3">Cajas</strong>
-            </span>
-          </div>
-        </div>
-        <div className="border border-amber-500">
-          <MovimientoList data={movimientos} />
-        </div>
+      <div className="max-w-full min-h-full border border-amber-500">
+        <MovimientoList caja={caja} data={movimientos} />
       </div>
     </>
   );

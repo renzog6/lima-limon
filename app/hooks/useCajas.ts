@@ -33,13 +33,12 @@ export async function getCajas() {
   }
 }
 
-export async function getCajaDetalle(cajaId: number) {
+export async function getCajaById(cajaId: number) {
   try {
     const res = await fetch(`${apiUrl}/${cajaId}`, {
       method: "GET",
       cache: "no-store" as RequestCache,
     });
-
     const data = await res.json();
     return data;
   } catch (error) {

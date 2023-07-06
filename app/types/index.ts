@@ -47,10 +47,10 @@ export interface CartItem {
   qty: number;
 }
 
-export type CajaSimple = Pick<Caja, "nombre"> & {
+export interface CajaSimple {
   id: number;
-  nombre: string;
-};
+  nombre: string | "";
+}
 
 export type FormaPago = {
   Efectivo;

@@ -1,71 +1,98 @@
 //@/app/cajas/movimientos/MovimientoList.tsx
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import MovimientoDetail from "./MovimientoDetail";
 import MovimientoEdit from "./MovimientoEdit";
 import MovimientoDelete from "./MovimientoDelete";
 
 import { formatAmount } from "@/lib/utilNumbers";
 import { convertDateToTable } from "@/lib/utilDates";
+import Link from "next/link";
+import { RiArrowGoBackLine } from "react-icons/ri";
 
-const MovimientoList = ({ data }) => {
+const MovimientoList = ({ caja, data }) => {
   const [searchTerm, setSearchTerm] = useState("");
-  // Filtrar los datos basados en el término de búsqueda
-  const filteredData = data.filter((row) =>
-    row.quien.toLowerCase().includes(searchTerm.toLowerCase())
+  // Usar useMemo para evitar recálculos innecesarios
+  const filteredData = useMemo(
+    () =>
+      data.filter((row) =>
+        row.quien.toLowerCase().includes(searchTerm.toLowerCase())
+      ),
+    [searchTerm, data]
   );
   return (
     <>
-      <div className="w-full overflow-x-auto">
-        <div className="px-1 flex justify-between items-center h-[40px]">
+      <div className="w-full px-1 flex justify-between items-center h-[50px] text-amber-400">
+        <div className="flex items-center justify-center w-20 h-14">
+          <Link
+            href="/cajas"
+            className="flex items-center justify-center w-full"
+          >
+            <RiArrowGoBackLine size="20" />
+          </Link>
+        </div>
+        <div className="text-sm md:text-xl">
+          <span>
+            Caja <strong>{caja.tipo}</strong>
+          </span>
+        </div>
+        <div className="">
           <input
+            id="inputBuscar"
             type="text"
-            className="px-2 py-1 w-32 md:w-64 border border-gray-300 rounded"
+            className="w-32 px-2 bg-transparent border border-gray-300 rounded md:w-64"
             placeholder="Buscar..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
       </div>
-      <div>
-        <div className="flex flex-row items-center justify-items-center h-[40px] bg-emerald-400 border border-gray-300">
-          <strong className="flex min-w-[72px] max-w-[96px] justify-center">
-            Fecha
+
+      <div className="">
+        <div className="flex flex-row items-center justify-between w-full h-[40px] bg-emerald-400 border border-gray-300">
+          <div className="flex flex-row items-center justify-between w-full ">
+            <strong className="flex min-w-[72px] max-w-[96px] justify-center">
+              Fecha
+            </strong>
+            <strong>C/P</strong>
+            <strong>Importe</strong>
+          </div>
+          <strong className="flex items-center justify-center w-6 md:w-24">
+            #
           </strong>
-          <strong className="basis-5/12 flex justify-center">C/P</strong>
-          <strong className="basis-1/3 flex justify-center">Importe</strong>
-          <strong className="basis-5/12 flex justify-center">Info</strong>
-          <strong className="flex justify-center">###</strong>
         </div>
         {filteredData.map((row, rowIndex) => (
           <div
             key={rowIndex}
-            className="flex flex-row items-center px-2 bg-gradient-to-b from-yellow-100 to-amber-200 py-1 w-full  hover:bg-gray-200"
+            className="flex flex-row items-center w-full px-1 py-1 bg-gradient-to-b from-yellow-100 to-amber-300 hover:bg-gray-200"
           >
-            <div className="flex flex-col min-w-[72px] max-w-[96px] items-center py-2 border-r">
-              <p className="text-sm">{convertDateToTable(row.fecha)}</p>
-              <p className="text-xs">{row.tipo}</p>
-            </div>
-            <div className="flex basis-5/12 justify-center">
-              <p className="text-sm">{row.quien}</p>
-            </div>
-            <div className="basis-1/6 flex justify-center text-sm">
-              <p
-                className={`${
-                  row.tipo === "Pago" ? "text-red-500" : "text-black-500"
-                }`}
-              >
-                {formatAmount(
-                  row.tipo === "Pago" ? row.importe * -1 : row.importe
-                )}
-              </p>
-            </div>
-
-            <div className="basis-5/12 flex justify-start border-l">
-              <p className="text-xs md:text-sm">{row.info}</p>
+            <div className="flex flex-col items-center justify-center w-full ">
+              <div className="flex flex-row items-center justify-between w-full">
+                <div className="flex flex-col min-w-[72px] max-w-[96px] items-center py-2">
+                  <p className="text-sm">{convertDateToTable(row.fecha)}</p>
+                  <p className="text-xs">{row.tipo}</p>
+                </div>
+                <div className="flex justify-center">
+                  <p className="text-sm">{row.quien}</p>
+                </div>
+                <div className="flex justify-center px-2 text-sm md:px-10">
+                  <p
+                    className={`${
+                      row.tipo === "Pago" ? "text-red-500" : "text-black-500"
+                    }`}
+                  >
+                    {formatAmount(
+                      row.tipo === "Pago" ? row.importe * -1 : row.importe
+                    )}
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center justify-start w-full h-6 px-2">
+                <p className="text-xs md:text-sm">Info: {row.info}</p>
+              </div>
             </div>
             <div className="flex justify-center">
-              <div className=" flex flex-col md:flex-row gap-1 items-center">
+              <div className="flex flex-col items-center gap-1 md:flex-row">
                 <div className="">
                   <MovimientoDetail />
                 </div>
