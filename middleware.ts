@@ -13,10 +13,6 @@ export function middleware(request: NextRequest) {
   );
   response.headers.set("Access-Control-Max-Age", "86400");
 
-  //console.log("Middleware! > " + request.method + " - " + request.url);
-  //console.log(request.method);
-  //console.log(request.url);
-
   return response;
 }
 

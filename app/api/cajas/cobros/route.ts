@@ -1,9 +1,9 @@
 //@/api/cajas/cobros/routes.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
-import { updateCajas } from "../updateCajas";
-import { updateClientes } from "../../clientes/updateClientes";
 import { TipoMovimiento } from "@prisma/client";
+import { updateClienteSaldo } from "@/app/_actions/_actionsClientes";
+import { updateCajas } from "@/app/_actions/_actionsCajas";
 
 /**
  *GET- List Cobros
@@ -107,7 +107,7 @@ export async function POST(req: Request) {
     }
 
     //Actualiza el saldo del Cliente
-    updateClientes(clienteId, Number(cobroImporte) * -1);
+    updateClienteSaldo(clienteId, Number(cobroImporte) * -1);
 
     return NextResponse.json({ data: cobro }, { status: 200 });
   } catch (error: unknown) {
@@ -117,27 +117,3 @@ export async function POST(req: Request) {
     );
   }
 }
-/** 
-export async function PUT(req: Request) {
-  try {
-    const body = await req.json();
-    const { id, nombre, info } = body;
-
-    if (!id || typeof id !== "number") {
-      throw new Error("Invalid ID");
-    }
-
-    const cobro = await prisma.cobro.update({
-      where: { id },
-      data: { nombre, info },
-    });
-
-    return NextResponse.json(cobro, { status: 200 });
-  } catch (error: unknown) {
-    return NextResponse.json(
-      { error: (error as Error).message },
-      { status: 500 }
-    );
-  }
-}
-*/

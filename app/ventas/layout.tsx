@@ -7,7 +7,7 @@ const LayoutVentas = ({ children }) => {
     <div className="min-h-full max-w-full">
       <Providers>
         <Header />
-        <div>{children}</div>
+        {children}
       </Providers>
     </div>
   );

@@ -1,17 +1,15 @@
-import Image from "next/image";
-import loading from "@/images/loading.gif";
+"use client";
 
-export default function Loading() {
+import { BounceLoader } from "react-spinners";
+
+import Box from "@/components/ui/Box";
+
+const Loading = () => {
   return (
-    <div className="flex justify-center place-items-center w-full py-2">
-      <Image
-        className="relative py-2 dark:drop-shadow-[0_0_0.6rem_#ffffff70] "
-        src={loading.src}
-        alt="loading"
-        width={100}
-        height={0}
-        priority
-      />
-    </div>
+    <Box className="flex justify-center h-full py-10">
+      <BounceLoader color="#22c55e" size={100} />
+    </Box>
   );
-}
+};
+
+export default Loading;

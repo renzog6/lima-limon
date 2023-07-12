@@ -1,7 +1,18 @@
 //@/app/compras/pages.tsx
+import { getCompras } from "../hooks/useCompras";
+import ListCompras from "./ListCompras";
+import Box from "@/components/ui/Box";
+import { CompraSafe } from "../types";
 
-const PageCompras = () => {
-  return <div>PageCompras</div>;
+export const dynamic = "force-dynamic";
+
+const pageCompras = async () => {
+  const compras: CompraSafe[] = await getCompras();
+  return (
+    <Box>
+      <ListCompras compras={compras} />
+    </Box>
+  );
 };
 
-export default PageCompras;
+export default pageCompras;

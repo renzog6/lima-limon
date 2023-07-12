@@ -1,29 +1,29 @@
-//@/api/ventas/routes.ts
+//@/api/compras/routes.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 
 /**
- * GET - List All Ventas
+ * GET - List All Compras
  *
  * @returns  {Array<Object>} An array of order objects
  */
 export async function GET() {
   try {
-    const ventas = await prisma.venta.findMany({
+    const compras = await prisma.compra.findMany({
       where: { estado: true },
       orderBy: {
         fecha: "asc",
       },
       include: {
         pedidos: true,
-        cliente: true,
+        proveedor: true,
       },
     });
 
-    const safe = ventas.map((venta) => ({
-      ...venta,
-      //fecha: venta.fecha !== null ? venta.fecha.toLocaleDateString() : null,
-      // cliente: venta.cliente.nombre,
+    const safe = compras.map((compra) => ({
+      ...compra,
+      //fecha: compra.fecha !== null ? compra.fecha.toLocaleDateString() : null,
+      //proveedor: compra.proveedor.nombre,
     }));
 
     return NextResponse.json(safe);
@@ -34,15 +34,15 @@ export async function GET() {
 }
 
 /**
- * POST /ventas - Create a new Venta
+ * POST /compras - Create a new Compra
  *
- * @param req Datos para crear la venta
+ * @param req Datos para crear la compra
  * @returns {Object} The created order object
  */
 export async function POST(req: Request) {
   try {
     const data = await req.json();
-    const { fecha, info, clienteId, total, saldo, cartItems } = data;
+    const { fecha, info, compraId, total, saldo, cartItems } = data;
 
     // Validate the data
     if (!fecha) {
@@ -51,7 +51,7 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-    if (!clienteId) {
+    if (!compraId) {
       return NextResponse.json(
         { error: "Please provide a customer id" },
         { status: 400 }
@@ -66,7 +66,7 @@ export async function POST(req: Request) {
 
     // Check if the customer exists
     const customer = await prisma.cliente.findUnique({
-      where: { id: Number(clienteId) },
+      where: { id: Number(compraId) },
     });
     if (!customer) {
       return NextResponse.json(
@@ -76,10 +76,10 @@ export async function POST(req: Request) {
     }
 
     // Create the order
-    const order = await prisma.venta.create({
+    const order = await prisma.compra.create({
       data: {
         fecha: fecha,
-        cliente: { connect: { id: Number(clienteId) } },
+        proveedor: { connect: { id: Number(compraId) } },
         total: total,
         saldo: saldo,
         info: info,
@@ -93,7 +93,7 @@ export async function POST(req: Request) {
           productoId: item.product.id,
           cantidad: item.qty,
           precio: item.product.precio,
-          ventaId: order.id,
+          compraId: order.id,
         },
       });
     }
@@ -107,7 +107,7 @@ export async function POST(req: Request) {
     }
 
     //Actualiza el saldo del Cliente
-    updateClienteSaldo(clienteId, total);
+    updateClienteSaldo(compraId, total);
 
     return NextResponse.json({ data: order }, { status: 201 });
   } catch (error: unknown) {
@@ -119,30 +119,30 @@ export async function POST(req: Request) {
 }
 
 /**
- * PUT /ventas/:id - Update an existing venta
+ * PUT /compras/:id - Update an existing compra
  *
  * @param req
- * @returns {Object} The updated venta
+ * @returns {Object} The updated compra
  */
 export async function PUT(req: Request) {
   try {
     const data = await req.json();
-    const { id, fecha, info, clienteId, total, saldo, cartItems } = data;
+    const { id, fecha, info, compraId, total, saldo, cartItems } = data;
 
     if (!id || typeof id !== "number") {
       throw new Error("Invalid ID");
     }
 
-    const venta = await prisma.venta.update({
+    const compra = await prisma.compra.update({
       where: { id },
       data: {
         fecha: fecha,
-        cliente: { connect: { id: Number(clienteId) } },
+        proveedor: { connect: { id: Number(compraId) } },
         info: info,
       },
     });
 
-    return NextResponse.json(venta, { status: 200 });
+    return NextResponse.json(compra, { status: 200 });
   } catch (error: unknown) {
     return NextResponse.json(
       { error: (error as Error).message },
@@ -150,6 +150,6 @@ export async function PUT(req: Request) {
     );
   }
 }
-function updateClienteSaldo(clienteId: any, total: any) {
+function updateClienteSaldo(compraId: any, total: any) {
   throw new Error("Function not implemented.");
 }

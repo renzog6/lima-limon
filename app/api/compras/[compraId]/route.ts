@@ -1,38 +1,39 @@
-//@/api/ventas/[ventaId]/routes.ts
+//@/api/compras/[compraId]/routes.ts
 import { NextResponse } from "next/server";
+import { CompraSafe } from "@/app/types";
+
 import prisma from "@/lib/prismadb";
-import { VentaSafe } from "@/app/types";
 
 export async function GET(
   request: Request,
-  { params }: { params: { ventaId: number } }
+  { params }: { params: { compraId: number } }
 ) {
   try {
-    var ventaId = Number(params.ventaId);
+    var compraId = Number(params.compraId);
 
-    if (!ventaId || typeof ventaId !== "number") {
+    if (!compraId || typeof compraId !== "number") {
       throw new Error("Invalid ID");
     }
 
-    const venta = await prisma.venta.findFirst({
+    const compra = await prisma.compra.findFirst({
       where: {
-        id: ventaId,
+        id: compraId,
       },
       include: {
-        cliente: true,
+        proveedor: true,
         pedidos: true,
       },
     });
 
-    if (!venta) {
-      throw new Error("Venta NO Existe!!!");
+    if (!compra) {
+      throw new Error("Compra NO Existe!!!");
     }
 
-    const ventaSafe = {
-      ...venta,
-    } as VentaSafe;
+    const compraSafe = {
+      ...compra,
+    } as CompraSafe;
 
-    return NextResponse.json(ventaSafe, { status: 200 });
+    return NextResponse.json(compraSafe, { status: 200 });
   } catch (error: unknown) {
     return NextResponse.json(
       { error: (error as Error).message },
@@ -43,30 +44,30 @@ export async function GET(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { ventaId: number } }
+  { params }: { params: { compraId: number } }
 ) {
   try {
-    var ventaId = Number(params.ventaId);
+    var compraId = Number(params.compraId);
 
-    if (!ventaId || typeof ventaId !== "number") {
+    if (!compraId || typeof compraId !== "number") {
       throw new Error("Invalid ID");
     }
 
-    const venta = await prisma.venta.findUnique({
-      where: { id: ventaId },
+    const compra = await prisma.compra.findUnique({
+      where: { id: compraId },
       include: { pedidos: { include: { producto: true } } },
     });
 
-    venta?.pedidos.map((item) => {
+    compra?.pedidos.map((item) => {
       sumarCantidadStockPedido(
         item.productoId,
         item.cantidad + item.producto.stock
       );
     });
 
-    const res = await prisma.venta.delete({
+    const res = await prisma.compra.delete({
       where: {
-        id: ventaId,
+        id: compraId,
       },
     });
 

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FaTrash } from "react-icons/fa";
 
 import { Cliente } from "@prisma/client";
-import { deleteCliente } from "@/app/hooks/useClientes";
+import { deleteCliente } from "../_actions/_actionsClientes";
 
 export default function DeleteCliente(cliente: Cliente) {
   const [modal, setModal] = useState(false);
@@ -47,7 +47,7 @@ export default function DeleteCliente(cliente: Cliente) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
+          <h3 className="text-lg font-bold">
             Seguro que desea BORRAR: {cliente.nombre} ?
           </h3>
           <div className="modal-action">

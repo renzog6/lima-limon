@@ -1,8 +1,8 @@
-//@/app/hooks/useVentas.ts
-import { Venta } from "@prisma/client";
-import { VentaSafe } from "../types";
+//@/app/hooks/useCompras.ts
+import { Compra } from "@prisma/client";
+import { CompraSafe } from "../types";
 
-const apiUrl = `${process.env.apiUrl}/ventas`;
+const apiUrl = `${process.env.apiUrl}/compras`;
 
 async function fetchRequest(url: string, method: string, body: any = null) {
   try {
@@ -26,7 +26,7 @@ async function fetchRequest(url: string, method: string, body: any = null) {
   }
 }
 
-export async function getVentas() {
+export async function getCompras() {
   try {
     return fetchRequest(apiUrl, "GET");
   } catch (error) {
@@ -34,38 +34,38 @@ export async function getVentas() {
   }
 }
 
-export async function getVentaById(ventaId: number) {
+export async function getCompraById(compraId: number) {
   try {
-    const res = await fetch(`${apiUrl}/${ventaId}`, {
+    const res = await fetch(`${apiUrl}/${compraId}`, {
       method: "GET",
       cache: "no-store" as RequestCache,
     });
     const data = await res.json();
-    return data as VentaSafe;
+    return data as CompraSafe;
   } catch (error) {
     throw new Error((error as Error).message);
   }
 }
 
-export async function createVenta(venta) {
+export async function createCompra(compra) {
   try {
-    return fetchRequest(apiUrl, "POST", venta);
+    return fetchRequest(apiUrl, "POST", compra);
   } catch (error) {
     throw new Error((error as Error).message);
   }
 }
 
-export async function updateVenta(venta: Venta) {
+export async function updateCompra(compra: Compra) {
   try {
-    return fetchRequest(apiUrl, "PUT", venta);
+    return fetchRequest(apiUrl, "PUT", compra);
   } catch (error) {
     throw new Error((error as Error).message);
   }
 }
 
-export async function deleteVenta(ventaId: number) {
+export async function deleteCompra(compraId: number) {
   try {
-    const res = await fetch(`${apiUrl}/${ventaId}`, {
+    const res = await fetch(`${apiUrl}/${compraId}`, {
       method: "DELETE",
     });
     return res;

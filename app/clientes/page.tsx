@@ -1,19 +1,15 @@
 //@/app/clientes/page.tsx
 import { Cliente } from "@prisma/client";
-import { getClientes } from "@/app/hooks/useClientes";
 
-import Table from "@/components/Table";
 import AddCliente from "./addCliente";
-import DeleteCliente from "./deleteCliente";
-import UpdateCliente from "./updateCliente";
 import Box from "@/components/ui/Box";
 import ListClientes from "./ListClientes";
+import { getClientes } from "../_actions/_actionsClientes";
 
 export const dynamic = "force-dynamic";
 
 const PageClientes = async () => {
   const clientes: Cliente[] = await getClientes();
-
   return (
     <>
       <div className="flex justify-around items-center  h-[40px] bg-amber-300">

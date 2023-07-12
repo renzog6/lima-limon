@@ -25,7 +25,6 @@ module.exports = {
       "dark",
       "forest",
       "black",
-      "luxury",
       "dracula",
       "lemonade",
     ],

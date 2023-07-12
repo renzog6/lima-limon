@@ -1,9 +1,8 @@
 //@/api/cajas/movimientos/routes.ts
 import prisma from "@/lib/prismadb";
 import { NextResponse } from "next/server";
-import { updateCajaSaldo } from "../updateCajas";
-
 import { TipoMovimiento } from "@prisma/client";
+import { updateCajaSaldo } from "@/app/_actions/_actionsCajas";
 
 export async function GET(req: Request) {
   try {

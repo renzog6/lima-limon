@@ -7,7 +7,7 @@ import AddProducto from "./addProducto";
 import DeleteProducto from "./deleteProducto";
 import UpdateProducto from "./updateProducto";
 
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 
 export default async function ProductoList() {
   const columnas = [

@@ -4,7 +4,7 @@ import Header from "@/components/ui/Header";
 
 import logo from "@/images/logo.png";
 
-export const revalidate = 0;
+//export const revalidate = 60;
 
 export default async function Home() {
   return (

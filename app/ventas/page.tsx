@@ -1,18 +1,19 @@
 //@/app/ventas/page.tsx
-import { Venta } from "@prisma/client";
 import { getVentas } from "@/app/hooks/useVentas";
 import ListVentas from "./ListVentas";
+import Box from "@/components/ui/Box";
+import { VentaSafe } from "../types";
 
 export const dynamic = "force-dynamic";
 // 'auto' | 'force-dynamic' | 'error' | 'force-static'
 
-const PageVentas = async () => {
-  const ventas: Venta[] = await getVentas();
+const pageVentas = async () => {
+  const ventas: VentaSafe[] = await getVentas();
   return (
-    <>
-      <ListVentas data={ventas} />
-    </>
+    <Box>
+      <ListVentas ventas={ventas} />
+    </Box>
   );
 };
 
-export default PageVentas;
+export default pageVentas;

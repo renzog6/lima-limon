@@ -1,5 +1,6 @@
 //@/api/productos/categorias/routes.ts
 import { NextResponse } from "next/server";
+import { CategoriaSafe } from "@/app/types";
 import prisma from "@/lib/prismadb";
 
 export async function GET() {
@@ -10,14 +11,26 @@ export async function GET() {
         nombre: "asc",
       },
     });
-    /** 
-    const safe = categorias.map((categoria) => ({
-      ...categoria,
-    }));
-    */
-    return NextResponse.json(categorias, { status: 200 });
+
+    if (!categorias) {
+      throw new Error("Categorias NO Existe!!!");
+    }
+
+    const safes = categorias.map(
+      (marca) =>
+        ({
+          id: marca.id,
+          nombre: marca.nombre,
+          info: marca.info,
+        } as CategoriaSafe)
+    );
+
+    return NextResponse.json(safes, { status: 200 });
   } catch (error: any) {
-    throw new Error(error);
+    return NextResponse.json(
+      { error: (error as Error).message },
+      { status: 500 }
+    );
   }
 }
 

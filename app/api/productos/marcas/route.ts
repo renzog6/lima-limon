@@ -8,6 +8,7 @@
 404 Not Found
 ****************/
 import { NextResponse } from "next/server";
+import { MarcaSafe } from "@/app/types";
 import prisma from "@/lib/prismadb";
 
 export async function GET() {
@@ -18,8 +19,22 @@ export async function GET() {
         nombre: "asc",
       },
     });
-    return NextResponse.json(marcas, { status: 200 });
-  } catch (error: unknown) {
+
+    if (!marcas) {
+      throw new Error("Marcas NO Existe!!!");
+    }
+
+    const safes = marcas.map(
+      (marca) =>
+        ({
+          id: marca.id,
+          nombre: marca.nombre,
+          info: marca.info,
+        } as MarcaSafe)
+    );
+
+    return NextResponse.json(safes, { status: 200 });
+  } catch (error: any) {
     return NextResponse.json(
       { error: (error as Error).message },
       { status: 500 }

@@ -3,19 +3,18 @@
 
 import { useState } from "react";
 import { FiList } from "react-icons/fi";
-
 import { Venta } from "@prisma/client";
-import { getPedidos } from "../api/ventas/pedidos/getPedidos";
-import { SafePedido } from "../types";
+import { PedidoSafe } from "../types";
+import { getDetalleVentaById } from "../_actions/getDetallePedido";
 
 export default function DetailPedido(venta: Venta) {
-  const [pedidos, setPedidos] = useState<SafePedido[]>([]);
+  const [pedidos, setPedidos] = useState<PedidoSafe[]>([]);
   const [modal, setModal] = useState(false);
 
   function handleChange() {
     setModal(!modal);
     async function fetchPedidos() {
-      const pedidos = await getPedidos({ ventaId: venta.id });
+      const pedidos = await getDetalleVentaById(venta.id);
       setPedidos(pedidos);
     }
     if (!modal) {
@@ -44,26 +43,26 @@ export default function DetailPedido(venta: Venta) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Detalle de Pedido</h3>
-          <div className="flex flex-row items-center px-2 bg-gradient-to-b from-yellow-200 to-amber-400 py-1 w-full  hover:bg-gray-200">
-            <div className="basis-1/4 flex justify-center">Producto</div>
-            <div className="basis-1/4 flex justify-center">Cantidad</div>
-            <div className="basis-1/4 flex justify-center">Precio</div>
-            <div className="basis-1/4 flex justify-center">Total</div>
+          <h3 className="text-lg font-bold">Detalle de Pedido</h3>
+          <div className="flex flex-row items-center w-full px-2 py-1 bg-gradient-to-b from-yellow-200 to-amber-400 hover:bg-gray-200">
+            <div className="flex justify-center basis-1/4">Producto</div>
+            <div className="flex justify-center basis-1/4">Cantidad</div>
+            <div className="flex justify-center basis-1/4">Precio</div>
+            <div className="flex justify-center basis-1/4">Total</div>
           </div>
           {pedidos.map((item, itemIndex) => (
             <div
               key={itemIndex}
-              className="flex flex-row items-center px-2 bg-gradient-to-b from-yellow-100 to-amber-200 py-1 w-full  hover:bg-gray-200"
+              className="flex flex-row items-center w-full px-2 py-1 bg-gradient-to-b from-yellow-100 to-amber-200 hover:bg-gray-200"
             >
-              <div className="basis-1/4 flex justify-start">
-                {item.producto}
+              <div className="flex justify-start basis-1/4">
+                {item.producto.nombre}
               </div>
-              <div className="basis-1/4 flex justify-center">
+              <div className="flex justify-center basis-1/4">
                 {item.cantidad}
               </div>
-              <div className="basis-1/4 flex justify-center">{item.precio}</div>
-              <div className="basis-1/4 flex justify-center">
+              <div className="flex justify-center basis-1/4">{item.precio}</div>
+              <div className="flex justify-center basis-1/4">
                 {item.precio * item.cantidad}
               </div>
             </div>

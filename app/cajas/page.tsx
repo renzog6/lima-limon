@@ -1,11 +1,11 @@
 //@/app/cajas/page.tsx
 import { Caja } from "@prisma/client";
-import { getCajas } from "../hooks/useCajas";
-import ListCajas from "./ListCajas";
 import { FaCashRegister } from "react-icons/fa";
 import MovimientoEntreCajas from "./MovimientoEntreCajas";
 import MovimientoIngresoACajas from "./MovimientoIngresoACajas";
 import MovimientoEgresoACajas from "./MovimientoEgresoDeCajas";
+import { getCajas } from "../_actions/_actionsCajas";
+import ListCajas from "./ListCajas";
 
 export const dynamic = "force-dynamic";
 

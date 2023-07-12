@@ -1,7 +1,22 @@
-//@/app/api/cajas/updateCajas.ts
-import { NextResponse } from "next/server";
+//@/app/actions/_actionsCajas.ts
 import prisma from "@/lib/prismadb";
-import { TipoMovimiento } from "@prisma/client";
+import { Caja, TipoMovimiento } from "@prisma/client";
+
+export async function getCajas(): Promise<Caja[]> {
+  try {
+    const cajas = await prisma.caja.findMany({
+      where: { estado: true },
+      orderBy: {
+        nombre: "asc",
+      },
+    });
+
+    return cajas || [];
+  } catch (error: any) {
+    console.log("//@/app/actions/_actionsCajas.ts > " + error);
+    return [];
+  }
+}
 
 /**
  * Funcion para actualizar el saldo de una caja especifica.
@@ -16,10 +31,7 @@ export async function updateCajaSaldo(tipoCaja, importe) {
       where: { tipo: tipoCaja },
     });
     if (!cajaToUpdate) {
-      return NextResponse.json(
-        { error: "The caja does not exist" },
-        { status: 404 }
-      );
+      throw new Error("La Caja NO Exite.");
     }
 
     const update = await prisma.caja.update({
@@ -27,7 +39,7 @@ export async function updateCajaSaldo(tipoCaja, importe) {
       data: { saldo: cajaToUpdate.saldo + importe },
     });
 
-    return NextResponse.json(update);
+    return update;
   } catch (error: any) {
     throw new Error(error);
   }
@@ -49,10 +61,7 @@ export async function updateCajas(tipoCaja) {
       },
     });
     if (!cajaToUpdate) {
-      return NextResponse.json(
-        { error: "The caja does not exist" },
-        { status: 404 }
-      );
+      throw new Error("La Caja NO Exite.");
     }
 
     const sumMovimientos = cajaToUpdate.movimientos.reduce(
@@ -68,7 +77,7 @@ export async function updateCajas(tipoCaja) {
       data: { saldo: sumMovimientos },
     });
 
-    return NextResponse.json(update);
+    return update;
   } catch (error: any) {
     throw new Error(error);
   }

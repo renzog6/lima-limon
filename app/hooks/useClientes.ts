@@ -34,19 +34,6 @@ export async function getClientes() {
   }
 }
 
-export async function getClienteById(clienteId: number) {
-  try {
-    const res = await fetch(`${apiUrl}/${clienteId}`, {
-      method: "GET",
-      cache: "no-store" as RequestCache,
-    });
-    const data = await res.json();
-    return data as Cliente;
-  } catch (error) {
-    throw new Error((error as Error).message);
-  }
-}
-
 export async function createCliente(cliente) {
   try {
     return fetchRequest(apiUrl, "POST", cliente);
@@ -58,17 +45,6 @@ export async function createCliente(cliente) {
 export async function updateCliente(cliente: Cliente) {
   try {
     return fetchRequest(apiUrl, "PUT", cliente);
-  } catch (error) {
-    throw new Error((error as Error).message);
-  }
-}
-
-export async function deleteCliente(clienteId: number) {
-  try {
-    const res = await fetch(`${apiUrl}/${clienteId}`, {
-      method: "DELETE",
-    });
-    return res;
   } catch (error) {
     throw new Error((error as Error).message);
   }

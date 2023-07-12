@@ -1,5 +1,5 @@
 import { getDetalleClienteById } from "@/app/_actions/getDetalleClienteById";
-import { getClienteById } from "@/app/hooks/useClientes";
+
 import Box from "@/components/ui/Box";
 import { Cliente } from "@prisma/client";
 import Link from "next/link";
@@ -9,6 +9,7 @@ import CobroACliente from "./CobroACliente";
 import { CajaSimple } from "@/app/types";
 import { getCajasSimple } from "@/app/_actions/getCajasSimple";
 import React from "react";
+import { getClienteById } from "@/app/_actions/_actionsClientes";
 
 interface DetalleCliente {
   fecha: Date;

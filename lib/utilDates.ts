@@ -22,6 +22,5 @@ export function convertDateToInput(dateString) {
   const day = date.getDate();
   // Combinar las partes en el formato "DD/MM/YYYY"
   const formattedDate = `${day}/${month}/${year}`;
-  console.log("YYYYYY " + formattedDate);
   return formattedDate;
 }
