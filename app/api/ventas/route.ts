@@ -1,6 +1,7 @@
 //@/api/ventas/routes.ts
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
+import { updateClienteSaldo } from "@/app/_actions/_actionsClientes";
 
 /**
  * GET - List All Ventas
@@ -149,7 +150,4 @@ export async function PUT(req: Request) {
       { status: 500 }
     );
   }
-}
-function updateClienteSaldo(clienteId: any, total: any) {
-  throw new Error("Function not implemented.");
 }

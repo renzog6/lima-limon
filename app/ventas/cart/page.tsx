@@ -6,9 +6,8 @@ import CartItemCard from "@/components/Cart/CartItemCard";
 
 import SaveCart from "./saveCart";
 import ResetCart from "./resetCart";
-import { getCajas } from "@/app/hooks/useCajas";
 
-export const dynamic = "force-dynamic";
+//export const dynamic = "force-dynamic";
 
 const CartPage = async () => {
   const cartItems = useAppSelector((state) => state.cart.cartItems);
@@ -17,17 +16,17 @@ const CartPage = async () => {
   return (
     <>
       <div className="flex flex-row items-center justify-items-center h-[50px] bg-emerald-600 border border-gray-300">
-        <strong className="basis-1/4 flex justify-center">Producto</strong>
-        <strong className="basis-1/4 flex justify-center">Precio</strong>
-        <strong className="basis-1/4 flex justify-center">Cantidad</strong>
-        <strong className="basis-1/4 flex justify-center">Total</strong>
+        <strong className="flex justify-center basis-1/4">Producto</strong>
+        <strong className="flex justify-center basis-1/4">Precio</strong>
+        <strong className="flex justify-center basis-1/4">Cantidad</strong>
+        <strong className="flex justify-center basis-1/4">Total</strong>
       </div>
       {cartItems.map((item) => (
         <CartItemCard key={item.product.id} cartItem={item} />
       ))}
       <div className="flex flex-row items-end justify-items-end h-[40px] bg-emerald-600 border border-gray-300">
-        <p className="text-slate-600 ml-auto mr-4 justify-items-center">
-          Total $ <span className="text-slate-900 font-bold">{totalPrice}</span>
+        <p className="ml-auto mr-4 text-slate-600 justify-items-center">
+          Total $ <span className="font-bold text-slate-900">{totalPrice}</span>
         </p>
       </div>
       <div className="flex flex-row justify-around h-[50px] bg-emerald-100 border border-gray-300">
