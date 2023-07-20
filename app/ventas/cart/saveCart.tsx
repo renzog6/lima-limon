@@ -17,10 +17,10 @@ import { useDispatch } from "react-redux";
 import { createCobro } from "@/app/hooks/useCobros";
 import InputDate from "@/components/InputDate";
 import InputSelectCajas from "@/components/InputSelectCajas";
-import { CajaSimple } from "@/app/types";
 import { getCajas } from "@/app/hooks/useCajas";
 
 import { Dialog, Transition } from "@headlessui/react";
+import { CajaSafe } from "@/app/types";
 
 const SaveCart = () => {
   const router = useRouter();
@@ -30,8 +30,8 @@ const SaveCart = () => {
   const [isMutating, setIsMutating] = useState(false);
   const [clientes, setClientes] = useState<Cliente[]>([]);
 
-  const [cajas, setCajas] = useState<CajaSimple[]>([]);
-  const [cajaSelected, setCajaSelected] = useState<CajaSimple>(cajas[0]);
+  const [cajas, setCajas] = useState<CajaSafe[]>([]);
+  const [cajaSelected, setCajaSelected] = useState<CajaSafe>(cajas[0]);
 
   const [startDate, setStartDate] = useState(new Date());
   const [hacePago, setHacePago] = useState(true);
@@ -137,7 +137,7 @@ const SaveCart = () => {
 
   return (
     <div>
-      <Button variant="success" className="w-36 h-10" onClick={handleChange}>
+      <Button variant="success" className="h-10 w-36" onClick={handleChange}>
         Guardar
       </Button>
 
@@ -161,7 +161,7 @@ const SaveCart = () => {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex items-center justify-center min-h-full p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -171,7 +171,7 @@ const SaveCart = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
@@ -183,11 +183,11 @@ const SaveCart = () => {
                     <div className="flex flex-row">
                       <label
                         htmlFor="date"
-                        className="label font-bold h-9 mr-2"
+                        className="mr-2 font-bold label h-9"
                       >
                         Fecha
                       </label>
-                      <div className="input input-bordered h-9 content-center justify-center">
+                      <div className="content-center justify-center input input-bordered h-9">
                         <InputDate
                           date={startDate}
                           onChange={handleDateChange}
@@ -195,10 +195,10 @@ const SaveCart = () => {
                       </div>
                     </div>
                     <div className="form-control">
-                      <label className="label font-bold">Cliente</label>
+                      <label className="font-bold label">Cliente</label>
                       <select
                         {...register("clienteId", { required: true })}
-                        className="input w-full input-bordered h-9"
+                        className="w-full input input-bordered h-9"
                       >
                         <option value="">Cliente</option>
                         {clientes.map((cliente) => (
@@ -208,20 +208,20 @@ const SaveCart = () => {
                         ))}
                       </select>
                       {errors.clienteId && (
-                        <span className="error text-red-500">*Requerido</span>
+                        <span className="text-red-500 error">*Requerido</span>
                       )}
                     </div>
                     <div className="form-control">
-                      <label className="label font-bold">Nota</label>
+                      <label className="font-bold label">Nota</label>
                       <input
                         id="cartInfo"
                         type="text"
                         {...register("info")}
-                        className="input w-full input-bordered h-9"
+                        className="w-full input input-bordered h-9"
                         placeholder="Info"
                       />
                     </div>
-                    <div className="border rounded py-1 my-1">
+                    <div className="py-1 my-1 border rounded">
                       <div
                         className={`flex flex-row h-9 justify-center items-center ${
                           hacePago ? "border-b" : ""
@@ -229,7 +229,7 @@ const SaveCart = () => {
                       >
                         <label
                           htmlFor="cartPago"
-                          className="label font-bold text-sm md:text-lg mx-2"
+                          className="mx-2 text-sm font-bold label md:text-lg"
                         >
                           Pago?
                         </label>
@@ -239,20 +239,20 @@ const SaveCart = () => {
                           type="checkbox"
                           checked={hacePago}
                           onChange={handlePago}
-                          className="checkbox checkbox-sm items-center"
+                          className="items-center checkbox checkbox-sm"
                         />
                       </div>
 
                       {hacePago && (
                         <div className="flex flex-col md:flex-row">
-                          <div className="form-control basis-1/2 px-1">
-                            <label className="label font-bold">Importe</label>
+                          <div className="px-1 form-control basis-1/2">
+                            <label className="font-bold label">Importe</label>
                             <input
                               id="cartImporte"
                               type="number"
                               step="0.01"
                               {...register("importe", { required: true })}
-                              className="input w-full input-bordered h-9"
+                              className="w-full input input-bordered h-9"
                               placeholder="$$$"
                             />
                             {errors.importe && (
@@ -260,8 +260,8 @@ const SaveCart = () => {
                             )}
                           </div>
                           <div className="form-control basis-1/2">
-                            <div className="form-control basis-1/2 px-1 bordered">
-                              <label className="label font-bold">
+                            <div className="px-1 form-control basis-1/2 bordered">
+                              <label className="font-bold label">
                                 Forma de Pago
                               </label>
                               <div className="input input-bordered h-9">
@@ -276,7 +276,7 @@ const SaveCart = () => {
                       )}
                     </div>
 
-                    <div className="flex flex-row mt-6 justify-end">
+                    <div className="flex flex-row justify-end mt-6">
                       <div className="flex flex-row space-x-reverse">
                         <div className="mr-2 ml-0.5">
                           <Button

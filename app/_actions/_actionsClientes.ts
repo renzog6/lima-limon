@@ -11,11 +11,7 @@ export async function getClientes(): Promise<Cliente[]> {
       },
     });
 
-    if (!clientes) {
-      return [];
-    }
-
-    return clientes;
+    return clientes || [];
   } catch (error: any) {
     console.log("//@/app/actions/_actionsClientes.ts > " + error);
     return [];

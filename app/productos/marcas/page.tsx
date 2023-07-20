@@ -4,8 +4,8 @@ import DeleteMarca from "./deleteMarca";
 import UpdateMarca from "./updateMarca";
 
 import { Marca } from "@prisma/client";
-import { getMarcas } from "@/app/hooks/useMarcas";
 import Table from "@/components/Table";
+import { getMarcas } from "@/app/_actions/_actionsMarcas";
 
 export const dynamic = "force-dynamic";
 

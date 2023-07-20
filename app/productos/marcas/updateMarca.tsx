@@ -1,12 +1,12 @@
+//@/app/productos/marcas/addUpdate.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FiEdit } from "react-icons/fi";
 
 import { Marca } from "@prisma/client";
-import { updateMarca } from "@/app/hooks/useMarcas";
 import { RiEdit2Line } from "react-icons/ri";
+import { updateMarca } from "@/app/_actions/_actionsMarcas";
 
 export default function UpdateMarca(marca: Marca) {
   const [nombre, setNombre] = useState(marca.nombre || "");
@@ -23,9 +23,10 @@ export default function UpdateMarca(marca: Marca) {
     const updatedMarca = { ...marca }; // Hacer una copia del objeto marca
     updatedMarca.nombre = nombre;
     updatedMarca.info = info;
-    updateMarca(updatedMarca);
-    setIsMutating(false);
 
+    updateMarca(updatedMarca);
+
+    setIsMutating(false);
     router.refresh();
     setModal(false);
   }
@@ -55,26 +56,26 @@ export default function UpdateMarca(marca: Marca) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Edit {marca.nombre}</h3>
+          <h3 className="text-lg font-bold">Edit {marca.nombre}</h3>
           <form onSubmit={handleUpdate}>
             <div className="form-control">
-              <label className="label font-bold">Nombre</label>
+              <label className="font-bold label">Nombre</label>
               <input
                 id="nombre"
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Marca Name"
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Info</label>
+              <label className="font-bold label">Info</label>
               <input
                 type="text"
                 value={info}
                 onChange={(e) => setInfo(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Info"
               />
             </div>

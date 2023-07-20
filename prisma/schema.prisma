@@ -13,7 +13,7 @@ model Producto {
   id          Int       @id @default(autoincrement())
   nombre      String    @db.VarChar(20)
   info        String    @default("") @db.VarChar(255)
-  precio      Float     @default(0)
+  precio      Float     @default(0.0)
   stock       Int       @default(0)
   estado      Boolean   @default(true)
   createdAt   DateTime  @default(now())
@@ -34,8 +34,8 @@ model Producto {
 
 model Categoria {
   id        Int        @id @default(autoincrement())
-  nombre    String?    @db.VarChar(20)
-  info      String?    @db.VarChar(255)
+  nombre    String     @db.VarChar(20)
+  info      String     @default("") @db.VarChar(255)
   estado    Boolean    @default(true)
   productos Producto[]
 
@@ -44,9 +44,9 @@ model Categoria {
 
 model Marca {
   id          Int         @id @default(autoincrement())
-  nombre      String?     @db.VarChar(20)
-  info        String?     @db.VarChar(255)
-  estado      Boolean?    @default(true)
+  nombre      String      @db.VarChar(20)
+  info        String      @default("") @db.VarChar(255)
+  estado      Boolean     @default(true)
   proveedores Proveedor[]
   productos   Producto[]
 
@@ -60,7 +60,7 @@ model Cliente {
   estado   Boolean @default(true)
   email    String? @unique
   telefono String? @unique
-  saldo    Float   @default(0)
+  saldo    Float   @default(0.0)
   ventas   Venta[]
   cobros   Cobro[]
 
@@ -74,7 +74,7 @@ model Proveedor {
   estado    Boolean    @default(true)
   email     String?    @unique
   telefono  String?    @unique
-  saldo     Float      @default(0)
+  saldo     Float      @default(0.0)
   marcas    Marca[]
   productos Producto[]
   pagos     Pago[]
@@ -86,12 +86,12 @@ model Proveedor {
 model Compra {
   id        Int      @id @default(autoincrement())
   fecha     DateTime @default(now())
-  info      String?  @db.VarChar(255)
+  info      String   @default("") @db.VarChar(255)
   estado    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  total     Float?   @default(0)
-  saldo     Float?   @default(0)
+  total     Float    @default(0.0)
+  saldo     Float    @default(0.0)
 
   proveedorId Int
   proveedor   Proveedor @relation(fields: [proveedorId], references: [id], map: "Compra_proveedorId_fkey")
@@ -105,12 +105,12 @@ model Compra {
 model Venta {
   id        Int      @id @default(autoincrement())
   fecha     DateTime @default(now())
-  info      String?  @db.VarChar(255)
+  info      String   @default("") @db.VarChar(255)
   estado    Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  total     Float?   @default(0)
-  saldo     Float?   @default(0)
+  total     Float    @default(0.0)
+  saldo     Float    @default(0.0)
 
   clienteId Int
   cliente   Cliente  @relation(fields: [clienteId], references: [id], map: "Venta_clienteId_fkey")
@@ -124,7 +124,7 @@ model Venta {
 model Pedido {
   id         Int      @id @default(autoincrement())
   cantidad   Int
-  precio     Float
+  precio     Float    @default(0.0)
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   productoId Int
@@ -141,7 +141,7 @@ model Pedido {
 model Caja {
   id            Int              @id @default(autoincrement())
   tipo          TipoCaja         @default(Efectivo)
-  nombre        String
+  nombre        String           @db.VarChar(20)
   saldo         Float            @default(0.0)
   estado        Boolean          @default(true)
   fechaApertura DateTime         @default(now())
@@ -164,8 +164,8 @@ model CajaMovimiento {
   id      Int            @id @default(autoincrement())
   fecha   DateTime       @default(now())
   tipo    TipoMovimiento
-  importe Float          @default(0)
-  info    String?
+  importe Float          @default(0.0)
+  info    String         @default("") @db.VarChar(255)
 
   cajaId Int?
   caja   Caja? @relation(fields: [cajaId], references: [id])

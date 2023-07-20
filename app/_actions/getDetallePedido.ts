@@ -41,10 +41,12 @@ export async function getDetalleCompraById(
         categoria: {
           id: pedido.producto.categoria.id,
           nombre: pedido.producto.categoria.nombre ?? "S/N",
+          info: pedido.producto.marca.nombre ?? "",
         },
         marca: {
           id: pedido.producto.marca.id,
           nombre: pedido.producto.marca.nombre ?? "S/N",
+          info: pedido.producto.marca.nombre ?? "",
         },
       },
     }));
@@ -95,10 +97,12 @@ export async function getDetalleVentaById(
         categoria: {
           id: pedido.producto.categoria.id,
           nombre: pedido.producto.categoria.nombre ?? "S/N",
+          info: pedido.producto.marca.info || "",
         },
         marca: {
           id: pedido.producto.marca.id,
           nombre: pedido.producto.marca.nombre ?? "S/N",
+          info: pedido.producto.marca.info || "",
         },
       },
     }));

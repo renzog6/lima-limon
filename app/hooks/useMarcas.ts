@@ -21,14 +21,6 @@ async function fetchRequest(url: string, method: string, body: any = null) {
   return data;
 }
 
-export async function getMarcas() {
-  try {
-    return fetchRequest(apiUrl, "GET");
-  } catch (error) {
-    throw new Error((error as Error).message);
-  }
-}
-
 export async function createMarca(marca) {
   try {
     return fetchRequest(apiUrl, "POST", marca);
@@ -40,17 +32,6 @@ export async function createMarca(marca) {
 export async function updateMarca(marca: Marca) {
   try {
     return fetchRequest(apiUrl, "PUT", marca);
-  } catch (error) {
-    throw new Error((error as Error).message);
-  }
-}
-
-export async function deleteMarca(marcaId: number) {
-  try {
-    const res = await fetch(`${apiUrl}/${marcaId}`, {
-      method: "DELETE",
-    });
-    return res;
   } catch (error) {
     throw new Error((error as Error).message);
   }

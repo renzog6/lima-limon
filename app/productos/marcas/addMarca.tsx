@@ -1,10 +1,9 @@
+//@/app/productos/marcas/addMarca.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-
-import { Marca } from "@prisma/client";
-import { createMarca } from "@/app/hooks/useMarcas";
+import { createMarca } from "@/app/_actions/_actionsMarcas";
 
 export default function AddMarca() {
   const [nombre, setNombre] = useState("");
@@ -19,12 +18,13 @@ export default function AddMarca() {
 
     setIsMutating(true);
     const marca = {
+      id: 0,
       nombre: nombre,
       info: info,
     };
-    //marca.nombre = nombre;
-    //marca.info = info;
+
     createMarca(marca);
+
     setIsMutating(false);
 
     setNombre("");
@@ -54,25 +54,25 @@ export default function AddMarca() {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Agregar Marca</h3>
+          <h3 className="text-lg font-bold">Agregar Marca</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
-              <label className="label font-bold">Nombre</label>
+              <label className="font-bold label">Nombre</label>
               <input
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Marca Name"
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Info</label>
+              <label className="font-bold label">Info</label>
               <input
                 type="text"
                 value={info}
                 onChange={(e) => setInfo(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Info"
               />
             </div>

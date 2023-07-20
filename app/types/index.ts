@@ -17,6 +17,7 @@ import {
 export type CategoriaSafe = {
   id: number;
   nombre: string;
+  info: string;
 };
 
 /**
@@ -25,6 +26,7 @@ export type CategoriaSafe = {
 export type MarcaSafe = {
   id: number;
   nombre: string;
+  info: string;
 };
 
 /**
@@ -139,14 +141,22 @@ export interface CartItem {
   qty: number;
 }
 
-export interface CajaSimple {
+export type CajaSafe = {
   id: number;
-  nombre: string | "";
+  tipo: TipoCaja;
+  nombre: string;
+  saldo: number;
+};
+
+enum TipoCaja {
+  Efectivo,
+  Electronico,
+  Otra,
 }
 
 export type FormaPago = {
-  Efectivo;
-  Transferecia;
+  Efectivo: any;
+  Transferecia: any;
 };
 
 export type CajaMovimientoSafe = {

@@ -6,8 +6,8 @@ import { Fragment, SyntheticEvent, useRef, useState } from "react";
 import { HiSwitchHorizontal, HiSwitchVertical } from "react-icons/hi";
 import { movimientoEntreCajas } from "../hooks/useCajas";
 import { useRouter } from "next/navigation";
-import { CajaSimple } from "../types";
 import InputDate from "@/components/InputDate";
+import { CajaSafe } from "../types";
 
 const MovimientoEntreCajas = ({ cajas }) => {
   const router = useRouter();
@@ -15,8 +15,8 @@ const MovimientoEntreCajas = ({ cajas }) => {
   const initialRef = useRef(null);
   const [startDate, setStartDate] = useState(new Date());
 
-  const [desdeCaja, setdesdeCaja] = useState<CajaSimple>(cajas[0]);
-  const [hastaCaja, sethastaCaja] = useState<CajaSimple>(cajas[1]);
+  const [desdeCaja, setdesdeCaja] = useState<CajaSafe>(cajas[0]);
+  const [hastaCaja, sethastaCaja] = useState<CajaSafe>(cajas[1]);
   const [info, setInfo] = useState("");
   const [importe, setImporte] = useState(0);
 
@@ -66,11 +66,11 @@ const MovimientoEntreCajas = ({ cajas }) => {
         <button
           type="button"
           onClick={handleChangeModal}
-          className="rounded-md bg-amber-500 bg-opacity-1w-20 px-1 py-2 text-sm font-medium text-black hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          className="px-1 py-2 text-sm font-medium text-black rounded-md bg-amber-500 bg-opacity-1w-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
           <div className="flex flex-row items-center justify-center min-w-32">
             <HiSwitchHorizontal color="blue" size="16" />
-            <p className="hidden md:block w-14 mx-1">Mover</p>
+            <p className="hidden mx-1 md:block w-14">Mover</p>
           </div>
         </button>
       </div>
@@ -95,7 +95,7 @@ const MovimientoEntreCajas = ({ cajas }) => {
           </Transition.Child>
 
           <div className="fixed inset-0 ">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex items-center justify-center min-h-full p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -105,18 +105,18 @@ const MovimientoEntreCajas = ({ cajas }) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
                     Movimiento entre Cajas
                   </Dialog.Title>
-                  <div className="h-full w-full mt-2">
+                  <div className="w-full h-full mt-2">
                     <div className="flex flex-col w-full">
-                      <div className="bg-yellow-300 h-9 flex flex-row items-center mt-2">
+                      <div className="flex flex-row items-center mt-2 bg-yellow-300 h-9">
                         <span className="w-1/3 mx-1">Fecha :</span>
-                        <div className="h-9 w-2/3 bg-transparent border-none">
+                        <div className="w-2/3 bg-transparent border-none h-9">
                           <InputDate
                             date={startDate}
                             onChange={handleDateChange}
@@ -125,19 +125,19 @@ const MovimientoEntreCajas = ({ cajas }) => {
                       </div>
                     </div>
                     <div className="flex flex-row w-full">
-                      <div className="flex flex-row gap-2 w-full mt-2">
+                      <div className="flex flex-row w-full gap-2 mt-2">
                         <div className="basis-4/5">
-                          <div className="bg-green-300 flex flex-row items-center h-9">
+                          <div className="flex flex-row items-center bg-green-300 h-9">
                             <span className="w-20 mx-1">Desde :</span>
                             {desdeCaja.nombre}
                           </div>
-                          <div className="bg-blue-300 flex flex-row items-center h-9 mt-1">
+                          <div className="flex flex-row items-center mt-1 bg-blue-300 h-9">
                             <span className="w-20 mx-1">Hasta :</span>
                             {hastaCaja.nombre}
                           </div>
                         </div>
-                        <div className="basis-1/5 h-full flex justify-center items-center">
-                          <div className="bg-red-400 flex justify-center items-center w-10 h-full">
+                        <div className="flex items-center justify-center h-full basis-1/5">
+                          <div className="flex items-center justify-center w-10 h-full bg-red-400">
                             <button
                               className="flex items-center justify-center"
                               onClick={handleSwitchCajas}
@@ -149,21 +149,21 @@ const MovimientoEntreCajas = ({ cajas }) => {
                       </div>
                     </div>
                     <div className="flex flex-col w-full">
-                      <div className="bg-yellow-200 h-9 flex flex-row items-center mt-2">
+                      <div className="flex flex-row items-center mt-2 bg-yellow-200 h-9">
                         <span className="w-1/3 mx-1">Importe :</span>
                         <input
                           type="number"
                           onChange={(e) => setImporte(Number(e.target.value))}
-                          className="h-9 bg-transparent border-none w-2/3"
+                          className="w-2/3 bg-transparent border-none h-9"
                           placeholder="0"
                         />
                       </div>
-                      <div className="bg-yellow-100 h-9 flex flex-row items-center mt-2">
+                      <div className="flex flex-row items-center mt-2 bg-yellow-100 h-9">
                         <span className="w-1/3 mx-1">Info :</span>
                         <input
                           type="text"
                           onChange={(e) => setInfo(e.target.value)}
-                          className="h-9 w-2/3 bg-transparent border-none"
+                          className="w-2/3 bg-transparent border-none h-9"
                           placeholder="..."
                         />
                       </div>
@@ -173,7 +173,7 @@ const MovimientoEntreCajas = ({ cajas }) => {
                   <div className="mt-4">
                     <button
                       type="button"
-                      className="w-24 mr-1 inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center w-24 px-4 py-2 mr-1 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
                       onClick={handleChangeModal}
                       ref={initialRef}
                     >
@@ -181,7 +181,7 @@ const MovimientoEntreCajas = ({ cajas }) => {
                     </button>
                     <button
                       type="button"
-                      className="w-24 ml-1 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center w-24 px-4 py-2 ml-1 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handlerGuardar}
                     >
                       Guardar

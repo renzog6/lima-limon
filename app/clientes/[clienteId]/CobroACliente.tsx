@@ -10,7 +10,7 @@ import { createCobro } from "@/app//hooks/useCobros";
 import InputDate from "@/components/InputDate";
 import InputSelectCajas from "@/components/InputSelectCajas";
 
-const CobroACliente = async ({ cliente, cajas }) => {
+const CobroACliente = ({ cliente, cajas }) => {
   const router = useRouter();
   const initialRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);

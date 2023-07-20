@@ -9,7 +9,7 @@ import ResetCart from "./resetCart";
 
 //export const dynamic = "force-dynamic";
 
-const CartPage = async () => {
+const CartPage = () => {
   const cartItems = useAppSelector((state) => state.cart.cartItems);
   const totalPrice = useAppSelector(TotalPriceSelector);
 

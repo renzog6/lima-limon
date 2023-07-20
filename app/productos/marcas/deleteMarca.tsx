@@ -1,12 +1,12 @@
+//@/app/productos/marcas/addDelete.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { FiDelete } from "react-icons/fi";
 
 import { Marca } from "@prisma/client";
-import { deleteMarca } from "@/app/hooks/useMarcas";
 import { RiDeleteBin5Line } from "react-icons/ri";
+import { deleteMarca } from "@/app/_actions/_actionsMarcas";
 
 export default function DeleteMarca(marca: Marca) {
   const [modal, setModal] = useState(false);
@@ -16,7 +16,9 @@ export default function DeleteMarca(marca: Marca) {
 
   async function handleDelete(marcaId: number) {
     setIsMutating(true);
+
     deleteMarca(marcaId);
+
     setIsMutating(false);
 
     router.refresh();

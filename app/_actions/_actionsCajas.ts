@@ -1,6 +1,7 @@
 //@/app/actions/_actionsCajas.ts
 import prisma from "@/lib/prismadb";
 import { Caja, TipoMovimiento } from "@prisma/client";
+import { CajaSafe } from "../types";
 
 export async function getCajas(): Promise<Caja[]> {
   try {
@@ -18,6 +19,27 @@ export async function getCajas(): Promise<Caja[]> {
   }
 }
 
+export async function getCajasSafe(): Promise<CajaSafe[]> {
+  try {
+    const cajas = await prisma.caja.findMany({
+      where: { estado: true },
+      orderBy: {
+        tipo: "asc",
+      },
+      select: {
+        id: true,
+        tipo: true,
+        nombre: true,
+        saldo: true,
+      },
+    });
+
+    return (cajas as unknown as CajaSafe[]) ?? [];
+  } catch (error: any) {
+    console.log(error);
+    return [];
+  }
+}
 /**
  * Funcion para actualizar el saldo de una caja especifica.
  *

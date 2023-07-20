@@ -6,10 +6,10 @@ import Link from "next/link";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import ClienteIdDetalle from "./ClienteIdDetalle";
 import CobroACliente from "./CobroACliente";
-import { CajaSimple } from "@/app/types";
-import { getCajasSimple } from "@/app/_actions/getCajasSimple";
-import React from "react";
 import { getClienteById } from "@/app/_actions/_actionsClientes";
+import { getCajasSafe } from "@/app/_actions/_actionsCajas";
+import { CajaSafe } from "@/app/types";
+import React from "react";
 
 interface DetalleCliente {
   fecha: Date;
@@ -21,7 +21,7 @@ interface DetalleCliente {
 const pageClienteId = async ({ params: { clienteId } }) => {
   const cliente: Cliente = await getClienteById(+clienteId);
   const detalles: DetalleCliente[] = await getDetalleClienteById(+clienteId);
-  const cajas: CajaSimple[] = await getCajasSimple();
+  const cajas: CajaSafe[] = await getCajasSafe();
   const ClienteIdDetalleMemo = React.memo(ClienteIdDetalle);
 
   return (

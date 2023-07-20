@@ -1,14 +1,14 @@
 //@/app/productos/addProductos.tsx
 "use client";
 import { useState, useEffect } from "react";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import { Categoria, Marca, Proveedor } from "@prisma/client";
 import { addProducto } from "@/app/hooks/useProductos";
 import { getCategorias } from "@/app/hooks/useCategorias";
-import { getMarcas } from "@/app/hooks/useMarcas";
 import { getProveedores } from "@/app/hooks/useProveedores";
+import { getMarcas } from "@/app/_actions/_actionsMarcas";
 
 export default function AddProducto() {
   const [modal, setModal] = useState(false);
@@ -106,13 +106,13 @@ export default function AddProducto() {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Agregar Producto</h3>
+          <h3 className="text-lg font-bold">Agregar Producto</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-control">
-              <label className="label font-bold">Proveedor</label>
+              <label className="font-bold label">Proveedor</label>
               <select
                 {...register("proveedorId", { required: true })}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
               >
                 <option value="">Proveedor</option>
                 {proveedores.map((proveedor) => (
@@ -122,14 +122,14 @@ export default function AddProducto() {
                 ))}
               </select>
               {errors.marcaId && (
-                <span className="error text-red-500">*Requerido</span>
+                <span className="text-red-500 error">*Requerido</span>
               )}
             </div>
             <div className="form-control">
-              <label className="label font-bold">Marca</label>
+              <label className="font-bold label">Marca</label>
               <select
                 {...register("marcaId", { required: true })}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
               >
                 <option value="">Seleccione una Marca</option>
                 {marcas.map((marca) => (
@@ -139,14 +139,14 @@ export default function AddProducto() {
                 ))}
               </select>
               {errors.marcaId && (
-                <span className="error text-red-500">*Requerido</span>
+                <span className="text-red-500 error">*Requerido</span>
               )}
             </div>
             <div className="form-control">
-              <label className="label font-bold">Categoría</label>
+              <label className="font-bold label">Categoría</label>
               <select
                 {...register("categoriaId", { required: true })}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
               >
                 <option value="">Seleccione una categoría</option>
                 {categorias.map((categoria) => (
@@ -156,48 +156,48 @@ export default function AddProducto() {
                 ))}
               </select>
               {errors.categoriaId && (
-                <span className="error text-red-500">*Requerido</span>
+                <span className="text-red-500 error">*Requerido</span>
               )}
             </div>
             <div className="form-control">
-              <label className="label font-bold">Nombre</label>
+              <label className="font-bold label">Nombre</label>
               <input
                 type="text"
                 {...register("nombre", { required: true })}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Nombre del producto"
               />
               {errors.nombre && <span className="error">*Requerido</span>}
             </div>
-            <div className="form-control flex flex-row">
-              <div className="form-control basis-1/2 pr-1">
-                <label className="label font-bold">Precio</label>
+            <div className="flex flex-row form-control">
+              <div className="pr-1 form-control basis-1/2">
+                <label className="font-bold label">Precio</label>
                 <input
                   type="number"
                   step="0.01"
                   {...register("precio")}
-                  className="input w-full input-bordered"
+                  className="w-full input input-bordered"
                   placeholder="Precio"
                 />
                 {errors.precio && <span className="error">*Requerido</span>}
               </div>
-              <div className="form-control basis-1/2 pl-1">
-                <label className="label font-bold">Cantidad</label>
+              <div className="pl-1 form-control basis-1/2">
+                <label className="font-bold label">Cantidad</label>
                 <input
                   type="number"
                   {...register("stock")}
-                  className="input w-full input-bordered"
+                  className="w-full input input-bordered"
                   placeholder="Cantidad"
                 />
                 {errors.stock && <span className="error">*Requerido</span>}
               </div>
             </div>
             <div className="form-control">
-              <label className="label font-bold">Info</label>
+              <label className="font-bold label">Info</label>
               <input
                 type="text"
                 {...register("info")}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Info"
               />
             </div>
