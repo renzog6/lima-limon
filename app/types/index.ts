@@ -122,7 +122,17 @@ export type ClienteSafe = Pick<Cliente, "id" | "nombre" | "info" | "saldo">;
 /**
  * Model Producto To Cart
  */
-export type ProductoToCart = Omit<
+export type ProductoToCart = {
+  id: number;
+  nombre: string;
+  info: string | null;
+  precio: number;
+  stock: number;
+  marca: string;
+  categoria: string;
+};
+
+/* export type ProductoToCart = Omit<
   Producto,
   "createdAt" | "updatedAt" | "ventaId" | "proveedorId"
 > & {
@@ -134,7 +144,7 @@ export type ProductoToCart = Omit<
   marca: string;
   categoria: string;
   estado: boolean | null;
-};
+}; */
 
 export interface CartItem {
   product: Producto;
@@ -157,6 +167,46 @@ enum TipoCaja {
 export type FormaPago = {
   Efectivo: any;
   Transferecia: any;
+};
+
+export type DataCobro = {
+  isInterno: boolean;
+  tipoCajaId: number;
+  info: string;
+  importe: number;
+  fecha: Date;
+  clienteId: number;
+  ventaId: number;
+  movimientoId: number;
+};
+
+export type DataPago = {
+  isInterno: boolean;
+  tipoCajaId: number;
+  info: string;
+  importe: number;
+  fecha: Date;
+  proveedorId: number;
+  compraId: number;
+  movimientoId: number;
+};
+
+export type DataCompra = {
+  fecha: Date;
+  info: string | null;
+  proveedorId: number;
+  total: number;
+  saldo: number;
+  cartItems: CartItem[];
+};
+
+export type DataVenta = {
+  fecha: Date;
+  info: string | null;
+  clienteId: number;
+  total: number;
+  saldo: number;
+  cartItems: CartItem[];
 };
 
 export type CajaMovimientoSafe = {

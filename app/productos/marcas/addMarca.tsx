@@ -3,7 +3,8 @@
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { createMarca } from "@/app/_actions/_actionsMarcas";
+import { createMarca } from "@/app/_actions/crud/crudMarca";
+import { Marca } from "@prisma/client";
 
 export default function AddMarca() {
   const [nombre, setNombre] = useState("");
@@ -23,7 +24,7 @@ export default function AddMarca() {
       info: info,
     };
 
-    createMarca(marca);
+    const result = createMarca(marca as Marca);
 
     setIsMutating(false);
 

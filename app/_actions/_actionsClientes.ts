@@ -1,52 +1,8 @@
 //@/app/actions/_actionsClientes.ts
 import prisma from "@/lib/prismadb";
-import { Cliente, Prisma } from "@prisma/client";
-
-export async function getClientes(): Promise<Cliente[]> {
-  try {
-    const clientes = await prisma.cliente.findMany({
-      where: { estado: true },
-      orderBy: {
-        nombre: "asc",
-      },
-    });
-
-    return clientes || [];
-  } catch (error: any) {
-    console.log("//@/app/actions/_actionsClientes.ts > " + error);
-    return [];
-  }
-}
-
-export async function getClienteById(clienteId: number): Promise<Cliente> {
-  try {
-    if (!clienteId || typeof clienteId !== "number") {
-      throw new Error("Invalid ID");
-    }
-
-    const cliente = await prisma.cliente.findFirst({
-      where: {
-        id: clienteId,
-      },
-    });
-
-    if (!cliente) {
-      return {} as Cliente;
-    }
-
-    return cliente;
-  } catch (error: any) {
-    console.log("//@/app/actions/_actionsClientes.ts > " + error);
-    return {} as Cliente;
-  }
-}
 
 export async function updateClienteSaldo(clienteId, importe) {
   try {
-    if (!clienteId || typeof clienteId !== "number") {
-      throw new Error("Invalid ID");
-    }
-
     const cliente = await prisma.cliente.findUnique({
       where: { id: Number(clienteId) },
     });
@@ -65,30 +21,67 @@ export async function updateClienteSaldo(clienteId, importe) {
   }
 }
 
-export async function deleteCliente(clienteId: number) {
+export async function getDetalleClienteById(
+  clienteId: number,
+  pgnumIdx?: number,
+  pgsizeIdx?: number
+) {
   try {
-    if (!clienteId || typeof clienteId !== "number") {
-      throw new Error("Invalid ID");
+    const validClienteId = Number(clienteId);
+    if (isNaN(validClienteId)) {
+      throw new Error("El clienteId debe ser un número válido.");
     }
 
-    const deleted = await prisma.cliente.delete({
-      where: {
-        id: clienteId,
+    const pgnum = +(pgnumIdx ?? 0);
+    const pgsize = +(pgsizeIdx ?? 15);
+    if (isNaN(pgnum) || isNaN(pgsize)) {
+      throw new Error("pgnumIdx y pgsizeIdx deben ser números válidos.");
+    }
+
+    const ventas = await prisma.venta.findMany({
+      where: { clienteId: validClienteId, estado: true },
+      skip: pgnum * pgsize,
+      take: pgsize,
+      orderBy: {
+        fecha: "desc",
+      },
+      include: {
+        pedidos: true,
       },
     });
 
-    if (!deleted) {
-      throw new Error("Cliente no encontrado");
-    }
+    const safeVentas = ventas.map((venta) => ({
+      fecha: venta.fecha,
+      tipo: "Venta",
+      importe: venta.total,
+      saldo: venta.saldo,
+    }));
 
-    return deleted;
-  } catch (error) {
-    if (error instanceof Prisma.PrismaClientKnownRequestError) {
-      // El cliente no existe
-      if (error.code === "P2025") {
-        throw new Error("Cliente no encontrado");
-      }
-    }
-    throw error;
+    const cobros = await prisma.cobro.findMany({
+      where: { clienteId: +clienteId },
+      skip: pgnum * pgsize,
+      take: pgsize,
+      orderBy: {
+        fecha: "desc",
+      },
+      include: {
+        movimiento: true,
+      },
+    });
+
+    const safeCobros = cobros.map((cobro) => ({
+      fecha: cobro.fecha,
+      tipo: "Cobro",
+      importe: cobro.movimiento?.importe ?? 0,
+      saldo: 0,
+    }));
+
+    const mergedData = safeVentas.concat(safeCobros);
+    mergedData.sort((a, b) => (a.fecha > b.fecha ? -1 : 1));
+
+    return mergedData;
+  } catch (error: any) {
+    console.log(error);
+    return [];
   }
 }

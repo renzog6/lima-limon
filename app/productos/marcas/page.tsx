@@ -5,7 +5,7 @@ import UpdateMarca from "./updateMarca";
 
 import { Marca } from "@prisma/client";
 import Table from "@/components/Table";
-import { getMarcas } from "@/app/_actions/_actionsMarcas";
+import { getMarcas } from "@/app/_actions/crud/crudMarca";
 
 export const dynamic = "force-dynamic";
 

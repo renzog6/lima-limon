@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { Marca } from "@prisma/client";
 import { RiDeleteBin5Line } from "react-icons/ri";
-import { deleteMarca } from "@/app/_actions/_actionsMarcas";
+import { deleteMarca } from "@/app/_actions/crud/crudMarca";
 
 export default function DeleteMarca(marca: Marca) {
   const [modal, setModal] = useState(false);

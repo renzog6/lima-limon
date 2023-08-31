@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FaTrash } from "react-icons/fa";
 
 import { Cliente } from "@prisma/client";
-import { deleteCliente } from "../_actions/_actionsClientes";
+import { deleteCliente } from "../_actions/crud/crudCliente";
 
 export default function DeleteCliente(cliente: Cliente) {
   const [modal, setModal] = useState(false);
@@ -16,7 +16,7 @@ export default function DeleteCliente(cliente: Cliente) {
 
   async function handleDelete(clienteId: number) {
     setIsMutating(true);
-    deleteCliente(clienteId); // Llama a la función de actualización del estado
+    deleteCliente(+clienteId); // Llama a la función de actualización del estado
     setIsMutating(false);
 
     router.refresh();

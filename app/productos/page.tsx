@@ -1,11 +1,13 @@
 //@/app/productos/page.tsx
 import { Producto } from "@prisma/client";
-import { getProductos } from "@/app/hooks/useProductos";
 
 import Table from "@/components/Table";
 import AddProducto from "./addProducto";
 import DeleteProducto from "./deleteProducto";
 import UpdateProducto from "./updateProducto";
+import { getProductos } from "../_actions/crud/crudProducto";
+import { ProductoToCart } from "../types";
+import { getProductosToCart } from "../_actions/_actionsProductos";
 
 export const dynamic = "force-dynamic";
 
@@ -18,7 +20,7 @@ export default async function ProductoList() {
     { Header: "Info", accessor: "info" },
   ];
 
-  const productos: Producto[] = await getProductos();
+  const productos = await getProductosToCart();
 
   return (
     <div>

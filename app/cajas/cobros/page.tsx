@@ -1,8 +1,8 @@
 //@/app/cajas/cobros/page.tsx
 
 import { Cobro } from "@prisma/client";
-import { getCobros } from "@/app/hooks/useCobros";
 import ListCobros from "./ListCobros";
+import { getCobros } from "@/app/_actions/crud/crudCobro";
 
 export const dynamic = "force-dynamic";
 

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FiDelete } from "react-icons/fi";
 
 import { Categoria } from "@prisma/client";
-import { deleteCategoria } from "@/app/hooks/useCategorias";
+import { deleteCategoria } from "@/app/_actions/crud/crudCategoria";
 
 export default function DeleteCategoria(categoria: Categoria) {
   const [modal, setModal] = useState(false);

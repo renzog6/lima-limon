@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import { Marca } from "@prisma/client";
 import { RiEdit2Line } from "react-icons/ri";
-import { updateMarca } from "@/app/_actions/_actionsMarcas";
+import { updateMarca } from "@/app/_actions/crud/crudMarca";
 
 export default function UpdateMarca(marca: Marca) {
   const [nombre, setNombre] = useState(marca.nombre || "");

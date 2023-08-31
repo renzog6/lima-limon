@@ -1,15 +1,15 @@
-import { getDetalleClienteById } from "@/app/_actions/getDetalleClienteById";
-
+//@/app/clientes/[clienteId]/page.tsx
+import React from "react";
+import Link from "next/link";
 import Box from "@/components/ui/Box";
 import { Cliente } from "@prisma/client";
-import Link from "next/link";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import ClienteIdDetalle from "./ClienteIdDetalle";
 import CobroACliente from "./CobroACliente";
-import { getClienteById } from "@/app/_actions/_actionsClientes";
-import { getCajasSafe } from "@/app/_actions/_actionsCajas";
 import { CajaSafe } from "@/app/types";
-import React from "react";
+import { getCajasSafe } from "@/app/_actions/_actionsCajas";
+import { getClienteById } from "@/app/_actions/crud/crudCliente";
+import { getDetalleClienteById } from "@/app/_actions/_actionsClientes";
 
 interface DetalleCliente {
   fecha: Date;

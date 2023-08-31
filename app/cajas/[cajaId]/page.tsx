@@ -1,11 +1,9 @@
 //@/app/cajas/[cajaId]/page.tsx
 import { FC } from "react";
 
-import { getCajaById } from "@/app/hooks/useCajas";
-import { getCajaAllMoviminetos } from "@/app/_actions/getCajaAllMoviminetos";
-import { Caja } from "@prisma/client";
-
 import MovimientoList from "../movimientos/MovimientoList";
+import { getCajaById, getCajaMoviminetos } from "@/app/_actions/_actionsCajas";
+import NotFound from "@/components/ui/NotFound";
 
 interface PageProps {
   params: {
@@ -14,8 +12,13 @@ interface PageProps {
 }
 
 const pageCajaId: FC<PageProps> = async ({ params }) => {
-  const caja: Caja = await getCajaById(params.cajaId);
-  const movimientos = await getCajaAllMoviminetos(caja.id);
+  const caja = await getCajaById(Number(params.cajaId));
+
+  if (!caja) {
+    return <NotFound />;
+  }
+
+  const movimientos = await getCajaMoviminetos(caja.id);
 
   return (
     <>

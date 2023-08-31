@@ -4,8 +4,8 @@ import { FaCashRegister } from "react-icons/fa";
 import MovimientoEntreCajas from "./MovimientoEntreCajas";
 import MovimientoIngresoACajas from "./MovimientoIngresoACajas";
 import MovimientoEgresoACajas from "./MovimientoEgresoDeCajas";
-import { getCajas } from "../_actions/_actionsCajas";
 import ListCajas from "./ListCajas";
+import { getCajas } from "../_actions/crud/crudCaja";
 
 export const dynamic = "force-dynamic";
 

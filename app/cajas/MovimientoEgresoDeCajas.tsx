@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 import { HiArrowUp } from "react-icons/hi";
 import InputDate from "@/components/InputDate";
 import InputSelectCajas from "@/components/InputSelectCajas";
-import { createPago } from "../hooks/usePagos";
+import { DataPago } from "../types";
+import { createPago } from "../_actions/crud/crudPago";
 
 const MovimientoEgresoDeCajas = ({ cajas }) => {
   const router = useRouter();
@@ -21,19 +22,22 @@ const MovimientoEgresoDeCajas = ({ cajas }) => {
 
   async function handlerGuardar(e: SyntheticEvent) {
     e.preventDefault();
-    const mov = {
-      pagoInterno: true,
-      pagoFecha: startDate,
-      pagoImporte: importe,
-      pagoInfo: info,
-      pagoCajaId: cajaEgreso.id,
+    const dataPago: DataPago = {
+      isInterno: true,
+      tipoCajaId: cajaEgreso.id,
+      info: info,
+      importe: importe,
+      fecha: startDate,
+      proveedorId: 0,
+      compraId: 0,
+      movimientoId: 0,
     };
 
-    const res = await createPago(mov);
-    if (res.data) {
-      console.log("Egreso se ha guardado exitosamente:", res.data);
+    const resPago = await createPago(dataPago);
+    if (resPago) {
+      console.log("MoviminetoEgresoDeCajas: Pago se ha guardado exitosamente:");
     } else {
-      console.log("Error al guardar el Egreso:", res.error);
+      console.log("MoviminetoEgresoDeCajas: Error al guardar el Cobro");
     }
 
     router.refresh();
@@ -58,11 +62,11 @@ const MovimientoEgresoDeCajas = ({ cajas }) => {
         <button
           type="button"
           onClick={handleChangeModal}
-          className="rounded-md bg-amber-500 bg-opacity-1w-20 px-1 py-2 text-sm font-medium text-black hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          className="px-1 py-2 text-sm font-medium text-black rounded-md bg-amber-500 bg-opacity-1w-20 hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
         >
           <div className="flex flex-row items-center justify-center min-w-32">
             <HiArrowUp color="red" size="16" />
-            <p className="hidden md:block w-14 mx-1">Egresar</p>
+            <p className="hidden mx-1 md:block w-14">Egresar</p>
           </div>
         </button>
       </div>
@@ -87,7 +91,7 @@ const MovimientoEgresoDeCajas = ({ cajas }) => {
           </Transition.Child>
 
           <div className="fixed inset-0 ">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex items-center justify-center min-h-full p-4 text-center">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -97,18 +101,18 @@ const MovimientoEgresoDeCajas = ({ cajas }) => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-md p-6 overflow-hidden text-left align-middle transition-all transform bg-white shadow-xl rounded-2xl">
                   <Dialog.Title
                     as="h3"
                     className="text-lg font-medium leading-6 text-gray-900"
                   >
                     Egreso de una Caja
                   </Dialog.Title>
-                  <div className="h-full w-full mt-2">
+                  <div className="w-full h-full mt-2">
                     <div className="flex flex-col w-full">
-                      <div className="bg-yellow-400 h-9 flex flex-row items-center mt-2">
+                      <div className="flex flex-row items-center mt-2 bg-yellow-400 h-9">
                         <span className="w-1/3 mx-1">Fecha :</span>
-                        <div className="h-9 w-2/3 bg-transparent border-none">
+                        <div className="w-2/3 bg-transparent border-none h-9">
                           <InputDate
                             date={startDate}
                             onChange={handleDateChange}
@@ -117,9 +121,9 @@ const MovimientoEgresoDeCajas = ({ cajas }) => {
                       </div>
                     </div>
                     <div className="flex flex-col w-full">
-                      <div className="bg-yellow-300 h-9 flex flex-row items-center mt-2">
+                      <div className="flex flex-row items-center mt-2 bg-yellow-300 h-9">
                         <span className="w-1/3 mx-1">Caja :</span>
-                        <div className="h-9 w-2/3 bg-transparent border-none">
+                        <div className="w-2/3 bg-transparent border-none h-9">
                           <InputSelectCajas
                             cajas={cajas}
                             onChange={handleCajaChange}
@@ -128,21 +132,21 @@ const MovimientoEgresoDeCajas = ({ cajas }) => {
                       </div>
                     </div>
                     <div className="flex flex-col w-full">
-                      <div className="bg-yellow-200 h-9 flex flex-row items-center mt-2">
+                      <div className="flex flex-row items-center mt-2 bg-yellow-200 h-9">
                         <span className="w-1/3 mx-1">Importe :</span>
                         <input
                           type="number"
                           onChange={(e) => setImporte(Number(e.target.value))}
-                          className="h-9 bg-transparent border-none w-2/3"
+                          className="w-2/3 bg-transparent border-none h-9"
                           placeholder="0"
                         />
                       </div>
-                      <div className="bg-yellow-100 h-9 flex flex-row items-center mt-2">
+                      <div className="flex flex-row items-center mt-2 bg-yellow-100 h-9">
                         <span className="w-1/3 mx-1">Info :</span>
                         <input
                           type="text"
                           onChange={(e) => setInfo(e.target.value)}
-                          className="h-9 w-2/3 bg-transparent border-none"
+                          className="w-2/3 bg-transparent border-none h-9"
                           placeholder="..."
                         />
                       </div>
@@ -153,7 +157,7 @@ const MovimientoEgresoDeCajas = ({ cajas }) => {
                     <button
                       id="btnCerrar"
                       type="button"
-                      className="w-24 mr-1 inline-flex justify-center rounded-md border border-transparent bg-red-100 px-4 py-2 text-sm font-medium text-red-900 hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center w-24 px-4 py-2 mr-1 text-sm font-medium text-red-900 bg-red-100 border border-transparent rounded-md hover:bg-red-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-red-500 focus-visible:ring-offset-2"
                       onClick={handleChangeModal}
                       ref={initialRef}
                     >
@@ -163,7 +167,7 @@ const MovimientoEgresoDeCajas = ({ cajas }) => {
                       id="btnGuardar"
                       type="button"
                       disabled={importe === 0}
-                      className="w-24 ml-1 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                      className="inline-flex justify-center w-24 px-4 py-2 ml-1 text-sm font-medium text-blue-900 bg-blue-100 border border-transparent rounded-md hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                       onClick={handlerGuardar}
                     >
                       Guardar

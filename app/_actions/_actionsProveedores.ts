@@ -1,17 +1,22 @@
-//@/app/api/proveedores/updateClienteSaldo.ts
-import { NextResponse } from "next/server";
+//@/app/actions/_actionsProveedores.ts
+"use server";
+
 import prisma from "@/lib/prismadb";
 
-export async function updateProveedor(proveedorId, importe) {
+/**
+ *
+ * @param proveedorId
+ * @param importe
+ * @returns
+ */
+export async function updateSaldoProveedor(proveedorId, importe) {
   try {
     const proveedor = await prisma.proveedor.findUnique({
       where: { id: Number(proveedorId) },
     });
+
     if (!proveedor) {
-      return NextResponse.json(
-        { error: "The proveedor does not exist" },
-        { status: 404 }
-      );
+      throw new Error("Provedor No exite!!!");
     }
 
     const update = await prisma.proveedor.update({
@@ -19,7 +24,7 @@ export async function updateProveedor(proveedorId, importe) {
       data: { saldo: proveedor.saldo + importe },
     });
 
-    return NextResponse.json(update);
+    return update;
   } catch (error: any) {
     throw new Error(error);
   }

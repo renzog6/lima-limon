@@ -4,7 +4,7 @@ import { Cliente } from "@prisma/client";
 import AddCliente from "./addCliente";
 import Box from "@/components/ui/Box";
 import ListClientes from "./ListClientes";
-import { getClientes } from "../_actions/_actionsClientes";
+import { getClientes } from "../_actions/crud/crudCliente";
 
 export const dynamic = "force-dynamic";
 

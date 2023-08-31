@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Producto } from "@prisma/client";
-import { updateProducto } from "@/app/hooks/useProductos";
+import { updateProducto } from "../_actions/crud/crudProducto";
 
 export default function UpdateProducto(producto: Producto) {
   const [nombre, setNombre] = useState(producto.nombre || "");
@@ -54,26 +54,26 @@ export default function UpdateProducto(producto: Producto) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Edit {producto.nombre}</h3>
+          <h3 className="text-lg font-bold">Edit {producto.nombre}</h3>
           <form onSubmit={handleUpdate}>
             <div className="form-control">
-              <label className="label font-bold">Nombre</label>
+              <label className="font-bold label">Nombre</label>
               <input
                 id="nombre"
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Producto Name"
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Info</label>
+              <label className="font-bold label">Info</label>
               <input
                 type="text"
                 value={info}
                 onChange={(e) => setInfo(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Info"
               />
             </div>

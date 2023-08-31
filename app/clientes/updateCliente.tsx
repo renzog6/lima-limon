@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Cliente } from "@prisma/client";
-import { updateCliente } from "@/app/hooks/useClientes";
+import { updateCliente } from "../_actions/crud/crudCliente";
 
 export default function UpdateCliente(cliente: Cliente) {
   const [nombre, setNombre] = useState(cliente.nombre || "");
@@ -55,27 +55,27 @@ export default function UpdateCliente(cliente: Cliente) {
       <div className="modal">
         <div className="modal-box">
           <div className="modal-header">
-            <h3 className="font-bold text-lg">Editar: {cliente.nombre}</h3>
+            <h3 className="text-lg font-bold">Editar: {cliente.nombre}</h3>
           </div>
           <form onSubmit={handleUpdate}>
             <div className="form-control">
-              <label className="label font-bold">Nombre</label>
+              <label className="font-bold label">Nombre</label>
               <input
                 id="nombre"
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Cliente Name"
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Info</label>
+              <label className="font-bold label">Info</label>
               <input
                 type="text"
                 value={info}
                 onChange={(e) => setInfo(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Info"
               />
             </div>

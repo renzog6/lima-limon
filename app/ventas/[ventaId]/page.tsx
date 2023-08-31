@@ -2,11 +2,11 @@
 import React from "react";
 import Box from "@/components/ui/Box";
 import LinkBack from "@/components/ui/LinkBack";
-import { getVentaById } from "@/app/hooks/useVentas";
 import { VentaSafe } from "@/app/types";
 import { convertDateToTable } from "@/lib/utilDates";
-import { getDetalleVentaById } from "@/app/_actions/getDetallePedido";
+import { getDetalleVentaById } from "@/app/_actions/_actionsPedido";
 import VentaIdDetalle from "./VentaIdDetalle";
+import { getVentaById } from "@/app/_actions/crud/crudVenta";
 
 const pageVentaId = async ({ params: { ventaId } }) => {
   const venta: VentaSafe = await getVentaById(+ventaId);

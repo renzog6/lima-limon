@@ -4,11 +4,12 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
-import { Categoria, Marca, Proveedor } from "@prisma/client";
-import { addProducto } from "@/app/hooks/useProductos";
-import { getCategorias } from "@/app/hooks/useCategorias";
-import { getProveedores } from "@/app/hooks/useProveedores";
-import { getMarcas } from "@/app/_actions/_actionsMarcas";
+import { Categoria, Marca, Producto, Proveedor } from "@prisma/client";
+
+import { getCategorias } from "../_actions/crud/crudCategoria";
+import { getMarcas } from "../_actions/crud/crudMarca";
+import { createProducto } from "../_actions/crud/crudProducto";
+import { getProveedores } from "../_actions/crud/crudProveedor";
 
 export default function AddProducto() {
   const [modal, setModal] = useState(false);
@@ -70,14 +71,8 @@ export default function AddProducto() {
       proveedorId: data.proveedorId,
     };
 
-    const res = await addProducto(producto);
-    if (res.success) {
-      // La solicitud fue exitosa, puedes acceder a los datos con res.data
-      console.log("El producto se ha guardado exitosamente:", res.data);
-    } else {
-      // Hubo un error en la solicitud, puedes acceder al objeto de error con res.error
-      console.log("Error al guardar el producto:", res.error);
-    }
+    const res = await createProducto(producto as Producto);
+    //Noctificar que se ha creado el producto
 
     router.refresh();
     setIsMutating(false);

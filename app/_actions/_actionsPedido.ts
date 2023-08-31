@@ -113,3 +113,13 @@ export async function getDetalleVentaById(
     return [];
   }
 }
+
+export async function sumarCantidadStockPedido(
+  productoId: number,
+  newStock: number
+) {
+  await prisma.producto.update({
+    where: { id: productoId },
+    data: { stock: newStock },
+  });
+}

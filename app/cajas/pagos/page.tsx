@@ -1,8 +1,9 @@
 //@/app/cajas/pagos/page.tsx
 
 import { Pago } from "@prisma/client";
-import { getPagos } from "@/app/hooks/usePagos";
+
 import ListPagos from "./ListPagos";
+import { getPagos } from "@/app/_actions/crud/crudPago";
 
 export const dynamic = "force-dynamic";
 

@@ -5,10 +5,11 @@ import { Fragment, SyntheticEvent, useRef, useState } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import { useRouter } from "next/navigation";
 import { MdPayments } from "react-icons/md";
-
-import { createCobro } from "@/app//hooks/useCobros";
 import InputDate from "@/components/InputDate";
 import InputSelectCajas from "@/components/InputSelectCajas";
+import { Cobro } from "@prisma/client";
+import { createCobro } from "@/app/_actions/crud/crudCobro";
+import { DataCobro } from "@/app/types";
 
 const CobroACliente = ({ cliente, cajas }) => {
   const router = useRouter();
@@ -23,20 +24,22 @@ const CobroACliente = ({ cliente, cajas }) => {
 
   async function handlerGuardar(e: SyntheticEvent) {
     e.preventDefault();
-    const mov = {
-      cobroInterno: false,
-      cobroFecha: startDate,
-      cobroImporte: importe,
-      cobroInfo: info,
-      cobroCajaId: cajaIngreso.id,
-      cobroClienteId: cliente.id,
-    };
 
-    const res = await createCobro(mov);
-    if (res.data) {
-      console.log("Ingreso se ha guardado exitosamente:", res.data);
+    const dataCobro: DataCobro = {
+      isInterno: false,
+      tipoCajaId: cajaIngreso.id,
+      info: info,
+      importe: importe,
+      fecha: startDate,
+      clienteId: cliente.id,
+      ventaId: 0,
+      movimientoId: 0,
+    };
+    const resCobro = await createCobro(dataCobro);
+    if (resCobro) {
+      console.log("Cobro se ha guardado exitosamente:");
     } else {
-      console.log("Error al guardar el Ingreso:", res.error);
+      console.log("Error al guardar el Cobro");
     }
 
     router.refresh();

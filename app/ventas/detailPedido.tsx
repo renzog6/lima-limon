@@ -5,7 +5,7 @@ import { useState } from "react";
 import { FiList } from "react-icons/fi";
 import { Venta } from "@prisma/client";
 import { PedidoSafe } from "../types";
-import { getDetalleVentaById } from "../_actions/getDetallePedido";
+import { getDetalleVentaById } from "../_actions/_actionsPedido";
 
 export default function DetailPedido(venta: Venta) {
   const [pedidos, setPedidos] = useState<PedidoSafe[]>([]);

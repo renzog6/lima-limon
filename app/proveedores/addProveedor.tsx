@@ -3,8 +3,8 @@
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-
-import { addProveedor } from "@/app/hooks/useProveedores";
+import { createProveedor } from "../_actions/crud/crudProveedor";
+import { Proveedor } from "@prisma/client";
 
 export default function AddProveedor() {
   const [nombre, setNombre] = useState("");
@@ -23,7 +23,7 @@ export default function AddProveedor() {
       info: info,
     };
 
-    await addProveedor(proveedor);
+    await createProveedor(proveedor as Proveedor);
     setIsMutating(false);
 
     setNombre("");

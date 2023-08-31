@@ -1,3 +1,4 @@
+//@next.config.js
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
@@ -5,8 +6,6 @@ const nextConfig = {
     appDir: true,
     serverActions: true,
   },
-
-  //output: "standalone",
 
   i18n: {
     locales: ["es-AR", "en-US"],
@@ -18,10 +17,6 @@ const nextConfig = {
       process.env.NODE_ENV === "development"
         ? process.env.URL_API_DEV // development api
         : process.env.URL_API_PROD, // production api
-  },
-
-  httpAgentOptions: {
-    keepAlive: false,
   },
 };
 

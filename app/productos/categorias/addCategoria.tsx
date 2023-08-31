@@ -3,8 +3,8 @@
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-
-import { createCategoria } from "@/app/hooks/useCategorias";
+import { Categoria } from "@prisma/client";
+import { createCategoria } from "@/app/_actions/crud/crudCategoria";
 
 export default function AddCategoria() {
   const [nombre, setNombre] = useState("");
@@ -23,7 +23,7 @@ export default function AddCategoria() {
       info: info,
     };
 
-    createCategoria(categoria);
+    createCategoria(categoria as Categoria);
     setIsMutating(false);
 
     setNombre("");

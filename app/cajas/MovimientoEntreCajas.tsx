@@ -4,10 +4,11 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { Fragment, SyntheticEvent, useRef, useState } from "react";
 import { HiSwitchHorizontal, HiSwitchVertical } from "react-icons/hi";
-import { movimientoEntreCajas } from "../hooks/useCajas";
+
 import { useRouter } from "next/navigation";
 import InputDate from "@/components/InputDate";
 import { CajaSafe } from "../types";
+import { createMovimientoEntreCajas } from "../_actions/_actionsCajas";
 
 const MovimientoEntreCajas = ({ cajas }) => {
   const router = useRouter();
@@ -41,7 +42,7 @@ const MovimientoEntreCajas = ({ cajas }) => {
       moviemientoHastaCajaId: hastaCaja.id,
     };
 
-    const res = await movimientoEntreCajas(mov);
+    const res = await createMovimientoEntreCajas(mov);
     if (res.data) {
       console.log("Movimiento se ha guardado exitosamente:", res.data);
     } else {

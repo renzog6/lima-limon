@@ -11,16 +11,17 @@ import { useForm } from "react-hook-form";
 
 import { Cliente } from "@prisma/client";
 import { Button } from "@/components/Cart";
-import { getClientes } from "@/app/hooks/useClientes";
-import { createVenta } from "@/app/hooks/useVentas";
 import { useDispatch } from "react-redux";
-import { createCobro } from "@/app/hooks/useCobros";
+
 import InputDate from "@/components/InputDate";
 import InputSelectCajas from "@/components/InputSelectCajas";
-import { getCajas } from "@/app/hooks/useCajas";
 
 import { Dialog, Transition } from "@headlessui/react";
-import { CajaSafe } from "@/app/types";
+import { CajaSafe, DataCobro } from "@/app/types";
+import { getCajasSafe } from "@/app/_actions/_actionsCajas";
+import { getClientes } from "@/app/_actions/crud/crudCliente";
+import { createCobro } from "@/app/_actions/crud/crudCobro";
+import { createVenta } from "@/app/_actions/crud/crudVenta";
 
 const SaveCart = () => {
   const router = useRouter();
@@ -57,7 +58,7 @@ const SaveCart = () => {
     }, 1000);
     //Carga Lista de Categorias
     async function fetchCajas() {
-      const cajas = await getCajas();
+      const cajas = await getCajasSafe();
       setCajas(cajas);
       setCajaSelected(cajas[0]);
     }
@@ -92,32 +93,30 @@ const SaveCart = () => {
     };
     const res = await createVenta(venta);
 
-    if (res.data) {
+    if (res) {
       // La solicitud fue exitosa, puedes acceder a los datos con res.data
-      console.log("El producto se ha guardado exitosamente:", res.data);
+      console.log("saveCart: La Compra se ha guardado exitosamente.");
       if (hacePago) {
-        const cobro = {
-          cobroInterno: false,
-          cobroFecha: startDate,
-          cobroImporte: data.importe,
-          cobroInfo: data.info,
-          cobroCajaId: cajaSelected.id,
-          cobroClienteId: data.clienteId,
-          ventaId: res.data.id,
+        const dataCobro: DataCobro = {
+          isInterno: false,
+          tipoCajaId: cajaSelected.id,
+          info: data.info,
+          importe: data.importe,
+          fecha: startDate,
+          clienteId: data.clienteId,
+          ventaId: 0,
+          movimientoId: 0,
         };
-        const resCobro = await createCobro(cobro);
-        if (resCobro.data) {
-          console.log(
-            "El producto se ha guardado exitosamente:",
-            resCobro.data
-          );
+        const resCobro = await createCobro(dataCobro);
+        if (resCobro) {
+          console.log("saveCart: Cobro se ha guardado exitosamente:");
         } else {
-          console.log("Error al guardar el producto:", resCobro.error);
+          console.log("saveCart: Error al guardar el Cobro");
         }
       }
     } else {
       // Hubo un error en la solicitud, puedes acceder al objeto de error con res.error
-      console.log("Error al guardar el producto:", res.error);
+      console.log("saveCart: Error al guardar la compra");
     }
 
     dispatch(resetCartItems());

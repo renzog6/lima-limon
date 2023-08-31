@@ -1,11 +1,11 @@
 //@/app/categorias/page.tsx
 import { Categoria } from "@prisma/client";
-import { getCategorias } from "@/app/hooks/useCategorias";
 
 import Table from "@/components/Table";
 import AddCategoria from "./addCategoria";
 import DeleteCategoria from "./deleteCategoria";
 import UpdateCategoria from "./updateCategoria";
+import { getCategorias } from "@/app/_actions/crud/crudCategoria";
 
 export const dynamic = "force-dynamic";
 

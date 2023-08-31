@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Categoria } from "@prisma/client";
-import { updateCategoria } from "@/app/hooks/useCategorias";
+import { updateCategoria } from "@/app/_actions/crud/crudCategoria";
 
 export default function UpdateCategoria(categoria: Categoria) {
   const [nombre, setNombre] = useState(categoria.nombre || "");
@@ -54,26 +54,26 @@ export default function UpdateCategoria(categoria: Categoria) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Edit {categoria.nombre}</h3>
+          <h3 className="text-lg font-bold">Edit {categoria.nombre}</h3>
           <form onSubmit={handleUpdate}>
             <div className="form-control">
-              <label className="label font-bold">Nombre</label>
+              <label className="font-bold label">Nombre</label>
               <input
                 id="nombre"
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Categoria Name"
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Info</label>
+              <label className="font-bold label">Info</label>
               <input
                 type="text"
                 value={info}
                 onChange={(e) => setInfo(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Info"
               />
             </div>

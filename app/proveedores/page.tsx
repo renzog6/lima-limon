@@ -1,11 +1,11 @@
 //@/app/proveedores/page.tsx
 import { Proveedor } from "@prisma/client";
-import { getProveedores } from "@/app/hooks/useProveedores";
 
 import Table from "@/components/Table";
 import AddProveedor from "./addProveedor";
 import DeleteProveedor from "./deleteProveedor";
 import UpdateProveedor from "./updateProveedor";
+import { getProveedores } from "../_actions/crud/crudProveedor";
 
 export const dynamic = "force-dynamic";
 

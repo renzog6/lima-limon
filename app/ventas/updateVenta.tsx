@@ -4,13 +4,12 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
-
-import { updateVenta } from "@/app/hooks/useVentas";
-import { convertDateToInput } from "@/lib/utilDates";
 import { Cliente, Venta } from "@prisma/client";
-import { getClientes } from "../hooks/useClientes";
+
 import { useForm } from "react-hook-form";
 import InputDate from "@/components/InputDate";
+import { getClientes } from "../_actions/crud/crudCliente";
+import { updateVenta } from "../_actions/crud/crudVenta";
 
 export default function UpdateVenta(venta: Venta) {
   const [clientes, setClientes] = useState<Cliente[]>([]);
@@ -58,7 +57,7 @@ export default function UpdateVenta(venta: Venta) {
       info: data.info,
     };
     const res = await updateVenta(updated);
-    if (res.status === 200) {
+    if (res) {
       console.log("OOOOOKKKKKKK");
     } else {
       console.log("ERROR");
@@ -96,23 +95,23 @@ export default function UpdateVenta(venta: Venta) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Editar Compra Id: {venta.id}</h3>
+          <h3 className="text-lg font-bold">Editar Compra Id: {venta.id}</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-control">
-              <label htmlFor="date" className="label font-semibold">
+              <label htmlFor="date" className="font-semibold label">
                 <span className="text-gray-700">Fecha Compra</span>
               </label>
-              <div className="input input-bordered h-9 content-center justify-center">
+              <div className="content-center justify-center input input-bordered h-9">
                 <InputDate date={startDate} onChange={handleDateChange} />
               </div>
             </div>
             <div className="form-control">
-              <label htmlFor="cliente" className="label font-semibold">
+              <label htmlFor="cliente" className="font-semibold label">
                 <span className="text-gray-700">Cliente</span>
               </label>
               <select
                 {...register("clienteId", { required: true })}
-                className="input w-full input-bordered h-9"
+                className="w-full input input-bordered h-9"
                 defaultValue={venta.clienteId}
                 disabled
               >
@@ -125,13 +124,13 @@ export default function UpdateVenta(venta: Venta) {
               </select>
             </div>
             <div className="form-control">
-              <label className="label font-semibold">
+              <label className="font-semibold label">
                 <span className="text-gray-700">Nota</span>
               </label>
               <input
                 type="text"
                 {...register("info")}
-                className="mt-1 rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                className="mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 placeholder="Info"
               />
             </div>

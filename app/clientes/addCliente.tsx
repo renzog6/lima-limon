@@ -3,9 +3,9 @@
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-
-import { createCliente } from "@/app/hooks/useClientes";
 import { Button } from "@/components/Cart";
+import { createCliente } from "../_actions/crud/crudCliente";
+import { Cliente } from "@prisma/client";
 
 export default function AddCliente() {
   const [nombre, setNombre] = useState("");
@@ -24,7 +24,7 @@ export default function AddCliente() {
       info: info,
     };
 
-    createCliente(cliente);
+    createCliente(cliente as Cliente);
     setIsMutating(false);
 
     setNombre("");
@@ -42,7 +42,7 @@ export default function AddCliente() {
     <div>
       <Button
         variant="warning"
-        className="w-36 h-8 py-0"
+        className="h-8 py-0 w-36"
         onClick={handleChange}
       >
         Agregar
@@ -59,25 +59,25 @@ export default function AddCliente() {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Agregar Cliente</h3>
+          <h3 className="text-lg font-bold">Agregar Cliente</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
-              <label className="label font-bold">Nombre</label>
+              <label className="font-bold label">Nombre</label>
               <input
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Cliente Name"
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Info</label>
+              <label className="font-bold label">Info</label>
               <input
                 type="text"
                 value={info}
                 onChange={(e) => setInfo(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Info"
               />
             </div>

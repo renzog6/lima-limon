@@ -94,7 +94,7 @@ const MovimientoList = ({ caja, data }) => {
             <div className="flex justify-center">
               <div className="flex flex-col items-center gap-1 md:flex-row">
                 <div className="">
-                  <MovimientoDetail />
+                  <MovimientoDetail movimientoId={row.id} />
                 </div>
                 <div className="">
                   <MovimientoEdit />

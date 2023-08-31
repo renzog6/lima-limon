@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { FaTrash } from "react-icons/fa";
 
 import { Proveedor } from "@prisma/client";
-import { deleteProveedor } from "@/app/hooks/useProveedores";
+import { deleteProveedor } from "../_actions/crud/crudProveedor";
 
 export default function DeleteProveedor(proveedor: Proveedor) {
   const [modal, setModal] = useState(false);
@@ -46,7 +46,7 @@ export default function DeleteProveedor(proveedor: Proveedor) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
+          <h3 className="text-lg font-bold">
             Seguro que desea BORRAR: {proveedor.nombre} ?
           </h3>
           <div className="modal-action">
