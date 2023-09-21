@@ -1,7 +1,7 @@
 //@/app/actions/_actionsVentas.ts
 import prisma from "@/lib/prismadb";
 import { Venta } from "@prisma/client";
-import { VentaSafe } from "../types";
+import { VentaSafe } from "@/types";
 
 export async function getVentas(): Promise<Venta[]> {
   try {

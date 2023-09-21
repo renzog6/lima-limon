@@ -3,7 +3,7 @@
 
 import prisma from "@/lib/prismadb";
 import { Caja, CajaMovimiento, TipoMovimiento } from "@prisma/client";
-import { CajaSafe } from "../types";
+import { CajaSafe } from "@/types";
 import { NextResponse } from "next/server";
 
 /**

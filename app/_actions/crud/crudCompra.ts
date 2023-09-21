@@ -1,7 +1,7 @@
 //@/app/actions/crudCompra.ts
 "use server";
 
-import { CompraSafe, DataCompra } from "@/app/types";
+import { CompraSafe, DataCompra } from "@/types";
 import prisma from "@/lib/prismadb";
 import { Compra } from "@prisma/client";
 import { updateClienteSaldo } from "../_actionsClientes";

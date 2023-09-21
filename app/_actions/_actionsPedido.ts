@@ -1,6 +1,6 @@
 //@/app/actions/getDetalleCompraById.ts
 import prisma from "@/lib/prismadb";
-import { PedidoSafe } from "../types";
+import { PedidoSafe } from "@/types";
 
 export async function getDetalleCompraById(
   compraId: number,

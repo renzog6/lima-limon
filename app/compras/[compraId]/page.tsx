@@ -2,7 +2,7 @@
 import React from "react";
 import Box from "@/components/ui/Box";
 import LinkBack from "@/components/ui/LinkBack";
-import { CompraSafe } from "@/app/types";
+import { CompraSafe } from "@/types";
 import { convertDateToTable } from "@/lib/utilDates";
 import { getDetalleCompraById } from "@/app/_actions/_actionsPedido";
 import CompraIdDetalle from "./CompraIdDetalle";

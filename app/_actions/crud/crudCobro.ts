@@ -5,7 +5,7 @@ import prisma from "@/lib/prismadb";
 import { Cobro, TipoMovimiento } from "@prisma/client";
 import { updateClienteSaldo } from "../_actionsClientes";
 import { updateCajas } from "../_actionsCajas";
-import { DataCobro } from "@/app/types";
+import { DataCobro } from "@/types";
 
 /**
  * Funcion para obtener el listado de cobros

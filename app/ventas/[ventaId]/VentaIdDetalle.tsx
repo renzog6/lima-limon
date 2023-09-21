@@ -1,7 +1,7 @@
 //@/app/ventas/ventaId/VentaIdDetalle.tsx
 import { FC } from "react";
 
-import { PedidoSafe } from "@/app/types";
+import { PedidoSafe } from "@/types";
 import { formatAmount } from "@/lib/utilNumbers";
 
 interface PageProps {

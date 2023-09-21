@@ -5,7 +5,7 @@ import prisma from "@/lib/prismadb";
 import { Pago, TipoMovimiento } from "@prisma/client";
 import { updateClienteSaldo } from "../_actionsClientes";
 import { updateCajas } from "../_actionsCajas";
-import { DataPago } from "@/app/types";
+import { DataPago } from "@/types";
 
 /**
  * Funcion para obtener el listado de pagos

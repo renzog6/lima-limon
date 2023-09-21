@@ -4,7 +4,7 @@
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { BsCartPlus } from "react-icons/bs";
-import { ProductoToCart } from "@/app/types";
+import { ProductoToCart } from "@/types";
 
 export default function AddToCart(producto: ProductoToCart) {
   const [cantidad, setCantidad] = useState(1);

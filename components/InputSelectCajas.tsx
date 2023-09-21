@@ -4,7 +4,7 @@
 import { Fragment, useState } from "react";
 import { Combobox, Transition } from "@headlessui/react";
 import { CheckIcon, ChevronUpDownIcon } from "@heroicons/react/20/solid";
-import { CajaSafe } from "@/app/types";
+import { CajaSafe } from "@/types";
 
 const InputSelectCajas = ({ cajas, onChange }) => {
   //const cajas = data.map((item) => ({ id: item.id, nombre: item.tipo }));

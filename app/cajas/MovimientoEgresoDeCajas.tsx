@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import { HiArrowUp } from "react-icons/hi";
 import InputDate from "@/components/InputDate";
 import InputSelectCajas from "@/components/InputSelectCajas";
-import { DataPago } from "../types";
+import { DataPago } from "@/types";
 import { createPago } from "../_actions/crud/crudPago";
 
 const MovimientoEgresoDeCajas = ({ cajas }) => {

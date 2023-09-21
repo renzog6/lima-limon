@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { convertDateToTable } from "@/lib/utilDates";
 import { IoMdEye } from "react-icons/io";
-import { VentaSafe } from "../types";
+import { VentaSafe } from "@/types";
 interface ListComprasProps {
   ventas: VentaSafe[];
 }

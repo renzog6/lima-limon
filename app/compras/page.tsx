@@ -2,7 +2,7 @@
 
 import ListCompras from "./ListCompras";
 import Box from "@/components/ui/Box";
-import { CompraSafe } from "../types";
+import { CompraSafe } from "@/types";
 import { getCompras } from "../_actions/crud/crudCompra";
 
 export const dynamic = "force-dynamic";

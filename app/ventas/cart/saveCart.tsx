@@ -17,7 +17,7 @@ import InputDate from "@/components/InputDate";
 import InputSelectCajas from "@/components/InputSelectCajas";
 
 import { Dialog, Transition } from "@headlessui/react";
-import { CajaSafe, DataCobro } from "@/app/types";
+import { CajaSafe, DataCobro } from "@/types";
 import { getCajasSafe } from "@/app/_actions/_actionsCajas";
 import { getClientes } from "@/app/_actions/crud/crudCliente";
 import { createCobro } from "@/app/_actions/crud/crudCobro";

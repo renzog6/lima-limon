@@ -6,7 +6,7 @@ import AddProducto from "./addProducto";
 import DeleteProducto from "./deleteProducto";
 import UpdateProducto from "./updateProducto";
 import { getProductos } from "../_actions/crud/crudProducto";
-import { ProductoToCart } from "../types";
+import { ProductoToCart } from "@/types";
 import { getProductosToCart } from "../_actions/_actionsProductos";
 
 export const dynamic = "force-dynamic";

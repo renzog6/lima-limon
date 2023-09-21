@@ -2,7 +2,7 @@
 
 import { getProductosToCart } from "@/app/_actions/_actionsProductos";
 import ListProductos from "./ListProductos";
-import { ProductoToCart } from "@/app/types";
+import { ProductoToCart } from "@/types";
 
 export const dynamic = "force-dynamic";
 

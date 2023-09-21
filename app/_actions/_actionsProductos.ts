@@ -2,7 +2,7 @@
 "use server";
 
 import prisma from "@/lib/prismadb";
-import { ProductoToCart } from "../types";
+import { ProductoToCart } from "@/types";
 
 export async function getProductosToCart() {
   try {

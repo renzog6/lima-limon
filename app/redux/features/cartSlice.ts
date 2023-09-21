@@ -2,7 +2,7 @@
 import { createSelector, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Producto } from "@prisma/client";
 import { RootState } from "../store";
-import { CartItem } from "@/app/types";
+import { CartItem } from "@/types";
 
 export interface CartState {
   cartItems: CartItem[];

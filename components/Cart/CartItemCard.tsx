@@ -1,7 +1,7 @@
 import QtyBtn from "./QtyBtn";
 import { decrement, increment } from "@/app/redux/features/cartSlice";
 import { useAppDispatch } from "@/app/redux/store";
-import { CartItem } from "@/app/types";
+import { CartItem } from "@/types";
 
 interface Props {
   cartItem: CartItem;

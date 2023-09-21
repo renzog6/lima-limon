@@ -2,7 +2,7 @@
 import Box from "@/components/ui/Box";
 import ListVentas from "./ListVentas";
 import { getVentasSafe } from "../_actions/_actionsVentas";
-import { VentaSafe } from "../types";
+import { VentaSafe } from "@/types";
 
 export const dynamic = "force-dynamic";
 // 'auto' | 'force-dynamic' | 'error' | 'force-static'

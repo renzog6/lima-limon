@@ -1,5 +1,5 @@
 //@/app/ventas/pedido/ItemProducto.tsx
-import { ProductoToCart } from "@/app/types";
+import { ProductoToCart } from "@/types";
 
 const ItemProducto = (producto: ProductoToCart) => {
   return (

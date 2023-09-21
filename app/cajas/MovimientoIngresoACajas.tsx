@@ -9,7 +9,7 @@ import InputDate from "@/components/InputDate";
 import InputSelectCajas from "@/components/InputSelectCajas";
 import { createCobro } from "../_actions/crud/crudCobro";
 import { Cobro } from "@prisma/client";
-import { DataCobro } from "../types";
+import { DataCobro } from "@/types";
 
 const MovimientoIngresoACajas = ({ cajas }) => {
   const router = useRouter();

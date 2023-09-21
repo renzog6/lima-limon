@@ -1,15 +1,5 @@
 //@/app/types/index.ts
-import {
-  Caja,
-  Categoria,
-  Cliente,
-  Compra,
-  Pedido,
-  Prisma,
-  Producto,
-  Proveedor,
-  Venta,
-} from "@prisma/client";
+import { Producto } from "@prisma/client";
 
 /**
  * Type Categoria
@@ -131,20 +121,6 @@ export type ProductoToCart = {
   marca: string;
   categoria: string;
 };
-
-/* export type ProductoToCart = Omit<
-  Producto,
-  "createdAt" | "updatedAt" | "ventaId" | "proveedorId"
-> & {
-  id: number;
-  nombre: string;
-  info: string | null;
-  precio: number;
-  stock: number;
-  marca: string;
-  categoria: string;
-  estado: boolean | null;
-}; */
 
 export interface CartItem {
   product: Producto;

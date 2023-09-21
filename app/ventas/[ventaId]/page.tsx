@@ -2,7 +2,7 @@
 import React from "react";
 import Box from "@/components/ui/Box";
 import LinkBack from "@/components/ui/LinkBack";
-import { VentaSafe } from "@/app/types";
+import { VentaSafe } from "@/types";
 import { convertDateToTable } from "@/lib/utilDates";
 import { getDetalleVentaById } from "@/app/_actions/_actionsPedido";
 import VentaIdDetalle from "./VentaIdDetalle";
@@ -10,6 +10,7 @@ import { getVentaById } from "@/app/_actions/crud/crudVenta";
 
 const pageVentaId = async ({ params: { ventaId } }) => {
   const venta: VentaSafe = await getVentaById(+ventaId);
+
   const detalles = await getDetalleVentaById(venta.id);
   const VentaIdDetalleMemo = React.memo(VentaIdDetalle);
 

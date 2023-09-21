@@ -1,7 +1,7 @@
 //@/app/actions/crudVenta.ts
 "use server";
 
-import { VentaSafe, DataVenta } from "@/app/types";
+import { VentaSafe, DataVenta } from "@/types";
 import prisma from "@/lib/prismadb";
 import { Venta } from "@prisma/client";
 import { updateClienteSaldo } from "../_actionsClientes";
@@ -16,7 +16,7 @@ export async function getVentas(): Promise<VentaSafe[]> {
     const ventas = await prisma.venta.findMany({
       where: { estado: true },
       orderBy: {
-        fecha: "asc",
+        fecha: "desc",
       },
       include: {
         pedidos: true,
@@ -46,6 +46,9 @@ export async function getVentaById(ventaId: number): Promise<VentaSafe> {
     const venta = await prisma.venta.findFirst({
       where: {
         id: ventaId,
+      },
+      include: {
+        cliente: true,
       },
     });
 

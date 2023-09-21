@@ -7,7 +7,7 @@ import { HiSwitchHorizontal, HiSwitchVertical } from "react-icons/hi";
 
 import { useRouter } from "next/navigation";
 import InputDate from "@/components/InputDate";
-import { CajaSafe } from "../types";
+import { CajaSafe } from "@/types";
 import { createMovimientoEntreCajas } from "../_actions/_actionsCajas";
 
 const MovimientoEntreCajas = ({ cajas }) => {

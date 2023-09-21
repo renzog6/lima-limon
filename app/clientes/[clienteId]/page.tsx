@@ -6,7 +6,7 @@ import { Cliente } from "@prisma/client";
 import { RiArrowGoBackLine } from "react-icons/ri";
 import ClienteIdDetalle from "./ClienteIdDetalle";
 import CobroACliente from "./CobroACliente";
-import { CajaSafe } from "@/app/types";
+import { CajaSafe } from "@/types";
 import { getCajasSafe } from "@/app/_actions/_actionsCajas";
 import { getClienteById } from "@/app/_actions/crud/crudCliente";
 import { getDetalleClienteById } from "@/app/_actions/_actionsClientes";
