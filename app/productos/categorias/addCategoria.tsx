@@ -5,6 +5,8 @@ import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Categoria } from "@prisma/client";
 import { createCategoria } from "@/app/_actions/crud/crudCategoria";
+import { Button } from "@/components/ui";
+import { FaPlus } from "react-icons/fa";
 
 export default function AddCategoria() {
   const [nombre, setNombre] = useState("");
@@ -39,9 +41,12 @@ export default function AddCategoria() {
 
   return (
     <div>
-      <button className="btn  btn-sm btn-secondary" onClick={handleChange}>
-        Agregar
-      </button>
+      <Button variant="warning" className="h-8 py-0" onClick={handleChange}>
+        <div className="flex flex-row items-center justify-center mx-2 min-w-32">
+          <FaPlus color="green" size="16" />
+          <p className="hidden mx-1 md:block w-14">Agregar</p>
+        </div>
+      </Button>
 
       <input
         id="modal"
@@ -54,25 +59,25 @@ export default function AddCategoria() {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Agregar Categoria</h3>
+          <h3 className="text-lg font-bold">Agregar Categoria</h3>
           <form onSubmit={handleSubmit}>
             <div className="form-control">
-              <label className="label font-bold">Nombre</label>
+              <label className="font-bold label">Nombre</label>
               <input
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Categoria Name"
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Info</label>
+              <label className="font-bold label">Info</label>
               <input
                 type="text"
                 value={info}
                 onChange={(e) => setInfo(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Info"
               />
             </div>

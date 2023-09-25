@@ -5,11 +5,11 @@ import { useState } from "react";
 import { convertDateToTable } from "@/lib/utilDates";
 import { IoMdEye } from "react-icons/io";
 import { VentaSafe } from "@/types";
-interface ListComprasProps {
+interface ListVentasProps {
   ventas: VentaSafe[];
 }
 
-const ListVentas: React.FC<ListComprasProps> = ({ ventas }) => {
+const ListVentas: React.FC<ListVentasProps> = ({ ventas }) => {
   const [searchTerm, setSearchTerm] = useState("");
   // Filtrar los datos basados en el término de búsqueda
   const filteredData = ventas.filter((row) =>

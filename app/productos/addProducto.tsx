@@ -10,6 +10,8 @@ import { getCategorias } from "../_actions/crud/crudCategoria";
 import { getMarcas } from "../_actions/crud/crudMarca";
 import { createProducto } from "../_actions/crud/crudProducto";
 import { getProveedores } from "../_actions/crud/crudProveedor";
+import { Button } from "@/components/ui";
+import { FaPlus } from "react-icons/fa";
 
 export default function AddProducto() {
   const [modal, setModal] = useState(false);
@@ -86,9 +88,12 @@ export default function AddProducto() {
 
   return (
     <div>
-      <button className="btn btn-sm btn-secondary" onClick={handleChange}>
-        Agregar
-      </button>
+      <Button variant="warning" className="h-8 py-0" onClick={handleChange}>
+        <div className="flex flex-row items-center justify-center mx-2 min-w-32">
+          <FaPlus color="green" size="16" />
+          <p className="hidden mx-1 md:block w-14">Agregar</p>
+        </div>
+      </Button>
 
       <input
         id="modal"

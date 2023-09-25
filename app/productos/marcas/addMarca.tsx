@@ -5,6 +5,8 @@ import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { createMarca } from "@/app/_actions/crud/crudMarca";
 import { Marca } from "@prisma/client";
+import { Button } from "@/components/ui";
+import { FaPlus } from "react-icons/fa";
 
 export default function AddMarca() {
   const [nombre, setNombre] = useState("");
@@ -40,9 +42,12 @@ export default function AddMarca() {
 
   return (
     <div>
-      <button className="btn btn-sm btn-secondary" onClick={handleChange}>
-        Agregar
-      </button>
+      <Button variant="warning" className="h-8 py-0" onClick={handleChange}>
+        <div className="flex flex-row items-center justify-center mx-2 min-w-32">
+          <FaPlus color="green" size="16" />
+          <p className="hidden mx-1 md:block w-14">Agregar</p>
+        </div>
+      </Button>
 
       <input
         id="modal"

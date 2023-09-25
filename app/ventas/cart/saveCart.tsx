@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 
 import { Cliente } from "@prisma/client";
-import { Button } from "@/components/Cart";
+import { Button } from "@/components/ui";
 import { useDispatch } from "react-redux";
 
 import InputDate from "@/components/InputDate";

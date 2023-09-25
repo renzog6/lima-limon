@@ -1,13 +1,10 @@
 //@/app/productos/page.tsx
-import { Producto } from "@prisma/client";
+import AddProducto from "./addProducto";
+import EditProducto from "./editProducto";
+import DeleteProducto from "./deleteProducto";
 
 import Table from "@/components/Table";
-import AddProducto from "./addProducto";
-import DeleteProducto from "./deleteProducto";
-import UpdateProducto from "./updateProducto";
-import { getProductos } from "../_actions/crud/crudProducto";
-import { ProductoToCart } from "@/types";
-import { getProductosToCart } from "../_actions/_actionsProductos";
+import { getAllProductosSafe } from "../_actions/_actionsProductos";
 
 export const dynamic = "force-dynamic";
 
@@ -20,25 +17,20 @@ export default async function ProductoList() {
     { Header: "Info", accessor: "info" },
   ];
 
-  const productos = await getProductosToCart();
+  const productos = await getAllProductosSafe();
 
   return (
-    <div>
-      <div className="flex justify-around items-center  h-[40px] bg-amber-300">
-        <p className="text-xl font-bold">Productos</p>
-        <div className="">
-          <AddProducto />
-        </div>
-      </div>
-      <div className="px-1 bg-amber-200">
+    <>
+      <div className="px-1 bg-green-500">
         <Table
           titulo="Productos"
           columns={columnas}
           data={productos}
-          EditButton={UpdateProducto}
+          AddButton={AddProducto}
+          EditButton={EditProducto}
           DeleteButton={DeleteProducto}
         />
       </div>
-    </div>
+    </>
   );
 }

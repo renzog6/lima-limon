@@ -5,7 +5,6 @@ import Layout from "@/components/ui/Layout";
 import Loading from "./loading";
 import "@/style/globals.css";
 import { Metadata } from "next";
-import Link from "next/link";
 
 const font = Figtree({
   subsets: ["latin"],
@@ -15,9 +14,9 @@ export const metadata: Metadata = {
   title: "Lima Limon App",
   description: "App by renzog6",
   icons: {
-    icon: "favicon.ico",
-    shortcut: "favicon-16x16.png",
-    apple: "apple-icon.png",
+    icon: "/favicon.ico",
+    shortcut: "/favicon-16x16.png",
+    apple: "/apple-icon.png",
   },
 };
 

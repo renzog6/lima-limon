@@ -1,3 +1,4 @@
+//@/app/productos/editProducto.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
@@ -5,9 +6,9 @@ import { useRouter } from "next/navigation";
 import { FiEdit } from "react-icons/fi";
 
 import { Producto } from "@prisma/client";
-import { updateProducto } from "../_actions/crud/crudProducto";
+import { editProducto } from "../_actions/crud/crudProducto";
 
-export default function UpdateProducto(producto: Producto) {
+export default function EditProducto(producto: Producto) {
   const [nombre, setNombre] = useState(producto.nombre || "");
   const [info, setInfo] = useState(producto.info || "");
   const [modal, setModal] = useState(false);
@@ -22,7 +23,7 @@ export default function UpdateProducto(producto: Producto) {
 
     const updated = { ...producto, nombre: nombre, info: info };
 
-    updateProducto(updated); // Llama a la función de actualización del estado
+    editProducto(updated); // Llama a la función de actualización del estado
     setIsMutating(false);
 
     router.refresh();
@@ -36,6 +37,7 @@ export default function UpdateProducto(producto: Producto) {
   return (
     <div>
       <button
+        id="btn-edit-producto"
         title="edit"
         className="mr-2 text-blue-500 hover:text-blue-700"
         onClick={handleChange}

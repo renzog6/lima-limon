@@ -8,7 +8,7 @@ export async function getVentas(): Promise<Venta[]> {
     const ventas = await prisma.venta.findMany({
       where: { estado: true },
       orderBy: {
-        fecha: "asc",
+        fecha: "desc",
       },
       include: {
         cliente: true,
@@ -27,7 +27,7 @@ export async function getVentasSafe(): Promise<VentaSafe[]> {
     const ventas = await prisma.venta.findMany({
       where: { estado: true },
       orderBy: {
-        fecha: "asc",
+        fecha: "desc",
       },
       include: {
         cliente: true,

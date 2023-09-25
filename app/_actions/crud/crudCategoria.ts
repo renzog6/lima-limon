@@ -54,7 +54,7 @@ export async function createCategoria(
  *
  * @returns Categoria
  */
-export async function updateCategoria(
+export async function editCategoria(
   categoria: Categoria
 ): Promise<Categoria | null> {
   try {

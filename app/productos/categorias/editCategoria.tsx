@@ -1,14 +1,14 @@
-//@/app/productos/categorias/updateCategoria.tsx
+//@/app/productos/categorias/editCategoria.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+
 import { FiEdit } from "react-icons/fi";
-
+import { editCategoria } from "@/app/_actions/crud/crudCategoria";
 import { Categoria } from "@prisma/client";
-import { updateCategoria } from "@/app/_actions/crud/crudCategoria";
 
-export default function UpdateCategoria(categoria: Categoria) {
+export default function EditCategoria(categoria: Categoria) {
   const [nombre, setNombre] = useState(categoria.nombre || "");
   const [info, setInfo] = useState(categoria.info || "");
   const [modal, setModal] = useState(false);
@@ -18,11 +18,10 @@ export default function UpdateCategoria(categoria: Categoria) {
 
   async function handleUpdate(e: SyntheticEvent) {
     e.preventDefault();
-
     setIsMutating(true);
 
     const updated = { ...categoria, nombre: nombre, info: info };
-    updateCategoria(updated);
+    editCategoria(updated);
 
     setIsMutating(false);
     router.refresh();
@@ -36,8 +35,9 @@ export default function UpdateCategoria(categoria: Categoria) {
   return (
     <div>
       <button
+        id="btn-edit-categoria"
         title="edit"
-        className="btn btn-info btn-sm"
+        className="mr-2 text-blue-500 hover:text-blue-700"
         onClick={handleChange}
       >
         <FiEdit color="blue" />

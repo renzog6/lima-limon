@@ -1,7 +1,16 @@
+//@/components/Table.tsx
 "use client";
 import { useState } from "react";
+import { FaList } from "react-icons/fa";
 
-const Table = ({ titulo, columns, data, EditButton, DeleteButton }) => {
+const Table = ({
+  titulo,
+  columns,
+  data,
+  AddButton,
+  EditButton,
+  DeleteButton,
+}) => {
   const [searchTerm, setSearchTerm] = useState("");
 
   // Filtrar los datos basados en el término de búsqueda
@@ -16,27 +25,31 @@ const Table = ({ titulo, columns, data, EditButton, DeleteButton }) => {
   return (
     <div className="w-full overflow-x-auto">
       <div className="px-1 flex justify-between items-center h-[40px]">
-        <p className="text-sm md:text-lg font-semibold">Listado de {titulo}</p>
+        <div className="flex items-center">
+          <FaList />
+          <p className="mx-1 text-sm font-semibold md:text-lg">{titulo}</p>
+        </div>
         <input
           type="text"
-          className="px-2 py-1 w-32 md:w-64 border border-gray-300 rounded"
+          className="w-32 px-2 py-1 border border-gray-300 rounded md:w-64"
           placeholder="Buscar..." //{`Buscar por ${columns[0].Header}`}
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <div className="">{AddButton && <AddButton />}</div>
       </div>
-      <table className="w-full table-auto">
+      <table className="w-full table-auto table-md">
         <thead>
           <tr>
             {columns.map((column) => (
               <th
                 key={column.accessor}
-                className="px-4 py-2 bg-gray-300 text-left"
+                className="px-4 py-2 text-left bg-gray-300"
               >
                 {column.Header}
               </th>
             ))}
-            <th className="px-4 py-2 bg-gray-300"></th>
+            <th className="px-4 py-2 bg-gray-300">#</th>
           </tr>
         </thead>
         <tbody>
@@ -54,8 +67,8 @@ const Table = ({ titulo, columns, data, EditButton, DeleteButton }) => {
                   {row[column.accessor]}
                 </td>
               ))}
-              <td className="px-4 py-2 whitespace-nowrap text-right">
-                <div className=" flex flex-row">
+              <td className="px-4 py-2 text-right whitespace-nowrap">
+                <div className="flex flex-row ">
                   <div className="">
                     {EditButton && <EditButton {...row} />}
                   </div>

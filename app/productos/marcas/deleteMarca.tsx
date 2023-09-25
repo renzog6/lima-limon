@@ -1,12 +1,12 @@
-//@/app/productos/marcas/addDelete.tsx
+//@/app/productos/marcas/deleteMarca.tsx
 "use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { Marca } from "@prisma/client";
-import { RiDeleteBin5Line } from "react-icons/ri";
 import { deleteMarca } from "@/app/_actions/crud/crudMarca";
+import { FaTrash } from "react-icons/fa";
 
 export default function DeleteMarca(marca: Marca) {
   const [modal, setModal] = useState(false);
@@ -32,11 +32,12 @@ export default function DeleteMarca(marca: Marca) {
   return (
     <div>
       <button
+        id="btn-delete-marca"
         title="delete"
-        className="btn btn-error btn-sm"
+        className="text-red-500 hover:text-red-700"
         onClick={handleChange}
       >
-        <RiDeleteBin5Line size={20} />
+        <FaTrash />
       </button>
 
       <input
@@ -49,7 +50,7 @@ export default function DeleteMarca(marca: Marca) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">
+          <h3 className="text-lg font-bold">
             Seguro que desea BORRAR: {marca.nombre} ?
           </h3>
           <div className="modal-action">

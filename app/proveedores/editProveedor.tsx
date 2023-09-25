@@ -1,16 +1,15 @@
-//@/app/productos/marcas/addUpdate.tsx
 "use client";
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { FiEdit } from "react-icons/fi";
 
-import { Marca } from "@prisma/client";
-import { RiEdit2Line } from "react-icons/ri";
-import { updateMarca } from "@/app/_actions/crud/crudMarca";
+import { Proveedor } from "@prisma/client";
+import { editProveedor } from "../_actions/crud/crudProveedor";
 
-export default function UpdateMarca(marca: Marca) {
-  const [nombre, setNombre] = useState(marca.nombre || "");
-  const [info, setInfo] = useState(marca.info || "");
+export default function EditProveedor(proveedor: Proveedor) {
+  const [nombre, setNombre] = useState(proveedor.nombre || "");
+  const [info, setInfo] = useState(proveedor.info || "");
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
@@ -20,13 +19,12 @@ export default function UpdateMarca(marca: Marca) {
     e.preventDefault();
 
     setIsMutating(true);
-    const updatedMarca = { ...marca }; // Hacer una copia del objeto marca
-    updatedMarca.nombre = nombre;
-    updatedMarca.info = info;
 
-    updateMarca(updatedMarca);
+    const updated = { ...proveedor, nombre: nombre, info: info };
 
+    editProveedor(updated); // Llama a la función de actualización del estado
     setIsMutating(false);
+
     router.refresh();
     setModal(false);
   }
@@ -39,10 +37,10 @@ export default function UpdateMarca(marca: Marca) {
     <div>
       <button
         title="edit"
-        className="btn btn-info btn-sm"
+        className="mr-2 text-blue-500 hover:text-blue-700"
         onClick={handleChange}
       >
-        <RiEdit2Line size={20} />
+        <FiEdit color="blue" />
       </button>
 
       <input
@@ -56,7 +54,7 @@ export default function UpdateMarca(marca: Marca) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="text-lg font-bold">Edit {marca.nombre}</h3>
+          <h3 className="text-lg font-bold">Edit {proveedor.nombre}</h3>
           <form onSubmit={handleUpdate}>
             <div className="form-control">
               <label className="font-bold label">Nombre</label>
@@ -66,7 +64,7 @@ export default function UpdateMarca(marca: Marca) {
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
                 className="w-full input input-bordered"
-                placeholder="Marca Name"
+                placeholder="Proveedor Name"
               />
             </div>
             <div className="form-control">

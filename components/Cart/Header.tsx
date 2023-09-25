@@ -1,5 +1,4 @@
 import Link from "next/link";
-import React from "react";
 import CartBtn from "./CartBtn";
 import { FaHome, FaPlus } from "react-icons/fa";
 

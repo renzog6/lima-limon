@@ -2,7 +2,7 @@
 "use server";
 
 import prisma from "@/lib/prismadb";
-import { ProductoToCart } from "@/types";
+import { ProductoSafe, ProductoToCart } from "@/types";
 
 export async function getProductosToCart() {
   try {
@@ -39,6 +39,37 @@ export async function getProductosToCart() {
       marca: producto.marca.nombre,
     }));
     return safe as ProductoToCart[];
+  } catch (error: any) {
+    console.log(error);
+    throw new Error(error);
+  }
+}
+
+export async function getAllProductosSafe() {
+  try {
+    const productos = await prisma.producto.findMany({
+      where: {
+        estado: true,
+      },
+      orderBy: {
+        nombre: "asc",
+      },
+      include: {
+        categoria: true,
+        marca: true,
+      },
+    });
+
+    const safe = productos.map((producto) => ({
+      id: producto.id,
+      nombre: producto.nombre,
+      info: producto.info,
+      precio: producto.precio,
+      stock: producto.stock,
+      categoria: producto.categoria.nombre,
+      marca: producto.marca.nombre,
+    }));
+    return safe as ProductoSafe[];
   } catch (error: any) {
     console.log(error);
     throw new Error(error);

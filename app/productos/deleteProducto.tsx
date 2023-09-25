@@ -1,3 +1,4 @@
+//@/app/productos/deleteProducto.tsx
 "use client";
 
 import { useState } from "react";
@@ -29,6 +30,7 @@ export default function DeleteProducto(producto: Producto) {
   return (
     <div>
       <button
+        id="btn-delete-producto"
         title="delete"
         className="text-red-500 hover:text-red-700"
         onClick={handleChange}

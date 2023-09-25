@@ -85,7 +85,7 @@ export async function createProveedor(
  *
  * @returns Proveedor
  */
-export async function updateProveedor(
+export async function editProveedor(
   proveedor: Proveedor
 ): Promise<Proveedor | null> {
   try {

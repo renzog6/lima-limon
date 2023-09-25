@@ -7,6 +7,7 @@ import { FiDelete } from "react-icons/fi";
 
 import { Categoria } from "@prisma/client";
 import { deleteCategoria } from "@/app/_actions/crud/crudCategoria";
+import { FaTrash } from "react-icons/fa";
 
 export default function DeleteCategoria(categoria: Categoria) {
   const [modal, setModal] = useState(false);
@@ -30,11 +31,12 @@ export default function DeleteCategoria(categoria: Categoria) {
   return (
     <div>
       <button
+        id="btn-delete-categoria"
         title="delete"
-        className="btn btn-error btn-sm"
+        className="text-red-500 hover:text-red-700"
         onClick={handleChange}
       >
-        <FiDelete />
+        <FaTrash />
       </button>
 
       <input

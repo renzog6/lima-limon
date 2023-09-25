@@ -3,7 +3,7 @@
 
 import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/Cart";
+import { Button } from "@/components/ui";
 import { createCliente } from "../_actions/crud/crudCliente";
 import { Cliente } from "@prisma/client";
 

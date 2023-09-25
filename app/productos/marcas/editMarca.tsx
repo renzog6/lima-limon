@@ -1,15 +1,16 @@
+//@/app/productos/marcas/editMarca.tsx
 "use client";
 
-import { SyntheticEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import { SyntheticEvent, useState } from "react";
+
 import { FiEdit } from "react-icons/fi";
+import { editMarca } from "@/app/_actions/crud/crudMarca";
+import { Marca } from "@prisma/client";
 
-import { Proveedor } from "@prisma/client";
-import { updateProveedor } from "../_actions/crud/crudProveedor";
-
-export default function UpdateProveedor(proveedor: Proveedor) {
-  const [nombre, setNombre] = useState(proveedor.nombre || "");
-  const [info, setInfo] = useState(proveedor.info || "");
+export default function EditMarca(marca: Marca) {
+  const [nombre, setNombre] = useState(marca.nombre || "");
+  const [info, setInfo] = useState(marca.info || "");
   const [modal, setModal] = useState(false);
   const [isMutating, setIsMutating] = useState(false);
 
@@ -17,14 +18,12 @@ export default function UpdateProveedor(proveedor: Proveedor) {
 
   async function handleUpdate(e: SyntheticEvent) {
     e.preventDefault();
-
     setIsMutating(true);
 
-    const updated = { ...proveedor, nombre: nombre, info: info };
+    const updated = { ...marca, nombre: nombre, info: info }; // Hacer una copia del objeto marca
+    editMarca(updated);
 
-    updateProveedor(updated); // Llama a la función de actualización del estado
     setIsMutating(false);
-
     router.refresh();
     setModal(false);
   }
@@ -36,6 +35,7 @@ export default function UpdateProveedor(proveedor: Proveedor) {
   return (
     <div>
       <button
+        id="btn-edit-marca"
         title="edit"
         className="mr-2 text-blue-500 hover:text-blue-700"
         onClick={handleChange}
@@ -54,26 +54,26 @@ export default function UpdateProveedor(proveedor: Proveedor) {
 
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Edit {proveedor.nombre}</h3>
+          <h3 className="text-lg font-bold">Edit {marca.nombre}</h3>
           <form onSubmit={handleUpdate}>
             <div className="form-control">
-              <label className="label font-bold">Nombre</label>
+              <label className="font-bold label">Nombre</label>
               <input
                 id="nombre"
                 type="text"
                 value={nombre}
                 onChange={(e) => setNombre(e.target.value)}
-                className="input w-full input-bordered"
-                placeholder="Proveedor Name"
+                className="w-full input input-bordered"
+                placeholder="Marca Name"
               />
             </div>
             <div className="form-control">
-              <label className="label font-bold">Info</label>
+              <label className="font-bold label">Info</label>
               <input
                 type="text"
                 value={info}
                 onChange={(e) => setInfo(e.target.value)}
-                className="input w-full input-bordered"
+                className="w-full input input-bordered"
                 placeholder="Info"
               />
             </div>

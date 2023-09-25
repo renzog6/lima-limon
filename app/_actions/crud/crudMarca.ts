@@ -81,7 +81,7 @@ export async function createMarca(marca: Marca): Promise<Marca | null> {
  *
  * @returns Marca
  */
-export async function updateMarca(marca: Marca): Promise<Marca | null> {
+export async function editMarca(marca: Marca): Promise<Marca | null> {
   try {
     const updated = await prisma.marca.update({
       where: { id: Number(marca.id) },

@@ -16,6 +16,11 @@ export async function getProductos(): Promise<Producto[]> {
       orderBy: {
         nombre: "asc",
       },
+
+      include: {
+        categoria: true,
+        marca: true,
+      },
     });
 
     return productos || [];
@@ -93,7 +98,7 @@ export async function createProducto(
  *
  * @returns Producto
  */
-export async function updateProducto(
+export async function editProducto(
   producto: Producto
 ): Promise<Producto | null> {
   try {
