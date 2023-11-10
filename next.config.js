@@ -2,10 +2,6 @@
 /** @type {import('next').NextConfig} */
 
 const nextConfig = {
-  experimental: {
-    serverActions: true,
-  },
-
   i18n: {
     locales: ["es-AR", "en-US"],
     defaultLocale: "es-AR",

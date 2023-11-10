@@ -11,7 +11,6 @@ const LayoutProductos = ({ children }) => {
             className="flex items-center justify-center"
             href={"/productos"}
           >
-            <FaHome />
             <strong>Productos</strong>
           </Link>
         </div>

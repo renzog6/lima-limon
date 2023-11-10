@@ -69,7 +69,7 @@ export async function getAllProductosSafe() {
       categoria: producto.categoria.nombre,
       marca: producto.marca.nombre,
     }));
-    return safe as ProductoSafe[];
+    return safe;
   } catch (error: any) {
     console.log(error);
     throw new Error(error);

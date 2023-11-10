@@ -2,12 +2,6 @@
 "use client";
 
 import { twMerge } from "tailwind-merge";
-import { RxCaretLeft, RxCaretRight } from "react-icons/rx";
-import { useRouter } from "next/navigation";
-import { FaUserAlt } from "react-icons/fa";
-
-import { HiHome } from "react-icons/hi";
-import { BiSearch } from "react-icons/bi";
 
 interface HeaderProps {
   children: React.ReactNode;

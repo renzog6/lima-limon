@@ -3,7 +3,7 @@ import AddProducto from "./addProducto";
 import EditProducto from "./editProducto";
 import DeleteProducto from "./deleteProducto";
 
-import Table from "@/components/Table";
+import TableProducto from "./TableProducto";
 import { getAllProductosSafe } from "../_actions/_actionsProductos";
 
 export const dynamic = "force-dynamic";
@@ -21,8 +21,8 @@ export default async function ProductoList() {
 
   return (
     <>
-      <div className="px-1 bg-green-500">
-        <Table
+      <div className="px-1 bg-green-600">
+        <TableProducto
           titulo="Productos"
           columns={columnas}
           data={productos}

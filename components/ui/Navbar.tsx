@@ -16,7 +16,7 @@ const Navbar = ({ setter }) => {
             id="MenuSideBar"
             title="MenuSideBar"
             type="button"
-            className="flex text-white items-center ml-2"
+            className="flex items-center ml-2 text-white"
             onClick={() => {
               setter((oldVal) => !oldVal);
             }}
@@ -32,7 +32,7 @@ const Navbar = ({ setter }) => {
               height={50}
             />
           </Link>
-          <Link className="flex text-white items-center mr-2" href="/">
+          <Link className="flex items-center mr-2 text-white" href="/">
             <FaUser size={26} />
           </Link>
         </nav>

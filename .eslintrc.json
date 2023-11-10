@@ -1,4 +1,4 @@
 //"./node_modules/standard/eslintrc.json"
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "prettier"]
 }

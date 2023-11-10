@@ -1,3 +1,4 @@
+//@/components/ui/Button.tsx
 const getVariant = (variant?: VariantType) => {
   switch (variant) {
     case "primary":
@@ -41,6 +42,7 @@ export interface IButtonProps
   square?: boolean;
   paddingLess?: boolean;
 }
+
 export const Button = ({
   className,
   children,
